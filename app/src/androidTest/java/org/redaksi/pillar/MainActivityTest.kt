@@ -1,4 +1,4 @@
-package com.ncorti.kotlin.template.app
+package org.redaksi.pillar
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
