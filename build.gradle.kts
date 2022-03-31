@@ -1,4 +1,5 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
     id("com.android.application") apply false
@@ -37,13 +38,20 @@ subprojects {
 
     detekt {
         config = rootProject.files("config/detekt/detekt.yml")
-        reports {
-            html {
-                enabled = true
-                destination = file("build/reports/detekt.html")
-            }
-        }
     }
+}
+
+task<Exec>("openReport") {
+    group = "detekt"
+    val reportLocation = rootDir.absolutePath + "/app/build/reports/detekt/detekt.html"
+
+    commandLine("cmd", "/c", "start ${reportLocation.replace("\\", "/")}")
+}
+
+task<Exec>("openDetekt") {
+    group = "detekt"
+    val reportLocation = rootDir.absolutePath + "/app/build/reports/detekt/"
+    commandLine("cmd", "/c", "start ${reportLocation.replace("\\", "/")}")
 }
 
 tasks {
@@ -51,5 +59,17 @@ tasks {
         rejectVersionIf {
             candidate.version.isStableVersion().not()
         }
+    }
+
+    withType<Detekt>().configureEach {
+        // openReport()
+        htmlReportFile.isPresent
+
+        reports {
+            html {
+                required.set(true)
+            }
+        }
+        dependsOn("openReport")
     }
 }
