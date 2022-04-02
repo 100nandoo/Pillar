@@ -1,6 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
 
+@Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 plugins {
     id("com.android.application") apply false
     id("com.android.library") apply false

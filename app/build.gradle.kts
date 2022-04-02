@@ -27,7 +27,8 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -36,22 +37,9 @@ android {
     }
 
     lint {
-        isWarningsAsErrors = true
-        isAbortOnError = true
+        warningsAsErrors = true
+        abortOnError = true
     }
-
-    // Use this block to configure different flavors
-//    flavorDimensions("version")
-//    productFlavors {
-//        create("full") {
-//            dimension = "version"
-//            applicationIdSuffix = ".full"
-//        }
-//        create("demo") {
-//            dimension = "version"
-//            applicationIdSuffix = ".demo"
-//        }
-//    }
 }
 
 dependencies {
