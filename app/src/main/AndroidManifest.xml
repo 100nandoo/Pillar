@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.redaksi.pillar">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name="org.redaksi.pillar.MainActivity"
+
+        <activity
+            android:name="org.redaksi.pillar.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
