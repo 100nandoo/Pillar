@@ -33,7 +33,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.kotlinx.json)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter)
-    implementation(libs.kotlinx.json)
+    implementation(libs.androidx.annotation)
 }
