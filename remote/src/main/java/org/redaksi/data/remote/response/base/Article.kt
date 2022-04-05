@@ -17,9 +17,8 @@ data class Article(
     val name: String,
     val title: String,
     val createTime: Int,
-    val body: String,
+    val body: String?,
     val snippet: String,
     val url: String,
-    val authors: Authors,
-    val tags: List<Any>
+    val authors: Authors
 )

@@ -10,7 +10,7 @@ data class Category(
     val name: String,
     val title: String,
     val monthly: Boolean,
-    val description: String,
+    val description: String?,
     val eternal: Boolean,
     val commentable: Boolean,
     val hidden: Boolean

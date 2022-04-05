@@ -10,32 +10,33 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+const val method = "?method="
 interface PillarApi {
-    @GET("getArticle")
+    @GET("${method}getArticle")
     suspend fun articleDetail(@Query("article_id") articleId: Int): Response<ArticleDetailResponse>
 
-    @GET("listAllIssues")
+    @GET("${method}listAllIssues")
     suspend fun issues(): Response<AllIssuesResponse>
 
-    @GET("getLastIssueWithArticles")
+    @GET("${method}getLastIssueWithArticles")
     suspend fun lastIssue(): Response<GenericIssueWithArticlesResponse>
 
-    @GET("searchArticles")
+    @GET("${method}searchArticles")
     suspend fun searchArticle(@Query("query") keyword: String): Response<GenericArticlesResponse>
 
-    @GET("listArticlesForCategory")
+    @GET("${method}listArticlesForCategory")
     suspend fun articlesByCategory(@CategoryId @Query("category_id") categoryId: Int): Response<GenericArticlesResponse>
 
-    @GET("listArticlesForIssueNumber")
+    @GET("${method}listArticlesForIssueNumber")
     suspend fun articlesByIssueNumber(@Query("issueNumber") issueNumber: String): Response<GenericIssueWithArticlesResponse>
 
-    @GET("listCommentsForArticle")
+    @GET("${method}listCommentsForArticle")
     suspend fun commentByArticle(@Query("article_id") articleId: Int): Response<GenericCommentsResponse>
 
-    @GET("listLatestComments")
+    @GET("${method}listLatestComments")
     suspend fun latestComments(): Response<GenericCommentsResponse>
 
-    @GET("insertComment")
+    @GET("${method}insertComment")
     suspend fun insertComment(
         @Query("article_id") articleId: Int,
         @Query("senderName") senderName: String,
