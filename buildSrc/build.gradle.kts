@@ -12,6 +12,7 @@ dependencies {
     implementation(libs.agp)
     implementation(libs.dokka.gradle.plugin)
     implementation(libs.dokka.core)
+    implementation(libs.hilt.gradle.plugin)
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {

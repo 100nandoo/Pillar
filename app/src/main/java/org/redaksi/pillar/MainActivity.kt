@@ -1,10 +1,11 @@
 package org.redaksi.pillar
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import org.redaksi.pillar.databinding.ActivityMainBinding
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -13,9 +14,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.buttonCompute.setOnClickListener {
-            Toast.makeText(this, "Please enter a number", Toast.LENGTH_SHORT).show()
-        }
     }
 }

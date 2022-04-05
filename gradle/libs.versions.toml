@@ -21,6 +21,8 @@ core_ktx = "1.7.0"
 retrofit = "2.9.0"
 retrofit_converter = "0.8.0"
 
+hilt = "2.41"
+
 [libraries]
 junit = { module = "junit:junit", version.ref = "junit" }
 
@@ -43,8 +45,11 @@ dokka_core = { module = "org.jetbrains.dokka:dokka-core", version.ref = "dokka" 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit_converter" }
 
-kotlinx_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin" }
+kotlinx_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.3.2" }
 
+hilt_android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt_compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hilt_gradle_plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

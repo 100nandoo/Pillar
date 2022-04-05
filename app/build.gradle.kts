@@ -1,6 +1,9 @@
 plugins {
-    id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
+
+    id("com.android.application")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -43,11 +46,15 @@ android {
 }
 
 dependencies {
+    implementation(project(":remote"))
     implementation(kotlin("stdlib-jdk8"))
-
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraint.layout)
     implementation(libs.androidx.core.ktx)
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
 
@@ -55,4 +62,12 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.espresso.core)
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+hilt {
+    enableAggregatingTask = true
 }
