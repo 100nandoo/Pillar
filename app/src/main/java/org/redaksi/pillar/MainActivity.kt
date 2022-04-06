@@ -1,18 +1,19 @@
 package org.redaksi.pillar
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.ui.res.stringResource
 import dagger.hilt.android.AndroidEntryPoint
-import org.redaksi.pillar.databinding.ActivityMainBinding
+import org.redaksi.ui.MainScreen
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContent {
+            MainScreen(items = listOf(stringResource(R.string.edisi), stringResource(R.string.artikel), stringResource(R.string.cari)))
+        }
     }
 }
