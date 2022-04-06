@@ -2,4 +2,6 @@
 - [ ] Setup ui module
 - [ ] Setup color
 - [ ] Setup m3 theme
-- [ ] Setup pillar app icon
+  
+Done
+- [x] Setup pillar app icon
