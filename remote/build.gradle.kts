@@ -35,6 +35,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.kotlinx.coroutines)
+
     implementation(libs.kotlinx.json)
     api(libs.retrofit)
     implementation(libs.retrofit.converter)
@@ -42,6 +44,8 @@ dependencies {
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    testImplementation(libs.junit)
 }
 
 kapt {

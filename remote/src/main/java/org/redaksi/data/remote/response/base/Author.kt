@@ -12,7 +12,7 @@ data class Authors(
 @Serializable
 data class Author(
     @SerialName("_id")
-    val id: String,
-    val name: String,
-    val title: String
+    val id: String?,
+    val name: String?,
+    val title: String?
 )

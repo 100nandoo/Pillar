@@ -13,7 +13,7 @@ data class Issue(
     val issueNumber: String,
     val yyyymm: String,
     val monthDisplay: String,
-    val snippet: String,
+    val snippet: String?,
     val title: String?,
     val thumbnailUrl: String
 )

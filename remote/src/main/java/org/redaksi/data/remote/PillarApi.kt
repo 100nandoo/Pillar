@@ -8,6 +8,7 @@ import org.redaksi.data.remote.response.GenericIssueWithArticlesResponse
 import org.redaksi.data.remote.response.InsertCommentResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 const val method = "?method="
@@ -22,7 +23,9 @@ interface PillarApi {
     suspend fun lastIssue(): Response<GenericIssueWithArticlesResponse>
 
     @GET("${method}searchArticles")
-    suspend fun searchArticle(@Query("query") keyword: String): Response<GenericArticlesResponse>
+    suspend fun searchArticle(@Query("query") keyword: String,
+        @SearchIn @Query("search_in") searchIn: String?,
+        @CategoryId @Query("category_id") categoryId: Int?): Response<GenericArticlesResponse>
 
     @GET("${method}listArticlesForCategory")
     suspend fun articlesByCategory(@CategoryId @Query("category_id") categoryId: Int): Response<GenericArticlesResponse>
@@ -36,7 +39,7 @@ interface PillarApi {
     @GET("${method}listLatestComments")
     suspend fun latestComments(): Response<GenericCommentsResponse>
 
-    @GET("${method}insertComment")
+    @POST("${method}insertComment")
     suspend fun insertComment(
         @Query("article_id") articleId: Int,
         @Query("senderName") senderName: String,

@@ -1,6 +1,7 @@
 package org.redaksi.data.remote
 
 import androidx.annotation.IntDef
+import androidx.annotation.StringDef
 
 @Retention(AnnotationRetention.SOURCE)
 @IntDef(
@@ -18,3 +19,13 @@ const val RESENSI = 5
 const val LIPUTAN = 6
 const val PROFILE = 7
 const val RENUNGAN = 17
+
+@Retention(AnnotationRetention.SOURCE)
+@StringDef(
+    value = [TITLE, BODY],
+    open = false
+)
+annotation class SearchIn
+
+const val TITLE = "title"
+const val BODY = "body"
