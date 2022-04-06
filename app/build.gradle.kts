@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    compileSdk = libs.versions.compile.sdk.version.get().toInt()
+    compileSdk = AppCoordinates.compileSDK
 
     defaultConfig {
-        minSdk = libs.versions.min.sdk.version.get().toInt()
-        targetSdk = libs.versions.target.sdk.version.get().toInt()
+        minSdk = AppCoordinates.minSDK
+        targetSdk = AppCoordinates.targetSDK
 
         applicationId = AppCoordinates.APP_ID
         versionCode = AppCoordinates.APP_VERSION_CODE
