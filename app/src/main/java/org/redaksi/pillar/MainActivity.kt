@@ -1,18 +1,23 @@
 package org.redaksi.pillar
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import dagger.hilt.android.AndroidEntryPoint
-import org.redaksi.pillar.databinding.ActivityMainBinding
+import org.redaksi.ui.mainscreen.MainScreen
+import org.redaksi.ui.PIllarTheme
+import org.redaksi.ui.mainscreen.navBarItemList
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContent {
+            PIllarTheme(false) {
+                MainScreen(
+                    items = navBarItemList                )
+            }
+        }
     }
 }

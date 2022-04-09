@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    compileSdk = libs.versions.compile.sdk.version.get().toInt()
+    compileSdk = AppCoordinates.compileSDK
 
     defaultConfig {
-        minSdk = libs.versions.min.sdk.version.get().toInt()
-        targetSdk = libs.versions.target.sdk.version.get().toInt()
+        minSdk = AppCoordinates.minSDK
+        targetSdk = AppCoordinates.targetSDK
 
         applicationId = AppCoordinates.APP_ID
         versionCode = AppCoordinates.APP_VERSION_CODE
@@ -19,7 +19,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
-        viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.1.1"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -46,6 +49,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":ui"))
     implementation(project(":remote"))
     implementation(kotlin("stdlib-jdk8"))
     implementation(libs.kotlinx.coroutines)
@@ -62,6 +66,17 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.espresso.core)
+
+    // Integration with activities
+    implementation(libs.androidx.activity.compose)
+
+    // Integration with ViewModels
+    implementation(libs.androidx.compose.viewmodel)
+    // UI Tests
+    androidTestImplementation(libs.androidx.test.compose.junit)
+    // Material design icons
+    // implementation("androidx.compose.material:material-icons-core:1.1.1")
+    // implementation("androidx.compose.material:material-icons-extended:1.1.1")
 }
 
 kapt {
