@@ -56,27 +56,33 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraint.layout)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.navigation)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
+    // ----------------------------- COMPOSE ------------------------------
+    // Integration with activities
+    implementation(libs.androidx.activity.compose)
+
+    implementation(libs.androidx.compose.foundation)
+    // Compose Material Design
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.material3)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+
+    // Integration with ViewModels
+    implementation(libs.androidx.compose.viewmodel)
+    // UI Tests
+    androidTestImplementation(libs.androidx.test.compose.junit)
+
+    // ----------------------------- TEST ------------------------------
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.espresso.core)
-
-    // Integration with activities
-    implementation(libs.androidx.activity.compose)
-
-    // Integration with ViewModels
-    implementation(libs.androidx.compose.viewmodel)
-    // UI Tests
-    androidTestImplementation(libs.androidx.test.compose.junit)
-    // Material design icons
-    // implementation("androidx.compose.material:material-icons-core:1.1.1")
-    // implementation("androidx.compose.material:material-icons-extended:1.1.1")
 }
 
 kapt {
