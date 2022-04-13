@@ -43,5 +43,5 @@ val PillarTypography = Typography(
     bodySmall = TextStyle(
         fontFamily = Lato,
         fontSize = 12.sp
-    ),
+    )
 )

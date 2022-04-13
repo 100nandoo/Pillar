@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import org.redaksi.ui.PIllarTheme
+import org.redaksi.ui.PillarTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            PIllarTheme(false) {
+            PillarTheme(darkTheme = false) {
                 MainScreen(navBarItemList, navController)
             }
         }

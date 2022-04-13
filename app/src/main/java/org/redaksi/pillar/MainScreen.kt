@@ -40,9 +40,9 @@ fun MainScreen(items: List<NavBar>, navController: NavHostController) {
     Scaffold(
         bottomBar = { NavBar(topRoundedCornerModifier, items, navController) }
     ) {
-        NavHost(navController, startDestination = artikelRoute) {
-            composable(artikelRoute) { ArtikelScreen() }
+        NavHost(navController, startDestination = edisiRoute) {
             composable(edisiRoute) { EdisiScreen() }
+            composable(artikelRoute) { ArtikelScreen() }
             composable(cariRoute) { CariScreen() }
         }
     }
@@ -55,8 +55,8 @@ fun NavBarPreview() {
 }
 
 val navBarItemList = listOf(
-    NavBar(R.string.artikel, R.drawable.ic_artikel, artikelRoute),
     NavBar(R.string.edisi, R.drawable.ic_edisi, edisiRoute),
+    NavBar(R.string.artikel, R.drawable.ic_artikel, artikelRoute),
     NavBar(R.string.cari, R.drawable.ic_cari, cariRoute)
 )
 

@@ -2,6 +2,7 @@ package org.redaksi.ui
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -53,7 +54,8 @@ private val LightMainColorPalette = lightColorScheme(
 )
 
 @Composable
-fun PIllarTheme(
+fun PillarTheme(
+    typography: Typography = PillarTypography,
     darkTheme: Boolean = isSystemInDarkTheme(),
     colorPallet: ColorPallet = ColorPallet.MAIN,
     content: @Composable () -> Unit
@@ -74,6 +76,7 @@ fun PIllarTheme(
     }
     androidx.compose.material3.MaterialTheme(
         colorScheme = colors,
-        content = content
+        content = content,
+        typography = typography
     )
 }
