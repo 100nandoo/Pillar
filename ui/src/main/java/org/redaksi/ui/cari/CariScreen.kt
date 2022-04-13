@@ -14,6 +14,6 @@ fun CariScreen() {
 
 @Preview
 @Composable
-private fun CariScreenPreview(){
+private fun CariScreenPreview() {
     CariScreen()
 }

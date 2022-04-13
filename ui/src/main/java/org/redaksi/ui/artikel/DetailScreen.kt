@@ -14,6 +14,6 @@ fun DetailScreen() {
 
 @Preview
 @Composable
-private fun DetailScreenPreview(){
+private fun DetailScreenPreview() {
     DetailScreen()
 }

@@ -34,7 +34,7 @@ private fun EdisiScreenPreview() {
 }
 
 @Composable
-fun EdisiItem(issue: Issue){
+fun EdisiItem(issue: Issue) {
     Column {
         Text(issue.issueNumber)
         Text(issue.monthDisplay)

@@ -14,6 +14,6 @@ fun ArtikelScreen() {
 
 @Preview
 @Composable
-private fun ArtikelScreenPreview(){
+private fun ArtikelScreenPreview() {
     ArtikelScreen()
 }

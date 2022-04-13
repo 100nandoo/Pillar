@@ -8,7 +8,7 @@ object PillarColor {
     val onPrimaryContainer = Color(0x3c000000)
 
     val secondary = Color(0xffA27070)
-    val secondaryVar  = Color(0xffF0C4B9)
+    val secondaryVar = Color(0xffF0C4B9)
     val secondaryContainer = Color(0xff7B3334)
 
     val background = Color(0xffFCF5F3)
@@ -18,5 +18,5 @@ object PillarColor {
 }
 
 enum class ColorPallet {
-   MAIN, WALLPAPER
+    MAIN, WALLPAPER
 }

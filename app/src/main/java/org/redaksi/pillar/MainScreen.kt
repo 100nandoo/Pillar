@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.navigation.compose.NavHost
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -40,7 +40,7 @@ fun MainScreen(items: List<NavBar>, navController: NavHostController) {
     Scaffold(
         bottomBar = { NavBar(topRoundedCornerModifier, items, navController) }
     ) {
-        NavHost(navController, startDestination =artikelRoute ) {
+        NavHost(navController, startDestination = artikelRoute) {
             composable(artikelRoute) { ArtikelScreen() }
             composable(edisiRoute) { EdisiScreen() }
             composable(cariRoute) { CariScreen() }
@@ -66,7 +66,8 @@ object BottomNavRoute {
     const val cariRoute = "cari"
 }
 
-val topRoundedCornerModifier = Modifier.clip(RoundedCornerShape(16, 16, 0, 0))
+const val BOTTOM_NAV_CORNER = 16
+val topRoundedCornerModifier = Modifier.clip(RoundedCornerShape(BOTTOM_NAV_CORNER, BOTTOM_NAV_CORNER, 0, 0))
 
 @Composable
 fun NavBar(modifier: Modifier, items: List<NavBar>, navController: NavController) {
@@ -76,7 +77,9 @@ fun NavBar(modifier: Modifier, items: List<NavBar>, navController: NavController
         items.forEachIndexed { _, item ->
 
             NavigationBarItem(
-                icon = { Icon(painter = painterResource(id = item.icon), contentDescription = stringResource(item.label)) },
+                icon = {
+                    Icon(painter = painterResource(id = item.icon), contentDescription = stringResource(item.label))
+                },
                 label = { Text(stringResource(item.label)) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = { onClickNavBarItem(navController, item) }

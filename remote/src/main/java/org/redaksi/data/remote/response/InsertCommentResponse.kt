@@ -1,6 +1,5 @@
 package org.redaksi.data.remote.response
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
