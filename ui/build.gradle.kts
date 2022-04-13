@@ -1,7 +1,10 @@
 plugins {
     kotlin("android")
+    kotlin("kapt")
 
     id("com.android.library")
+    id("dagger.hilt.android.plugin")
+
     id("base-android-plugin")
 }
 
@@ -25,11 +28,22 @@ android {
 }
 
 dependencies {
+    implementation(project(":remote"))
+    // ----------------------------- AndroidX ------------------------------
+    implementation(libs.androidx.viewmodel.ktx)
+
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.nav.compose)
+
+    kapt(libs.hilt.compiler)
+
+    // ----------------------------- COMPOSE ------------------------------
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
     implementation(libs.androidx.compose.foundation)
     // Compose Material Design
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.viewmodel)
 
     // Animations
     implementation(libs.androidx.compose.animation)
