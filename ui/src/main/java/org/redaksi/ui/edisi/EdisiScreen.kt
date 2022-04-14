@@ -15,16 +15,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -35,6 +38,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.Dimens.twelve
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarTypography
@@ -51,7 +55,7 @@ fun EdisiScreen(
         SwipeRefresh(
             state = rememberSwipeRefreshState(uiState.isLoading),
             onRefresh = { viewModel.loadEdisi() }) {
-            if(uiState.isLoading){
+            if (uiState.isLoading) {
                 LoadingScreen(false)
             } else {
                 LazyColumn {
@@ -74,7 +78,6 @@ fun EdisiScreen(
 
                     }
                 }
-
             }
         }
     }
@@ -168,6 +171,7 @@ fun EdisiItem(modifier: Modifier = Modifier, onClick: () -> Unit, issue: IssueUi
             .background(PillarColor.background)
             .padding(sixteen.dp, sixteen.dp, sixteen.dp, 0.dp)
             .wrapContentHeight()
+            .clip(RoundedCornerShape(twelve.dp))
             .clickable { onClick() },
         containerColor = PillarColor.edisiBackground
     ) {
