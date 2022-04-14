@@ -23,12 +23,19 @@ interface PillarApi {
     suspend fun lastIssue(): Response<GenericIssueWithArticlesResponse>
 
     @GET("${method}searchArticles")
-    suspend fun searchArticle(@Query("query") keyword: String,
-        @SearchIn @Query("search_in") searchIn: String?,
-        @CategoryId @Query("category_id") categoryId: Int?): Response<GenericArticlesResponse>
+    suspend fun searchArticle(
+        @Query("query") keyword: String,
+        @SearchIn @Query("search_in")
+        searchIn: String?,
+        @CategoryId @Query("category_id")
+        categoryId: Int?
+    ): Response<GenericArticlesResponse>
 
     @GET("${method}listArticlesForCategory")
-    suspend fun articlesByCategory(@CategoryId @Query("category_id") categoryId: Int): Response<GenericArticlesResponse>
+    suspend fun articlesByCategory(
+        @CategoryId @Query("category_id")
+        categoryId: Int
+    ): Response<GenericArticlesResponse>
 
     @GET("${method}listArticlesForIssueNumber")
     suspend fun articlesByIssueNumber(@Query("issueNumber") issueNumber: String): Response<GenericIssueWithArticlesResponse>

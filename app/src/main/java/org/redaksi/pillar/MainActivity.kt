@@ -3,10 +3,9 @@ package org.redaksi.pillar
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import org.redaksi.ui.mainscreen.MainScreen
-import org.redaksi.ui.PIllarTheme
-import org.redaksi.ui.mainscreen.navBarItemList
+import org.redaksi.ui.PillarTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -14,9 +13,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PIllarTheme(false) {
-                MainScreen(
-                    items = navBarItemList                )
+            val navController = rememberNavController()
+
+            PillarTheme(darkTheme = false) {
+                MainScreen(navBarItemList, navController)
             }
         }
     }

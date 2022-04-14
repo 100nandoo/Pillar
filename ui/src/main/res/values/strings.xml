@@ -3,4 +3,9 @@
     <string name="artikel">Artikel</string>
     <string name="edisi">Edisi</string>
     <string name="cari">Cari</string>
+    <!-- Edisi -->
+    <string name="buletin_grii">Buletin Pemuda\nGereja Reformed Injili Indonesia</string>
+    <string name="belum_ada_judul">"Belum Ada Judul"</string>
+    <string name="terbaru">Terbaru</string>
+    <string name="sebelumnya">Sebelumnya</string>
 </resources>

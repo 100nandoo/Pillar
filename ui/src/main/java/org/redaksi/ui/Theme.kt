@@ -2,6 +2,7 @@ package org.redaksi.ui
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -31,7 +32,7 @@ private val DarkMainColorPalette = darkColorScheme(
     onBackground = onBackground,
     onSurface = onBackground,
     onSurfaceVariant = onBackground,
-    error = Color.Red,
+    error = Color.Red
 )
 
 private val LightMainColorPalette = lightColorScheme(
@@ -53,27 +54,29 @@ private val LightMainColorPalette = lightColorScheme(
 )
 
 @Composable
-fun PIllarTheme(
+fun PillarTheme(
+    typography: Typography = PillarTypography,
     darkTheme: Boolean = isSystemInDarkTheme(),
     colorPallet: ColorPallet = ColorPallet.MAIN,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
 
     val colors = when (colorPallet) {
         ColorPallet.MAIN -> if (darkTheme) DarkMainColorPalette else LightMainColorPalette
-        ColorPallet.WALLPAPER -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-            if (darkTheme)
+        ColorPallet.WALLPAPER -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (darkTheme) {
                 dynamicDarkColorScheme(context)
-            else
+            } else {
                 dynamicLightColorScheme(context)
-        else
-            if (darkTheme)
-                DarkMainColorPalette
-            else LightMainColorPalette
+            }
+        } else if (darkTheme) {
+            DarkMainColorPalette
+        } else LightMainColorPalette
     }
     androidx.compose.material3.MaterialTheme(
         colorScheme = colors,
-        content = content
+        content = content,
+        typography = typography
     )
 }
