@@ -15,5 +15,6 @@ data class Issue(
     val monthDisplay: String,
     val snippet: String?,
     val title: String?,
-    val thumbnailUrl: String
+    val thumbnailUrl: String,
+    val articleTitles: ArticleTitles
 )

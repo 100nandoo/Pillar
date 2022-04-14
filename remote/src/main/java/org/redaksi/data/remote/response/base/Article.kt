@@ -22,3 +22,9 @@ data class Article(
     val url: String,
     val authors: Authors
 )
+
+@Serializable
+data class ArticleTitles(
+    val total: Int,
+    val items: List<String>
+)
