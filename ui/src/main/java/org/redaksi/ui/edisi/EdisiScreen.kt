@@ -46,9 +46,7 @@ fun EdisiScreen(
     onClick: (issueNumber: String) -> Unit,
 ) {
     Scaffold {
-        val defaultTitle = stringResource(id = R.string.tidak_ada_judul)
         val viewModel: EdisiViewModel = hiltViewModel()
-        viewModel.defaultIssueTitle = defaultTitle
         val uiState by viewModel.uiState.collectAsState()
         SwipeRefresh(
             state = rememberSwipeRefreshState(uiState.isLoading),
@@ -94,7 +92,7 @@ fun EdisiScreen(
 @Preview
 @Composable
 private fun EdisiScreenPreview() {
-    EdisiScreen({  })
+    EdisiScreen {}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -161,11 +159,13 @@ fun EdisiItem(modifier: Modifier = Modifier, onClick: () -> Unit, issue: IssueUi
         }
 
         Column(modifier = modifier.padding(sixteen.dp)) {
-            Text(
-                modifier = modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
-                style = PillarTypography.titleSmall,
-                text = issue.title
-            )
+            if (issue.title.isNotBlank()) {
+                Text(
+                    modifier = modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
+                    style = PillarTypography.titleSmall,
+                    text = issue.title
+                )
+            }
             issue.articles.forEach { article ->
                 ArtikelItem(modifier, article)
             }
