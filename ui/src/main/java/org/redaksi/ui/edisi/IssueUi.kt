@@ -1,19 +1,19 @@
-package org.redaksi.ui.model
+package org.redaksi.ui.edisi
 
 import org.redaksi.data.remote.response.AllIssuesResponse
 
-data class IssueWithArticle(
+data class IssueUi(
     val number: String,
     val dateDisplay: String,
     val title: String,
     val articles: List<String>
 )
 
-fun fromResponse(response: AllIssuesResponse): List<IssueWithArticle> {
+fun fromResponse(response: AllIssuesResponse): List<IssueUi> {
     val issues = response.issues.items
 
     return issues.map { issue ->
         val articles = issue.articleTitles.items
-        IssueWithArticle(issue.issueNumber, issue.monthDisplay, issue.title ?: "Belum Ada Judul", articles)
+        IssueUi(issue.issueNumber, issue.monthDisplay, issue.title ?: "Belum Ada Judul", articles)
     }
 }

@@ -39,7 +39,7 @@ import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarTypography
 import org.redaksi.ui.R
 import org.redaksi.ui.Symbol
-import org.redaksi.ui.model.IssueWithArticle
+import org.redaksi.ui.model.IssueUi
 
 @Composable
 fun EdisiScreen(
@@ -56,13 +56,13 @@ fun EdisiScreen(
                         HeaderItem(Modifier.shimmer(), R.string.terbaru)
                     }
                     item {
-                        EdisiItem(Modifier.shimmer(), IssueWithArticle("", "", "", listOf("", "", "", "", "", "", "")))
+                        EdisiItem(Modifier.shimmer(), IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
                     }
                     item {
                         HeaderItem(Modifier.shimmer(), R.string.sebelumnya)
                     }
                     item {
-                        EdisiItem(Modifier.shimmer(), IssueWithArticle("", "", "", listOf("", "", "", "", "", "", "")))
+                        EdisiItem(Modifier.shimmer(), IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
                     }
                 }
                 uiState.issuesUi.forEachIndexed { index, issueWithArticle ->
@@ -96,9 +96,9 @@ private fun EdisiScreenPreview() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EdisiItem(modifier: Modifier = Modifier, issue: IssueWithArticle) {
+fun EdisiItem(modifier: Modifier = Modifier, issue: IssueUi) {
     @Composable
-    fun EdisiHeader(modifier: Modifier, issue: IssueWithArticle) {
+    fun EdisiHeader(modifier: Modifier, issue: IssueUi) {
         Row(modifier = modifier.height(IntrinsicSize.Min)) {
             Column(
                 modifier = Modifier
@@ -138,7 +138,7 @@ fun EdisiItem(modifier: Modifier = Modifier, issue: IssueWithArticle) {
     }
 
     @Composable
-    fun EdisiContent(modifier: Modifier, issue: IssueWithArticle) {
+    fun EdisiContent(modifier: Modifier, issue: IssueUi) {
         @Composable
         fun ArtikelItem(modifier: Modifier, title: String) {
             val staticModifier = modifier.padding(0.dp, 0.dp, 0.dp, 4.dp)
@@ -188,7 +188,7 @@ fun EdisiItem(modifier: Modifier = Modifier, issue: IssueWithArticle) {
 private fun EdisiItemPreview() {
     EdisiItem(
         Modifier,
-        IssueWithArticle(
+        IssueUi(
             "224",
             "Apr 2022",
             "Iman, Pengharapan, dan Kasih (Bagian 14): Doktrin Iman",
