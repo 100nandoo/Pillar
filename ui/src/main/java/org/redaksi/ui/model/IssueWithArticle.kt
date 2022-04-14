@@ -1,6 +1,6 @@
 package org.redaksi.ui.model
 
-import org.redaksi.data.remote.response.GenericIssueWithArticlesResponse
+import org.redaksi.data.remote.response.AllIssuesResponse
 
 data class IssueWithArticle(
     val number: String,
@@ -9,8 +9,11 @@ data class IssueWithArticle(
     val articles: List<String>
 )
 
-fun fromResponse(response: GenericIssueWithArticlesResponse): IssueWithArticle {
-    val issue = response.issue
-    val articles = response.articles.items.map { it.title }
-    return IssueWithArticle(issue.issueNumber, issue.monthDisplay, issue.title ?: "Belum Ada Judul", articles)
+fun fromResponse(response: AllIssuesResponse): List<IssueWithArticle> {
+    val issues = response.issues.items
+
+    return issues.map { issue ->
+        val articles = issue.articleTitles.items
+        IssueWithArticle(issue.issueNumber, issue.monthDisplay, issue.title ?: "Belum Ada Judul", articles)
+    }
 }

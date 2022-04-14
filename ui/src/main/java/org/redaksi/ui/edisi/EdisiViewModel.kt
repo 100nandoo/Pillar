@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.redaksi.data.remote.PillarApi
-import org.redaksi.data.remote.response.base.Issue
 import org.redaksi.ui.model.IssueWithArticle
 import org.redaksi.ui.model.fromResponse
 import javax.inject.Inject
@@ -17,24 +16,23 @@ import javax.inject.Inject
 @HiltViewModel
 class EdisiViewModel @Inject constructor(private val pillarApi: PillarApi) : ViewModel() {
 
+    private val viewModelState = MutableStateFlow(EdisiViewModelState())
+    val uiState = viewModelState
+
     init {
         loadEdisi()
     }
 
-    private val viewModelState = MutableStateFlow(EdisiViewModelState())
 
-    val uiState = viewModelState
-
-    private fun loadEdisi() {
+    fun loadEdisi() {
         viewModelScope.launch {
+            viewModelState.value = EdisiViewModelState(isLoading = true)
             val result = withContext(Dispatchers.Default) { runCatching { pillarApi.issues() } }
-            val lastIssueResult = withContext(Dispatchers.Default) { pillarApi.lastIssue() }
+            val response = result.getOrNull()?.body()
             when {
-                result.isSuccess && lastIssueResult.isSuccessful -> {
-                    val issues = result.getOrNull()?.body()?.issues?.items?.toSet() ?: setOf()
-                    val body = lastIssueResult.body() ?: return@launch
-                    val lastIssue = fromResponse(body)
-                    viewModelState.update { it.copy(lastIssue = lastIssue, issues = issues) }
+                result.isSuccess && response != null -> {
+                    val issuesUi = fromResponse(response)
+                    viewModelState.update { it.copy(issuesUi = issuesUi, isLoading = false) }
                 }
             }
         }
@@ -42,6 +40,6 @@ class EdisiViewModel @Inject constructor(private val pillarApi: PillarApi) : Vie
 }
 
 data class EdisiViewModelState(
-    val lastIssue: IssueWithArticle = IssueWithArticle("", "", "", listOf()),
-    val issues: Set<Issue> = setOf()
+    val issuesUi: List<IssueWithArticle> = listOf(),
+    val isLoading: Boolean = true
 )
