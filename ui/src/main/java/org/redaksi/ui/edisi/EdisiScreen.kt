@@ -33,9 +33,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.valentinilk.shimmer.shimmer
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarTypography
 import org.redaksi.ui.R
@@ -51,39 +51,30 @@ fun EdisiScreen(
         SwipeRefresh(
             state = rememberSwipeRefreshState(uiState.isLoading),
             onRefresh = { viewModel.loadEdisi() }) {
-            LazyColumn {
-                if (uiState.isLoading) {
-                    item {
-                        HeaderItem(Modifier.shimmer(), R.string.terbaru)
-                    }
-                    item {
-                        EdisiItem(Modifier.shimmer(), {  }, IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
-                    }
-                    item {
-                        HeaderItem(Modifier.shimmer(), R.string.sebelumnya)
-                    }
-                    item {
-                        EdisiItem(Modifier.shimmer(), {  }, IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
-                    }
-                }
-                uiState.issuesUi.forEachIndexed { index, issueWithArticle ->
-                    if (index == 0) {
-                        item {
-                            HeaderItem(Modifier, R.string.terbaru)
+            if(uiState.isLoading){
+                LoadingScreen(false)
+            } else {
+                LazyColumn {
+                    uiState.issuesUi.forEachIndexed { index, issueWithArticle ->
+                        if (index == 0) {
+                            item {
+                                HeaderItem(Modifier.background(PillarColor.background), R.string.terbaru)
+                            }
+                            item {
+                                EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
+                            }
+                            item {
+                                HeaderItem(Modifier.background(PillarColor.background), R.string.sebelumnya)
+                            }
+                        } else {
+                            item {
+                                EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
+                            }
                         }
-                        item {
-                            EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
-                        }
-                        item {
-                            HeaderItem(Modifier, R.string.sebelumnya)
-                        }
-                    } else {
-                        item {
-                            EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
-                        }
-                    }
 
+                    }
                 }
+
             }
         }
     }
@@ -174,6 +165,7 @@ fun EdisiItem(modifier: Modifier = Modifier, onClick: () -> Unit, issue: IssueUi
 
     Card(
         Modifier
+            .background(PillarColor.background)
             .padding(sixteen.dp, sixteen.dp, sixteen.dp, 0.dp)
             .wrapContentHeight()
             .clickable { onClick() },
@@ -190,7 +182,7 @@ fun EdisiItem(modifier: Modifier = Modifier, onClick: () -> Unit, issue: IssueUi
 @Composable
 private fun EdisiItemPreview() {
     EdisiItem(
-        Modifier,
+        Modifier.background(PillarColor.background),
         { },
         IssueUi(
             "224",
@@ -208,6 +200,7 @@ private fun EdisiItemPreview() {
 @Composable
 fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
     val staticModifier = modifier
+        .background(PillarColor.background)
         .padding(sixteen.dp, sixteen.dp, sixteen.dp, 0.dp)
         .fillMaxWidth()
     Text(modifier = staticModifier, style = PillarTypography.titleLarge, text = stringResource(id = id))
@@ -223,7 +216,7 @@ private fun HeaderItemPreview() {
         HeaderItem(Modifier, R.string.terbaru)
         HeaderItem(Modifier, R.string.sebelumnya)
 
-        HeaderItem(Modifier.shimmer(), R.string.terbaru)
-        HeaderItem(Modifier.shimmer(), R.string.sebelumnya)
+        HeaderItem(Modifier, R.string.terbaru)
+        HeaderItem(Modifier, R.string.sebelumnya)
     }
 }

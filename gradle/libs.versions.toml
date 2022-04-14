@@ -67,7 +67,6 @@ hilt_nav_compose = {module = "androidx.hilt:hilt-navigation-compose", version = 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit_converter" }
 
-shimmer = { module = "com.valentinilk.shimmer:compose-shimmer", version = "1.0.2" }
 swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version = "0.23.1" }
 
 [plugins]

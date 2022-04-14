@@ -58,7 +58,10 @@ fun ArtikelDetailScreen(
         if (uiState.isLoading) {
             LoadingScreen()
         } else {
-            Column {
+            Column(
+                Modifier
+                    .verticalScroll(rememberScrollState())
+            ) {
                 ArtikelHeader(artikelDetailUi = uiState.articleDetailUi)
                 ArtikelBody(artikelDetailUi = uiState.articleDetailUi)
             }
@@ -96,6 +99,7 @@ fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
             Spacer(Modifier.weight(1f))
             Text(
                 modifier = Modifier
+                    .clip(RoundedCornerShape(eight.dp))
                     .background(PillarColor.secondaryVar)
                     .padding(8.dp),
                 style = PillarTypography.bodySmall,
@@ -117,7 +121,6 @@ fun ArtikelHeaderPreview() {
 fun ArtikelBody(artikelDetailUi: ArtikelDetailUi) {
     Column(
         Modifier
-            .verticalScroll(rememberScrollState())
             .background(PillarColor.background)
             .padding(sixteen.dp)
     ) {
@@ -127,6 +130,7 @@ fun ArtikelBody(artikelDetailUi: ArtikelDetailUi) {
             factory = { context ->
                 TextView(context).apply {
                     setLineSpacing(12f, 1f)
+                    textSize = 16f
                     val typeface: Typeface? = ResourcesCompat.getFont(context, R.font.lato_regular)
                     setTypeface(typeface)
                     setTextColor(ResourcesCompat.getColor(resources, R.color.primary, null))
@@ -151,7 +155,7 @@ fun ArtikelKategori(categoryUi: CategoryUi) {
     Row(
         modifier = Modifier
             .padding(0.dp, 0.dp, eight.dp, 0.dp)
-            .clip(RoundedCornerShape(eight.dp))
+            .clip(RoundedCornerShape(percent = 50))
             .background(categoryTranskrip)
             .padding(eight.dp)
 

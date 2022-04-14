@@ -1,6 +1,7 @@
 package org.redaksi.ui.artikel.detail
 
 import androidx.annotation.DrawableRes
+import org.redaksi.core.helper.ReadingTime
 import org.redaksi.data.remote.response.ArticleDetailResponse
 import org.redaksi.data.remote.response.base.Category
 import org.redaksi.ui.R
@@ -24,8 +25,8 @@ fun fromResponse(response: ArticleDetailResponse): ArtikelDetailUi {
     val article = response.article
     val authors = article.authors.items.joinToString { it.title ?: "" }
     val categoryUi = article.category.toCategoryUi()
-
-    return ArtikelDetailUi(article.title, authors, Date(article.createTime.toLong() * 1000), "", categoryUi, article.body ?: "")
+    val estimation = ReadingTime(response.article.body ?: "").calcReadingTime()
+    return ArtikelDetailUi(article.title, authors, Date(article.createTime.toLong() * 1000), estimation, categoryUi, article.body ?: "")
 }
 
 fun Category.toCategoryUi(): CategoryUi {
