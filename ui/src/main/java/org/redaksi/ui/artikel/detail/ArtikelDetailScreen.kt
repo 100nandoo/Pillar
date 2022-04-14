@@ -34,6 +34,7 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.categoryTranskrip
 import org.redaksi.ui.PillarTypography
@@ -47,19 +48,20 @@ import java.util.Date
 fun ArtikelDetailScreen(
     paddingValues: PaddingValues,
     id: Int,
-    viewModel: ArtikelDetailViewModel = hiltViewModel(),
 ) {
+    val viewModel: ArtikelDetailViewModel = hiltViewModel()
+    val uiState by viewModel.uiState.collectAsState()
     viewModel.loadArtikelDetail(id)
     Scaffold(
         modifier = Modifier.padding(paddingValues)
     ) {
-        val uiState by viewModel.uiState.collectAsState()
         if (uiState.isLoading) {
-            ArtikelHeader(artikelDetailUi = uiState.articleDetailUi)
-            ArtikelBody(artikelDetailUi = uiState.articleDetailUi)
+            LoadingScreen()
         } else {
-            ArtikelHeader(artikelDetailUi = uiState.articleDetailUi)
-            ArtikelBody(artikelDetailUi = uiState.articleDetailUi)
+            Column {
+                ArtikelHeader(artikelDetailUi = uiState.articleDetailUi)
+                ArtikelBody(artikelDetailUi = uiState.articleDetailUi)
+            }
         }
 
     }
@@ -83,7 +85,7 @@ fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
             .padding(sixteen.dp)
     ) {
         Text(
-            modifier = Modifier.padding(0.dp, 0.dp, 0.dp, sixteen.dp),
+            modifier = Modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
             style = PillarTypography.titleLarge, text = artikelDetailUi.title,
             textAlign = TextAlign.Center
         )

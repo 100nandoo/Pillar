@@ -20,7 +20,7 @@ object PillarColor {
     val edisiNumber = Color(0xFFF9E397)
     val edisiTitle = Color(0xFFFFECC2)
 
-    val textOnBackground = Color(0xFF3A1819)
+    val edisiDetailTitle = Color(0xFF3A1819)
     val edisiDetailBody = Color(0x99000000)
 
     val artikelDetailTitleBackground = Color(0xFFF8DFD8)

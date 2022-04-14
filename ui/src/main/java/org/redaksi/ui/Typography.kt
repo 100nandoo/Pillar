@@ -6,11 +6,9 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import org.redaksi.ui.PillarColor.textOnBackground
 
 val Lato = FontFamily(
-    Font(R.font.lato_regular, FontWeight.Normal),
-    Font(R.font.lato_light, FontWeight.Light)
+    Font(R.font.lato_regular, FontWeight.Normal)
 
 )
 
@@ -53,8 +51,7 @@ val PillarTypography = Typography(
         fontSize = 16.sp
     ),
     labelSmall = TextStyle(
-        fontFamily = Lato,
-        fontWeight = FontWeight.Light,
+        fontFamily = FontFamily.Serif,
         fontSize = 12.sp
     )
 )

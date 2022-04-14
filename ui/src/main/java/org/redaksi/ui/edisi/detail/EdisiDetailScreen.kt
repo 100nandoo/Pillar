@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
@@ -22,8 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.edisiDetailBody
+import org.redaksi.ui.PillarColor.edisiDetailTitle
 import org.redaksi.ui.PillarTypography
 import org.redaksi.ui.R
 import java.util.Date
@@ -33,27 +36,25 @@ import java.util.Date
 fun EdisiDetailScreen(
     modifier: PaddingValues,
     issueNumber: String,
-    viewModel: EdisiDetailViewModel = hiltViewModel(),
     onClick: (artikelId: Int) -> Unit
 ) {
-    viewModel.loadArticles(issueNumber)
-
+    val viewModel: EdisiDetailViewModel = hiltViewModel()
+    val uiState by viewModel.uiState.collectAsState()
+    if(uiState.articlesUi.isEmpty()){
+        viewModel.loadArticles(issueNumber = issueNumber)
+    }
     Scaffold(
         Modifier.padding(modifier)
     ) {
-        val uiState by viewModel.uiState.collectAsState()
-        LazyColumn {
-            if (uiState.isLoading) {
-                List(8) { ArticleUi() }.forEach { articleUi ->
+        if (uiState.isLoading) {
+            LoadingScreen()
+        } else {
+            LazyColumn {
+                uiState.articlesUi.forEachIndexed { index, articleUi ->
                     item {
-                        ArticleItem(articleUi = articleUi, isLast = false) { onClick(articleUi.id) }
+                        val isLast = index == uiState.articlesUi.size - 1
+                        ArticleItem(articleUi = articleUi, isLast = isLast) { onClick(articleUi.id) }
                     }
-                }
-            }
-            uiState.articlesUi.forEachIndexed { index, articleUi ->
-                item {
-                    val isLast = index == uiState.articlesUi.size-1
-                    ArticleItem(articleUi = articleUi, isLast = isLast) { onClick(articleUi.id) }
                 }
             }
         }
@@ -73,7 +74,12 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
         modifier
             .padding(sixteen.dp, eight.dp, sixteen.dp, 0.dp)
             .clickable { onClick(articleUi.id) }) {
-        Text(style = PillarTypography.headlineSmall, text = articleUi.title)
+        Text(
+            modifier = modifier.fillMaxWidth(),
+            style = PillarTypography.headlineSmall,
+            color = edisiDetailTitle,
+            text = articleUi.title
+        )
         if (articleUi.body.isNotBlank()) {
             Text(
                 modifier = paddingTop,
@@ -89,12 +95,14 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
                 modifier = Modifier
                     .weight(1f),
                 style = PillarTypography.labelSmall,
+                color = edisiDetailBody,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 text = stringResource(id = R.string.oleh) + " " + articleUi.authors
             )
             Text(
                 style = PillarTypography.labelSmall,
+                color = edisiDetailBody,
                 text = detailScreenDate(LocalContext.current, articleUi.date)
             )
         }
@@ -120,3 +128,20 @@ fun ArticleItemPreview() {
         false
     ) {}
 }
+
+@Preview(showBackground = true)
+@Composable
+fun ArticleItemLoadingPreview() {
+    ArticleItem(
+        Modifier,
+        ArticleUi(
+            0,
+            "Doktrin Wahyu: Sebuah Introduksi",
+            "Bab pertama buku ini dimulai dengan penjelasan tentang aksiologi (teori nilai) dan hubungan nyata",
+            "John Doe",
+            Date()
+        ),
+        false
+    ) {}
+}
+

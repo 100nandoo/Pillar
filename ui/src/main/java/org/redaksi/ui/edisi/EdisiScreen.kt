@@ -57,13 +57,13 @@ fun EdisiScreen(
                         HeaderItem(Modifier.shimmer(), R.string.terbaru)
                     }
                     item {
-                        EdisiItem(Modifier.shimmer(), { onClick("") }, IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
+                        EdisiItem(Modifier.shimmer(), {  }, IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
                     }
                     item {
                         HeaderItem(Modifier.shimmer(), R.string.sebelumnya)
                     }
                     item {
-                        EdisiItem(Modifier.shimmer(), { onClick("") }, IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
+                        EdisiItem(Modifier.shimmer(), {  }, IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
                     }
                 }
                 uiState.issuesUi.forEachIndexed { index, issueWithArticle ->
