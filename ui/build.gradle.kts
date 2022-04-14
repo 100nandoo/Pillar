@@ -49,4 +49,10 @@ dependencies {
     implementation(libs.androidx.compose.animation)
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.ui.tooling.preview)
+
+    // ----------------------------- UI ------------------------------
+    implementation(libs.shimmer)
+    implementation(libs.swiperefresh)
+
+
 }
