@@ -17,10 +17,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import org.redaksi.pillar.BottomNavRoute.artikelDetailRoute
+import org.redaksi.pillar.BottomNavRoute.artikelIdArg
 import org.redaksi.pillar.BottomNavRoute.artikelRoute
 import org.redaksi.pillar.BottomNavRoute.cariRoute
 import org.redaksi.pillar.BottomNavRoute.edisiDetailRoute
@@ -28,6 +32,7 @@ import org.redaksi.pillar.BottomNavRoute.edisiRoute
 import org.redaksi.pillar.BottomNavRoute.issueNumberArg
 import org.redaksi.ui.R
 import org.redaksi.ui.artikel.ArtikelScreen
+import org.redaksi.ui.artikel.detail.ArtikelDetailScreen
 import org.redaksi.ui.cari.CariScreen
 import org.redaksi.ui.edisi.EdisiScreen
 import org.redaksi.ui.edisi.detail.EdisiDetailScreen
@@ -40,9 +45,16 @@ fun MainScreenPreview() {
 
 @Composable
 fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
     Scaffold(
-        bottomBar = { NavBar(topRoundedCornerModifier, items, navController) }
-    ) {
+        bottomBar = {
+            if(currentRoute == edisiRoute || currentRoute == artikelRoute || currentRoute == cariRoute){
+                NavBar(topRoundedCornerModifier, items, navController)
+            }
+        }
+    ) { paddingValues ->
         NavHost(navController, startDestination = edisiRoute) {
             composable(edisiRoute) { EdisiScreen(onClick = { navController.navigate("$edisiDetailRoute/$it") }) }
             composable(artikelRoute) { ArtikelScreen() }
@@ -50,7 +62,16 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
             composable("$edisiDetailRoute/{$issueNumberArg}") { navBackStackEntry ->
                 val issueNumber = navBackStackEntry.arguments?.getString(issueNumberArg)
                 issueNumber?.let {
-                    EdisiDetailScreen(it)
+                    EdisiDetailScreen(paddingValues, it, onClick = { navController.navigate("$artikelDetailRoute/$it") })
+                }
+            }
+            composable(
+                route = "$artikelDetailRoute/{$artikelIdArg}",
+                arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
+            ) { navBackStackEntry ->
+                val artikelId = navBackStackEntry.arguments?.getInt(artikelIdArg)
+                artikelId?.let {
+                    ArtikelDetailScreen(paddingValues, it)
                 }
             }
         }
@@ -73,9 +94,11 @@ object BottomNavRoute {
     const val edisiRoute = "edisi"
     const val edisiDetailRoute = "edisiDetail"
     const val artikelRoute = "artikel"
+    const val artikelDetailRoute = "artikelDetail"
     const val cariRoute = "cari"
 
     const val issueNumberArg = "issueNumber"
+    const val artikelIdArg = "artikelId"
 }
 
 const val BOTTOM_NAV_CORNER = 16

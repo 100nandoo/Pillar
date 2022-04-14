@@ -12,4 +12,7 @@
 
     <!-- Edisi Detail -->
     <string name="oleh">Oleh</string>
+
+    <!--  Artikel Detail  -->
+    <string name="transkrip">Transkrip</string>
 </resources>

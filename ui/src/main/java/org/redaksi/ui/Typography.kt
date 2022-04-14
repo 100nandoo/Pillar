@@ -48,13 +48,11 @@ val PillarTypography = Typography(
         fontSize = 12.sp
     ),
     headlineSmall = TextStyle(
-        color = textOnBackground,
         fontFamily = Lora,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp
     ),
     labelSmall = TextStyle(
-        color = textOnBackground,
         fontFamily = Lato,
         fontWeight = FontWeight.Light,
         fontSize = 12.sp

@@ -1,6 +1,8 @@
 package org.redaksi.ui.edisi.detail
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,24 +31,29 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EdisiDetailScreen(
+    modifier: PaddingValues,
     issueNumber: String,
-    viewModel: EdisiDetailViewModel = hiltViewModel()
+    viewModel: EdisiDetailViewModel = hiltViewModel(),
+    onClick: (artikelId: Int) -> Unit
 ) {
     viewModel.loadArticles(issueNumber)
 
-    Scaffold {
+    Scaffold(
+        Modifier.padding(modifier)
+    ) {
         val uiState by viewModel.uiState.collectAsState()
         LazyColumn {
             if (uiState.isLoading) {
                 List(8) { ArticleUi() }.forEach { articleUi ->
                     item {
-                        ArticleItem(articleUi = articleUi)
+                        ArticleItem(articleUi = articleUi, isLast = false) { onClick(articleUi.id) }
                     }
                 }
             }
-            uiState.articlesUi.forEach { articleUi ->
+            uiState.articlesUi.forEachIndexed { index, articleUi ->
                 item {
-                    ArticleItem(articleUi = articleUi)
+                    val isLast = index == uiState.articlesUi.size-1
+                    ArticleItem(articleUi = articleUi, isLast = isLast) { onClick(articleUi.id) }
                 }
             }
         }
@@ -56,16 +63,18 @@ fun EdisiDetailScreen(
 @Preview(showSystemUi = true)
 @Composable
 fun EdisiDetailScreenPreview() {
-    EdisiDetailScreen(issueNumber = "")
+    EdisiDetailScreen(issueNumber = "", modifier = PaddingValues()) {}
 }
 
-
 @Composable
-fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi) {
+fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boolean, onClick: (artikelId: Int) -> Unit) {
     val paddingTop = modifier.padding(0.dp, eight.dp, 0.dp, 0.dp)
-    Column(modifier.padding(sixteen.dp, sixteen.dp, sixteen.dp, 0.dp)) {
+    Column(
+        modifier
+            .padding(sixteen.dp, eight.dp, sixteen.dp, 0.dp)
+            .clickable { onClick(articleUi.id) }) {
         Text(style = PillarTypography.headlineSmall, text = articleUi.title)
-        if(articleUi.body.isNotBlank()){
+        if (articleUi.body.isNotBlank()) {
             Text(
                 modifier = paddingTop,
                 style = PillarTypography.bodyMedium,
@@ -89,7 +98,9 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi) {
                 text = detailScreenDate(LocalContext.current, articleUi.date)
             )
         }
-        Divider(modifier = paddingTop, color = PillarColor.secondaryVar)
+        if (isLast.not()) {
+            Divider(modifier = paddingTop, color = PillarColor.secondaryVar)
+        }
     }
 }
 
@@ -98,11 +109,14 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi) {
 fun ArticleItemPreview() {
     ArticleItem(
         Modifier,
+
         ArticleUi(
+            0,
             "Doktrin Wahyu: Sebuah Introduksi",
             "Bab pertama buku ini dimulai dengan penjelasan tentang aksiologi (teori nilai) dan hubungan nyata",
             "John Doe",
             Date()
-        )
-    )
+        ),
+        false
+    ) {}
 }
