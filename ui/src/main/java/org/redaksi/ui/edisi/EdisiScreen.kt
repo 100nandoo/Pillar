@@ -2,6 +2,7 @@ package org.redaksi.ui.edisi
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -32,57 +33,48 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.valentinilk.shimmer.shimmer
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarTypography
 import org.redaksi.ui.R
 import org.redaksi.ui.Symbol
-import org.redaksi.ui.model.IssueWithArticle
 
 @Composable
 fun EdisiScreen(
-    viewModel: EdisiViewModel = hiltViewModel()
+    onClick: (issueNumber: String) -> Unit,
 ) {
     Scaffold {
+        val viewModel: EdisiViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsState()
         SwipeRefresh(
             state = rememberSwipeRefreshState(uiState.isLoading),
             onRefresh = { viewModel.loadEdisi() }) {
-            LazyColumn {
-                if (uiState.isLoading) {
-                    item {
-                        HeaderItem(Modifier.shimmer(), R.string.terbaru)
-                    }
-                    item {
-                        EdisiItem(Modifier.shimmer(), IssueWithArticle("", "", "", listOf("", "", "", "", "", "", "")))
-                    }
-                    item {
-                        HeaderItem(Modifier.shimmer(), R.string.sebelumnya)
-                    }
-                    item {
-                        EdisiItem(Modifier.shimmer(), IssueWithArticle("", "", "", listOf("", "", "", "", "", "", "")))
-                    }
-                }
-                uiState.issuesUi.forEachIndexed { index, issueWithArticle ->
-                    if (index == 0) {
-                        item {
-                            HeaderItem(Modifier, R.string.terbaru)
+            if(uiState.isLoading){
+                LoadingScreen(false)
+            } else {
+                LazyColumn {
+                    uiState.issuesUi.forEachIndexed { index, issueWithArticle ->
+                        if (index == 0) {
+                            item {
+                                HeaderItem(Modifier.background(PillarColor.background), R.string.terbaru)
+                            }
+                            item {
+                                EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
+                            }
+                            item {
+                                HeaderItem(Modifier.background(PillarColor.background), R.string.sebelumnya)
+                            }
+                        } else {
+                            item {
+                                EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
+                            }
                         }
-                        item {
-                            EdisiItem(issue = issueWithArticle)
-                        }
-                        item {
-                            HeaderItem(Modifier, R.string.sebelumnya)
-                        }
-                    } else {
-                        item {
-                            EdisiItem(issue = issueWithArticle)
-                        }
-                    }
 
+                    }
                 }
+
             }
         }
     }
@@ -91,14 +83,14 @@ fun EdisiScreen(
 @Preview
 @Composable
 private fun EdisiScreenPreview() {
-    EdisiScreen()
+    EdisiScreen {}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EdisiItem(modifier: Modifier = Modifier, issue: IssueWithArticle) {
+fun EdisiItem(modifier: Modifier = Modifier, onClick: () -> Unit, issue: IssueUi) {
     @Composable
-    fun EdisiHeader(modifier: Modifier, issue: IssueWithArticle) {
+    fun EdisiHeader(modifier: Modifier, issue: IssueUi) {
         Row(modifier = modifier.height(IntrinsicSize.Min)) {
             Column(
                 modifier = Modifier
@@ -138,7 +130,7 @@ fun EdisiItem(modifier: Modifier = Modifier, issue: IssueWithArticle) {
     }
 
     @Composable
-    fun EdisiContent(modifier: Modifier, issue: IssueWithArticle) {
+    fun EdisiContent(modifier: Modifier, issue: IssueUi) {
         @Composable
         fun ArtikelItem(modifier: Modifier, title: String) {
             val staticModifier = modifier.padding(0.dp, 0.dp, 0.dp, 4.dp)
@@ -158,11 +150,13 @@ fun EdisiItem(modifier: Modifier = Modifier, issue: IssueWithArticle) {
         }
 
         Column(modifier = modifier.padding(sixteen.dp)) {
-            Text(
-                modifier = modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
-                style = PillarTypography.titleSmall,
-                text = issue.title
-            )
+            if (issue.title.isNotBlank()) {
+                Text(
+                    modifier = modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
+                    style = PillarTypography.titleSmall,
+                    text = issue.title
+                )
+            }
             issue.articles.forEach { article ->
                 ArtikelItem(modifier, article)
             }
@@ -171,8 +165,10 @@ fun EdisiItem(modifier: Modifier = Modifier, issue: IssueWithArticle) {
 
     Card(
         Modifier
+            .background(PillarColor.background)
             .padding(sixteen.dp, sixteen.dp, sixteen.dp, 0.dp)
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .clickable { onClick() },
         containerColor = PillarColor.edisiBackground
     ) {
         EdisiHeader(modifier = modifier, issue = issue)
@@ -181,14 +177,14 @@ fun EdisiItem(modifier: Modifier = Modifier, issue: IssueWithArticle) {
 }
 
 @Preview(
-    name = "EdisiItem",
-    showSystemUi = true
+    showBackground = true
 )
 @Composable
 private fun EdisiItemPreview() {
     EdisiItem(
-        Modifier,
-        IssueWithArticle(
+        Modifier.background(PillarColor.background),
+        { },
+        IssueUi(
             "224",
             "Apr 2022",
             "Iman, Pengharapan, dan Kasih (Bagian 14): Doktrin Iman",
@@ -204,6 +200,7 @@ private fun EdisiItemPreview() {
 @Composable
 fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
     val staticModifier = modifier
+        .background(PillarColor.background)
         .padding(sixteen.dp, sixteen.dp, sixteen.dp, 0.dp)
         .fillMaxWidth()
     Text(modifier = staticModifier, style = PillarTypography.titleLarge, text = stringResource(id = id))
@@ -219,7 +216,7 @@ private fun HeaderItemPreview() {
         HeaderItem(Modifier, R.string.terbaru)
         HeaderItem(Modifier, R.string.sebelumnya)
 
-        HeaderItem(Modifier.shimmer(), R.string.terbaru)
-        HeaderItem(Modifier.shimmer(), R.string.sebelumnya)
+        HeaderItem(Modifier, R.string.terbaru)
+        HeaderItem(Modifier, R.string.sebelumnya)
     }
 }

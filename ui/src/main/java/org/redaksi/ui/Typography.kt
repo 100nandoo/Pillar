@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.sp
 
 val Lato = FontFamily(
     Font(R.font.lato_regular, FontWeight.Normal)
+
 )
 
 val Lora = FontFamily(
@@ -42,6 +43,15 @@ val PillarTypography = Typography(
     ),
     bodySmall = TextStyle(
         fontFamily = Lato,
+        fontSize = 12.sp
+    ),
+    headlineSmall = TextStyle(
+        fontFamily = Lora,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp
+    ),
+    labelSmall = TextStyle(
+        fontFamily = FontFamily.Serif,
         fontSize = 12.sp
     )
 )

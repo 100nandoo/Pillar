@@ -29,6 +29,7 @@ android {
 
 dependencies {
     implementation(project(":remote"))
+    implementation(project(":core"))
     // ----------------------------- AndroidX ------------------------------
     implementation(libs.androidx.viewmodel.ktx)
 
@@ -51,7 +52,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
 
     // ----------------------------- UI ------------------------------
-    implementation(libs.shimmer)
     implementation(libs.swiperefresh)
 
 
