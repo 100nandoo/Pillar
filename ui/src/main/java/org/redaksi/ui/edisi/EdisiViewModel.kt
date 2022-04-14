@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.redaksi.data.remote.PillarApi
-import org.redaksi.ui.model.IssueUi
-import org.redaksi.ui.model.fromResponse
 import javax.inject.Inject
 
 @HiltViewModel
 class EdisiViewModel @Inject constructor(private val pillarApi: PillarApi) : ViewModel() {
+
+    var defaultIssueTitle: String = ""
 
     private val viewModelState = MutableStateFlow(EdisiViewModelState())
     val uiState = viewModelState
@@ -31,7 +31,7 @@ class EdisiViewModel @Inject constructor(private val pillarApi: PillarApi) : Vie
             val response = result.getOrNull()?.body()
             when {
                 result.isSuccess && response != null -> {
-                    val issuesUi = fromResponse(response)
+                    val issuesUi = fromResponse(response, defaultIssueTitle)
                     viewModelState.update { it.copy(issuesUi = issuesUi, isLoading = false) }
                 }
             }

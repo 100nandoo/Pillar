@@ -6,9 +6,12 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import org.redaksi.ui.PillarColor.textOnBackground
 
 val Lato = FontFamily(
-    Font(R.font.lato_regular, FontWeight.Normal)
+    Font(R.font.lato_regular, FontWeight.Normal),
+    Font(R.font.lato_light, FontWeight.Light)
+
 )
 
 val Lora = FontFamily(
@@ -42,6 +45,18 @@ val PillarTypography = Typography(
     ),
     bodySmall = TextStyle(
         fontFamily = Lato,
+        fontSize = 12.sp
+    ),
+    headlineSmall = TextStyle(
+        color = textOnBackground,
+        fontFamily = Lora,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp
+    ),
+    labelSmall = TextStyle(
+        color = textOnBackground,
+        fontFamily = Lato,
+        fontWeight = FontWeight.Light,
         fontSize = 12.sp
     )
 )

@@ -2,6 +2,7 @@ package org.redaksi.ui.edisi
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -39,13 +40,15 @@ import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarTypography
 import org.redaksi.ui.R
 import org.redaksi.ui.Symbol
-import org.redaksi.ui.model.IssueUi
 
 @Composable
 fun EdisiScreen(
-    viewModel: EdisiViewModel = hiltViewModel()
+    onClick: (issueNumber: String) -> Unit,
 ) {
     Scaffold {
+        val defaultTitle = stringResource(id = R.string.tidak_ada_judul)
+        val viewModel: EdisiViewModel = hiltViewModel()
+        viewModel.defaultIssueTitle = defaultTitle
         val uiState by viewModel.uiState.collectAsState()
         SwipeRefresh(
             state = rememberSwipeRefreshState(uiState.isLoading),
@@ -56,13 +59,13 @@ fun EdisiScreen(
                         HeaderItem(Modifier.shimmer(), R.string.terbaru)
                     }
                     item {
-                        EdisiItem(Modifier.shimmer(), IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
+                        EdisiItem(Modifier.shimmer(), { onClick("") }, IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
                     }
                     item {
                         HeaderItem(Modifier.shimmer(), R.string.sebelumnya)
                     }
                     item {
-                        EdisiItem(Modifier.shimmer(), IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
+                        EdisiItem(Modifier.shimmer(), { onClick("") }, IssueUi("", "", "", listOf("", "", "", "", "", "", "")))
                     }
                 }
                 uiState.issuesUi.forEachIndexed { index, issueWithArticle ->
@@ -71,14 +74,14 @@ fun EdisiScreen(
                             HeaderItem(Modifier, R.string.terbaru)
                         }
                         item {
-                            EdisiItem(issue = issueWithArticle)
+                            EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
                         }
                         item {
                             HeaderItem(Modifier, R.string.sebelumnya)
                         }
                     } else {
                         item {
-                            EdisiItem(issue = issueWithArticle)
+                            EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
                         }
                     }
 
@@ -91,12 +94,12 @@ fun EdisiScreen(
 @Preview
 @Composable
 private fun EdisiScreenPreview() {
-    EdisiScreen()
+    EdisiScreen({  })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EdisiItem(modifier: Modifier = Modifier, issue: IssueUi) {
+fun EdisiItem(modifier: Modifier = Modifier, onClick: () -> Unit, issue: IssueUi) {
     @Composable
     fun EdisiHeader(modifier: Modifier, issue: IssueUi) {
         Row(modifier = modifier.height(IntrinsicSize.Min)) {
@@ -172,7 +175,8 @@ fun EdisiItem(modifier: Modifier = Modifier, issue: IssueUi) {
     Card(
         Modifier
             .padding(sixteen.dp, sixteen.dp, sixteen.dp, 0.dp)
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .clickable { onClick() },
         containerColor = PillarColor.edisiBackground
     ) {
         EdisiHeader(modifier = modifier, issue = issue)
@@ -181,13 +185,13 @@ fun EdisiItem(modifier: Modifier = Modifier, issue: IssueUi) {
 }
 
 @Preview(
-    name = "EdisiItem",
-    showSystemUi = true
+    showBackground = true
 )
 @Composable
 private fun EdisiItemPreview() {
     EdisiItem(
         Modifier,
+        { },
         IssueUi(
             "224",
             "Apr 2022",

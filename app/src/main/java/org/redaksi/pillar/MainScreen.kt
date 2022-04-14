@@ -23,11 +23,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.redaksi.pillar.BottomNavRoute.artikelRoute
 import org.redaksi.pillar.BottomNavRoute.cariRoute
+import org.redaksi.pillar.BottomNavRoute.edisiDetailRoute
 import org.redaksi.pillar.BottomNavRoute.edisiRoute
+import org.redaksi.pillar.BottomNavRoute.issueNumberArg
 import org.redaksi.ui.R
 import org.redaksi.ui.artikel.ArtikelScreen
 import org.redaksi.ui.cari.CariScreen
 import org.redaksi.ui.edisi.EdisiScreen
+import org.redaksi.ui.edisi.detail.EdisiDetailScreen
 
 @Preview
 @Composable
@@ -36,14 +39,20 @@ fun MainScreenPreview() {
 }
 
 @Composable
-fun MainScreen(items: List<NavBar>, navController: NavHostController) {
+fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
     Scaffold(
         bottomBar = { NavBar(topRoundedCornerModifier, items, navController) }
     ) {
         NavHost(navController, startDestination = edisiRoute) {
-            composable(edisiRoute) { EdisiScreen() }
+            composable(edisiRoute) { EdisiScreen(onClick = { navController.navigate("$edisiDetailRoute/$it") }) }
             composable(artikelRoute) { ArtikelScreen() }
             composable(cariRoute) { CariScreen() }
+            composable("$edisiDetailRoute/{$issueNumberArg}") { navBackStackEntry ->
+                val issueNumber = navBackStackEntry.arguments?.getString(issueNumberArg)
+                issueNumber?.let {
+                    EdisiDetailScreen(it)
+                }
+            }
         }
     }
 }
@@ -55,22 +64,25 @@ fun NavBarPreview() {
 }
 
 val navBarItemList = listOf(
-    NavBar(R.string.edisi, R.drawable.ic_edisi, edisiRoute),
-    NavBar(R.string.artikel, R.drawable.ic_artikel, artikelRoute),
-    NavBar(R.string.cari, R.drawable.ic_cari, cariRoute)
+    NavBarItem(R.string.edisi, R.drawable.ic_edisi, edisiRoute),
+    NavBarItem(R.string.artikel, R.drawable.ic_artikel, artikelRoute),
+    NavBarItem(R.string.cari, R.drawable.ic_cari, cariRoute)
 )
 
 object BottomNavRoute {
-    const val artikelRoute = "artikel"
     const val edisiRoute = "edisi"
+    const val edisiDetailRoute = "edisiDetail"
+    const val artikelRoute = "artikel"
     const val cariRoute = "cari"
+
+    const val issueNumberArg = "issueNumber"
 }
 
 const val BOTTOM_NAV_CORNER = 16
 val topRoundedCornerModifier = Modifier.clip(RoundedCornerShape(BOTTOM_NAV_CORNER, BOTTOM_NAV_CORNER, 0, 0))
 
 @Composable
-fun NavBar(modifier: Modifier, items: List<NavBar>, navController: NavController) {
+fun NavBar(modifier: Modifier, items: List<NavBarItem>, navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     NavigationBar(modifier = modifier) {
@@ -88,7 +100,7 @@ fun NavBar(modifier: Modifier, items: List<NavBar>, navController: NavController
     }
 }
 
-private fun onClickNavBarItem(navController: NavController, navbar: NavBar) {
+private fun onClickNavBarItem(navController: NavController, navbar: NavBarItem) {
     navController.navigate(navbar.route) {
         popUpTo(navController.graph.findStartDestination().id) { saveState = true }
         launchSingleTop = true

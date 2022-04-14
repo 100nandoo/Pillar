@@ -19,6 +19,9 @@ object PillarColor {
     val edisiBackground = Color(0xFFFFF6E3)
     val edisiNumber = Color(0xFFF9E397)
     val edisiTitle = Color(0xFFFFECC2)
+
+    val textOnBackground = Color(0xFF3A1819)
+    val edisiDetailBody = Color(0x99000000)
 }
 
 enum class ColorPallet {

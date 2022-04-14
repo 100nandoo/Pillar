@@ -9,11 +9,11 @@ data class IssueUi(
     val articles: List<String>
 )
 
-fun fromResponse(response: AllIssuesResponse): List<IssueUi> {
+fun fromResponse(response: AllIssuesResponse, defaultIssueTitle: String): List<IssueUi> {
     val issues = response.issues.items
 
     return issues.map { issue ->
         val articles = issue.articleTitles.items
-        IssueUi(issue.issueNumber, issue.monthDisplay, issue.title ?: "Belum Ada Judul", articles)
+        IssueUi(issue.issueNumber, issue.monthDisplay, issue.title ?: defaultIssueTitle, articles)
     }
 }
