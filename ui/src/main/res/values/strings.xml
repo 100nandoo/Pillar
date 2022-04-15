@@ -3,6 +3,10 @@
     <string name="artikel">Artikel</string>
     <string name="edisi">Edisi</string>
     <string name="cari">Cari</string>
+    <string name="transkrip">Transkrip</string>
+    <string name="renungan">Renungan</string>
+    <string name="resensi">Resensi</string>
+    <string name="lain_lain">Lain-lain</string>
 
     <!-- Edisi -->
     <string name="buletin_grii">Buletin Pemuda\nGereja Reformed Injili Indonesia</string>
@@ -13,6 +17,4 @@
     <!-- Edisi Detail -->
     <string name="oleh">Oleh</string>
 
-    <!--  Artikel Detail  -->
-    <string name="transkrip">Transkrip</string>
 </resources>

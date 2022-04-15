@@ -24,6 +24,8 @@ hilt = "2.41"
 retrofit = "2.9.0"
 retrofit_converter = "0.8.0"
 
+accompanist = "0.23.1"
+
 [libraries]
 junit = { module = "junit:junit", version.ref = "junit" }
 
@@ -67,7 +69,9 @@ hilt_nav_compose = {module = "androidx.hilt:hilt-navigation-compose", version = 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit_converter" }
 
-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version = "0.23.1" }
+accompanist_swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
+accompanist_pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist"}
+accompanist_pager_indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist"}
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

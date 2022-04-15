@@ -2,6 +2,7 @@ package org.redaksi.ui.edisi.detail
 
 import android.content.Context
 import android.text.format.DateUtils
+import org.redaksi.data.remote.response.GenericArticlesResponse
 import org.redaksi.data.remote.response.GenericIssueWithArticlesResponse
 import java.util.Date
 
@@ -12,6 +13,15 @@ fun detailScreenDate(context: Context, date: Date): String {
 }
 
 fun fromResponse(response: GenericIssueWithArticlesResponse): List<ArticleUi> {
+    val articles = response.articles.items
+
+    return articles.map { article ->
+        val authors = article.authors.items.joinToString { it.title ?: "" }
+        ArticleUi(article.id, article.title, article.body ?: "", authors, Date(article.createTime.toLong() * 1000))
+    }
+}
+
+fun fromResponse(response: GenericArticlesResponse): List<ArticleUi> {
     val articles = response.articles.items
 
     return articles.map { article ->
