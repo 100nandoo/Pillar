@@ -50,14 +50,14 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
 
     Scaffold(
         bottomBar = {
-            if(currentRoute == edisiRoute || currentRoute == artikelRoute || currentRoute == cariRoute){
+            if (currentRoute == edisiRoute || currentRoute == artikelRoute || currentRoute == cariRoute) {
                 NavBar(topRoundedCornerModifier, items, navController)
             }
         }
     ) { paddingValues ->
         NavHost(navController, startDestination = edisiRoute) {
             composable(edisiRoute) { EdisiScreen(onClick = { navController.navigate("$edisiDetailRoute/$it") }) }
-            composable(artikelRoute) { ArtikelScreen() }
+            composable(artikelRoute) { ArtikelScreen(onClickArtikel = { navController.navigate("$artikelDetailRoute/$it") }) }
             composable(cariRoute) { CariScreen() }
             composable("$edisiDetailRoute/{$issueNumberArg}") { navBackStackEntry ->
                 val issueNumber = navBackStackEntry.arguments?.getString(issueNumberArg)
