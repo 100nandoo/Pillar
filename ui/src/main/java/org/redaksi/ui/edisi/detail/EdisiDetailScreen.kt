@@ -91,7 +91,7 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
                 text = articleUi.body
             )
         }
-        Row(modifier = paddingTop) {
+        Row(modifier = modifier.padding(0.dp, eight.dp)) {
             Text(
                 modifier = Modifier
                     .weight(1f),
@@ -108,7 +108,7 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
             )
         }
         if (isLast.not()) {
-            Divider(modifier = paddingTop, color = PillarColor.secondaryVar)
+            Divider(modifier = modifier, color = PillarColor.secondaryVar)
         }
     }
 }

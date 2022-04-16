@@ -58,7 +58,7 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
         NavHost(navController, startDestination = edisiRoute) {
             composable(edisiRoute) { EdisiScreen(onClick = { navController.navigate("$edisiDetailRoute/$it") }) }
             composable(artikelRoute) { ArtikelScreen(onClickArtikel = { navController.navigate("$artikelDetailRoute/$it") }) }
-            composable(cariRoute) { CariScreen() }
+            composable(cariRoute) { CariScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
             composable("$edisiDetailRoute/{$issueNumberArg}") { navBackStackEntry ->
                 val issueNumber = navBackStackEntry.arguments?.getString(issueNumberArg)
                 issueNumber?.let {

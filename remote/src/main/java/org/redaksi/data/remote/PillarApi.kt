@@ -26,9 +26,9 @@ interface PillarApi {
     suspend fun searchArticle(
         @Query("query") keyword: String,
         @SearchIn @Query("search_in")
-        searchIn: String?,
+        searchIn: String? = null,
         @CategoryId @Query("category_id")
-        categoryId: Int?
+        categoryId: Int? = null
     ): Response<GenericArticlesResponse>
 
     @GET("${method}listArticlesForCategory")

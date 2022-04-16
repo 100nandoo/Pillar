@@ -26,6 +26,8 @@ object PillarColor {
     val artikelDetailTitleBackground = Color(0xFFF8DFD8)
 
     val categoryTranskrip = Color(0xFFFFE485)
+
+    val cariPlaceholder = Color(0xFFE28E78)
 }
 
 enum class ColorPallet {

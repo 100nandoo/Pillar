@@ -17,4 +17,7 @@
     <!-- Edisi Detail -->
     <string name="oleh">Oleh</string>
 
+    <!--  Cari  -->
+    <string name="masukan_kata_kunci">Masukan kata kunci...</string>
+
 </resources>
