@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,26 +50,14 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
                 .background(PillarColor.background)
                 .padding(paddingValues),
         ) {
-            TextField(
-                modifier = Modifier
-                    .padding(16.dp, 16.dp, 16.dp, 0.dp)
-                    .fillMaxWidth(),
-                value = uiState.textFieldValue,
-                placeholder = { Placeholder() },
-                trailingIcon = {
-                    TrailingIcon(uiState.textFieldValue.text) {
-                        viewModel.loadSearchArticle(it)
-                        keyboardController?.hide()
-                    }
-                },
+            CariTextField(
+                uiState = uiState,
                 onValueChange = { viewModel.updateTextFieldValue(it) },
-                keyboardOptions = keyboardOptions,
-                keyboardActions = keyboardActions(uiState.textFieldValue.text) {
+                onSearch = {
                     viewModel.loadSearchArticle(it)
                     keyboardController?.hide()
-                },
-                maxLines = 1
-            )
+                })
+
             if (uiState.isLoading) {
                 LoadingScreen()
             } else {
@@ -83,6 +72,29 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
             }
         }
     }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun CariTextField(uiState: CariViewModelState, onValueChange: (TextFieldValue) -> Unit, onSearch: (String) -> Unit) {
+    TextField(
+        modifier = Modifier
+            .padding(16.dp, 16.dp, 16.dp, 0.dp)
+            .fillMaxWidth(),
+        value = uiState.textFieldValue,
+        placeholder = { Placeholder() },
+        trailingIcon = {
+            TrailingIcon(uiState.textFieldValue.text) {
+                onSearch(it)
+            }
+        },
+        onValueChange = { onValueChange(it) },
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions(uiState.textFieldValue.text) {
+            onSearch(it)
+        },
+        maxLines = 1
+    )
 }
 
 private val keyboardOptions = KeyboardOptions(KeyboardCapitalization.None, true, KeyboardType.Text, ImeAction.Search)

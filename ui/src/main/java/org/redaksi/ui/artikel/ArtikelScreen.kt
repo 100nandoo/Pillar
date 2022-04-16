@@ -1,6 +1,7 @@
 package org.redaksi.ui.artikel
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,8 +16,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Velocity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -100,10 +106,20 @@ private fun ArtikelScreenPreview() {
     ArtikelScreen {}
 }
 
+private val HorizontalScrollConsumer = object : NestedScrollConnection {
+    override fun onPreScroll(available: Offset, source: NestedScrollSource) = available.copy(y = 0f)
+    override suspend fun onPreFling(available: Velocity) = available.copy(y = 0f)
+}
+
+fun Modifier.disabledHorizontalPointerInputScroll(disabled: Boolean = true) =
+    if (disabled) this.nestedScroll(HorizontalScrollConsumer) else this
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun PageContent(pages: List<Page>, uiState: ArtikelViewModelState, pagerState: PagerState, onClick: (artikelId: Int) -> Unit) {
+
     HorizontalPager(
+        modifier = Modifier.disabledHorizontalPointerInputScroll(),
         count = pages.size,
         state = pagerState
     ) { page ->
