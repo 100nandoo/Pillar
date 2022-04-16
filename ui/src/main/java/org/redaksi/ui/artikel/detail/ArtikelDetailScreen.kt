@@ -1,5 +1,6 @@
 package org.redaksi.ui.artikel.detail
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
 import android.os.Build
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -60,16 +60,28 @@ fun ArtikelDetailScreen(
     val viewModel: ArtikelDetailViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
     val artikelId = remember { viewModel.artikelId }
+    val context = LocalContext.current
+
     val bottomBarIcons = remember {
         listOf(
-            BottomBarIcon(R.drawable.ic_cari, R.string.cari) {  },
-            BottomBarIcon(R.drawable.ic_komentar, R.string.komentar) { onClickKomentar(it) },
-            BottomBarIcon(R.drawable.ic_share, R.string.share) {  }
+            BottomBarIcon(R.drawable.ic_cari, R.string.cari) { },
+            BottomBarIcon(R.drawable.ic_komentar, R.string.komentar) { artikelId?.let(onClickKomentar) },
+            BottomBarIcon(R.drawable.ic_share, R.string.share) {
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TITLE, it.articleDetailUi.title)
+                    putExtra(Intent.EXTRA_TEXT, it.articleDetailUi.bodyStriped)
+                    type = "text/plain"
+                }
+
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                context.startActivity(shareIntent)
+            }
         )
     }
     Scaffold(
         bottomBar = {
-            ArtikelDetailBottomBar(bottomBarIcons, artikelId)
+            ArtikelDetailBottomBar(bottomBarIcons, uiState)
         }
     ) {
         if (uiState.isLoading) {
@@ -87,15 +99,15 @@ fun ArtikelDetailScreen(
 }
 
 @Composable
-fun ArtikelDetailBottomBar(bottomBarIcons: List<BottomBarIcon>, artikelId: Int?) {
+fun ArtikelDetailBottomBar(bottomBarIcons: List<BottomBarIcon>, uiState: ArtikelDetailViewModelState) {
     BottomAppBar(
         modifier = Modifier.clip(RoundedCornerShape(sixteen.dp, sixteen.dp, 0.dp, 0.dp)),
-        containerColor = primary,
+        containerColor = primary
     ) {
-        Row(horizontalArrangement = Arrangement.End){
+        Row(horizontalArrangement = Arrangement.End) {
             Spacer(modifier = Modifier.weight(1f))
             bottomBarIcons.forEach { bottomBarIcon ->
-                BottomBarItem(bottomBarIcon = bottomBarIcon, artikelId = artikelId)
+                BottomBarItem(bottomBarIcon = bottomBarIcon, uiState)
             }
         }
     }
@@ -104,20 +116,23 @@ fun ArtikelDetailBottomBar(bottomBarIcons: List<BottomBarIcon>, artikelId: Int?)
 @Preview(showBackground = true)
 @Composable
 fun ArtikelDetailBottomBarPreview() {
-    ArtikelDetailBottomBar(listOf(
-        BottomBarIcon(R.drawable.ic_cari, R.string.cari) {  },
-        BottomBarIcon(R.drawable.ic_komentar, R.string.komentar) {  },
-        BottomBarIcon(R.drawable.ic_share, R.string.share) {  }
-    ), 0)
+    ArtikelDetailBottomBar(
+        listOf(
+            BottomBarIcon(R.drawable.ic_cari, R.string.cari) { },
+            BottomBarIcon(R.drawable.ic_komentar, R.string.komentar) { },
+            BottomBarIcon(R.drawable.ic_share, R.string.share) {}
+        ),
+        ArtikelDetailViewModelState()
+    )
 }
 
 @Composable
-fun BottomBarItem(bottomBarIcon: BottomBarIcon, artikelId: Int?) {
+fun BottomBarItem(bottomBarIcon: BottomBarIcon, uiState: ArtikelDetailViewModelState) {
     Box(
         modifier = Modifier
             .fillMaxHeight()
             .background(primary)
-            .clickable { artikelId?.let { bottomBarIcon.onClick(artikelId) } }
+            .clickable { bottomBarIcon.onClick(uiState) }
             .padding(sixteen.dp),
         contentAlignment = Alignment.Center
     ) {

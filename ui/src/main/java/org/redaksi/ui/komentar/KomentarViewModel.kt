@@ -11,7 +11,7 @@ import org.redaksi.data.remote.PillarApi
 import javax.inject.Inject
 
 @HiltViewModel
-class KomentarViewModel @Inject constructor(private val pillarApi: PillarApi,  savedStateHandle: SavedStateHandle): ViewModel() {
+class KomentarViewModel @Inject constructor(private val pillarApi: PillarApi, savedStateHandle: SavedStateHandle) : ViewModel() {
     private val viewModelState = MutableStateFlow(KomentarViewModelState())
     val uiState = viewModelState
 

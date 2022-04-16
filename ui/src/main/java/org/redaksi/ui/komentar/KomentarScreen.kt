@@ -14,7 +14,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,7 +27,6 @@ import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.background
 import org.redaksi.ui.PillarColor.komentarBody
 import org.redaksi.ui.PillarTypography
-import org.redaksi.ui.R
 import org.redaksi.ui.edisi.detail.detailScreenDate
 import java.util.Date
 
@@ -49,7 +47,6 @@ fun KomentarScreen() {
                 }
             }
         }
-
     }
 }
 
@@ -58,7 +55,6 @@ fun KomentarScreen() {
 private fun KomentarScreenPreview() {
     KomentarScreen()
 }
-
 
 @Composable
 fun KomentarItem(komentarUi: KomentarUi) {
@@ -79,7 +75,7 @@ fun KomentarItem(komentarUi: KomentarUi) {
                 color = PillarColor.edisiDetailBody,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                text =   " - " + komentarUi.city
+                text = " - " + komentarUi.city
             )
             Spacer(Modifier.weight(1f))
             Text(
@@ -95,6 +91,13 @@ fun KomentarItem(komentarUi: KomentarUi) {
 @Preview(showBackground = true)
 @Composable
 private fun KomentarItemPreview() {
-    KomentarItem(KomentarUi("Anak-anak Tuhan harus melaksanakan hal pacaran secara Kristen, " +
-        "biar Nama Tuhan juga dipermuliakan di muka bumi ini. Gbu", "Budi Wijaya", "Jambi", Date()))
+    KomentarItem(
+        KomentarUi(
+            "Anak-anak Tuhan harus melaksanakan hal pacaran secara Kristen, " +
+                "biar Nama Tuhan juga dipermuliakan di muka bumi ini. Gbu",
+            "Budi Wijaya",
+            "Jambi",
+            Date()
+        )
+    )
 }

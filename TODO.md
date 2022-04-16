@@ -1,7 +1,5 @@
 # TODO
-- [ ] Komentar List UI
 - [ ] Insert Komentar UI
-- [ ] Share sheet UI
 - [ ] Icon for artikel category
 - [ ] Deep link
 
@@ -15,3 +13,5 @@ Done
 - [x] Artikel List UI
 - [x] Proper setup VM (fix lifecycle)
 - [x] Cari UI
+- [x] Komentar List UI
+- [x] Share sheet UI
