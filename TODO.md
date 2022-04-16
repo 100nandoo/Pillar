@@ -1,6 +1,7 @@
 # TODO
-- [ ] Cari UI
-- [ ] Proper setup VM (fix lifecycle)
+- [ ] Komentar List UI
+- [ ] Insert Komentar UI
+- [ ] Share sheet UI
 - [ ] Icon for artikel category
 - [ ] Deep link
 
@@ -12,3 +13,5 @@ Done
 - [x] Navigation
 - [x] Edisi UI
 - [x] Artikel List UI
+- [x] Proper setup VM (fix lifecycle)
+- [x] Cari UI
