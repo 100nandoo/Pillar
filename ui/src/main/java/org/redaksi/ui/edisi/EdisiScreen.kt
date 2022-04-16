@@ -20,7 +20,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -47,14 +46,15 @@ import org.redaksi.ui.Symbol
 
 @Composable
 fun EdisiScreen(
-    onClick: (issueNumber: String) -> Unit,
+    onClick: (issueNumber: String) -> Unit
 ) {
     Scaffold {
         val viewModel: EdisiViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsState()
         SwipeRefresh(
             state = rememberSwipeRefreshState(uiState.isLoading),
-            onRefresh = { viewModel.loadEdisi() }) {
+            onRefresh = { viewModel.loadEdisi() }
+        ) {
             if (uiState.isLoading) {
                 LoadingScreen(false)
             } else {
@@ -75,7 +75,6 @@ fun EdisiScreen(
                                 EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
                             }
                         }
-
                     }
                 }
             }

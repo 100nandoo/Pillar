@@ -33,12 +33,12 @@ class ArtikelViewModel @Inject constructor(private val pillarApi: PillarApi) : V
             when {
                 result.isSuccess && response != null -> {
                     val issuesUi = fromResponse(response)
-                    when(categoryId){
-                        TRANSKIP -> { viewModelState.update { it.copy(transkripArticles = issuesUi, isLoading = false) }}
-                        ARTIKEL -> { viewModelState.update { it.copy(artikelArticles = issuesUi, isLoading = false) }}
-                        RENUNGAN -> { viewModelState.update { it.copy(renunganArticles = issuesUi, isLoading = false) }}
-                        RESENSI -> { viewModelState.update { it.copy(resensiArticles = issuesUi, isLoading = false) }}
-                        else -> { viewModelState.update { it.copy(lainLainArticles = issuesUi, isLoading = false) }}
+                    when (categoryId) {
+                        TRANSKIP -> { viewModelState.update { it.copy(transkripArticles = issuesUi, isLoading = false) } }
+                        ARTIKEL -> { viewModelState.update { it.copy(artikelArticles = issuesUi, isLoading = false) } }
+                        RENUNGAN -> { viewModelState.update { it.copy(renunganArticles = issuesUi, isLoading = false) } }
+                        RESENSI -> { viewModelState.update { it.copy(resensiArticles = issuesUi, isLoading = false) } }
+                        else -> { viewModelState.update { it.copy(lainLainArticles = issuesUi, isLoading = false) } }
                     }
                 }
             }

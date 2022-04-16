@@ -19,7 +19,7 @@ import kotlin.math.max
 @ExperimentalPagerApi
 fun Modifier.pagerTabIndicatorOffset(
     pagerState: PagerState,
-    tabPositions: List<TabPosition>,
+    tabPositions: List<TabPosition>
 ): Modifier = composed {
     // If there are no pages, nothing to show
     if (pagerState.pageCount == 0) return@composed this

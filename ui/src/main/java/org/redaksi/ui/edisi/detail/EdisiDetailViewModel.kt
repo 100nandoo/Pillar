@@ -10,7 +10,7 @@ import org.redaksi.data.remote.PillarApi
 import javax.inject.Inject
 
 @HiltViewModel
-class EdisiDetailViewModel @Inject constructor(private val pillarApi: PillarApi): ViewModel() {
+class EdisiDetailViewModel @Inject constructor(private val pillarApi: PillarApi) : ViewModel() {
     private val viewModelState = MutableStateFlow(EdisiDetailViewModelState())
     val uiState = viewModelState
 
@@ -28,7 +28,6 @@ class EdisiDetailViewModel @Inject constructor(private val pillarApi: PillarApi)
         }
     }
 }
-
 
 data class EdisiDetailViewModelState(
     val articlesUi: List<ArticleUi> = listOf(),

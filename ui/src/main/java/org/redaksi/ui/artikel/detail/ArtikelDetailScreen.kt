@@ -47,7 +47,7 @@ import java.util.Date
 @Composable
 fun ArtikelDetailScreen(
     paddingValues: PaddingValues,
-    id: Int,
+    id: Int
 ) {
     val viewModel: ArtikelDetailViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
@@ -66,7 +66,6 @@ fun ArtikelDetailScreen(
                 ArtikelBody(artikelDetailUi = uiState.articleDetailUi)
             }
         }
-
     }
 }
 
@@ -77,7 +76,10 @@ val artikelDetailUi = ArtikelDetailUi(
     Date(),
     "12 menit",
     category,
-    "Iman adalah hal yang sangat unik, khususnya dalam agama Kristen, karena Alkitab berkata, “Tanpa iman, tidak ada orang yang diperkenan Allah.” Manusia beriman dan menjadi orang yang diperkenan Tuhan. Iman tidak berarti kita menyatakan jasa keyakinan kita dan cukup syarat sehingga Tuhan harus terima. Justru iman membuktikan dan mengaku bahwa kita tidak berjasa, tidak layak, tidak berharga, dan tidak bersyarat, kemudian datang kepada Tuhan, bersandar kepada-Nya, dan menerima jasa Yesus menjadi sumber iman kita. \n"
+    "Iman adalah hal yang sangat unik, khususnya dalam agama Kristen, karena Alkitab berkata, “Tanpa iman, tidak ada orang yang " +
+        "diperkenan Allah.” Manusia beriman dan menjadi orang yang diperkenan Tuhan. Iman tidak berarti kita menyatakan jasa keyakinan kita dan " +
+        "cukup syarat sehingga Tuhan harus terima. Justru iman membuktikan dan mengaku bahwa kita tidak berjasa, tidak layak, tidak berharga, dan " +
+        "tidak bersyarat, kemudian datang kepada Tuhan, bersandar kepada-Nya, dan menerima jasa Yesus menjadi sumber iman kita. \n"
 )
 
 @Composable
@@ -89,7 +91,8 @@ fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
     ) {
         Text(
             modifier = Modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
-            style = PillarTypography.titleLarge, text = artikelDetailUi.title,
+            style = PillarTypography.titleLarge,
+            text = artikelDetailUi.title,
             textAlign = TextAlign.Center
         )
         Row(verticalAlignment = Alignment.CenterVertically) {

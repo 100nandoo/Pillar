@@ -40,7 +40,7 @@ fun EdisiDetailScreen(
 ) {
     val viewModel: EdisiDetailViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
-    if(uiState.articlesUi.isEmpty()){
+    if (uiState.articlesUi.isEmpty()) {
         viewModel.loadArticles(issueNumber = issueNumber)
     }
     Scaffold(
@@ -73,7 +73,8 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
     Column(
         modifier
             .padding(sixteen.dp, eight.dp, sixteen.dp, 0.dp)
-            .clickable { onClick(articleUi.id) }) {
+            .clickable { onClick(articleUi.id) }
+    ) {
         Text(
             modifier = modifier.fillMaxWidth(),
             style = PillarTypography.headlineSmall,
@@ -144,4 +145,3 @@ fun ArticleItemLoadingPreview() {
         false
     ) {}
 }
-

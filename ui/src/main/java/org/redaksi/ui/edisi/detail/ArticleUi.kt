@@ -6,7 +6,7 @@ import org.redaksi.data.remote.response.GenericArticlesResponse
 import org.redaksi.data.remote.response.GenericIssueWithArticlesResponse
 import java.util.Date
 
-data class ArticleUi(val id : Int = 0, val title: String = "", val body: String = "", val authors: String = "", val date: Date = Date())
+data class ArticleUi(val id: Int = 0, val title: String = "", val body: String = "", val authors: String = "", val date: Date = Date())
 
 fun detailScreenDate(context: Context, date: Date): String {
     return DateUtils.formatDateTime(context, date.time, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_ABBREV_MONTH)

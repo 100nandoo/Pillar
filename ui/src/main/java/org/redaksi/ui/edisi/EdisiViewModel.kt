@@ -21,7 +21,6 @@ class EdisiViewModel @Inject constructor(private val pillarApi: PillarApi) : Vie
         loadEdisi()
     }
 
-
     fun loadEdisi() {
         viewModelScope.launch {
             viewModelState.value = EdisiViewModelState(isLoading = true)

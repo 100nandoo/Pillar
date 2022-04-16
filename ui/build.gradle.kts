@@ -55,6 +55,4 @@ dependencies {
     implementation(libs.accompanist.swiperefresh)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicator)
-
-
 }
