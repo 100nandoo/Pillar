@@ -1,6 +1,7 @@
 package org.redaksi.ui.artikel.detail
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import org.redaksi.core.helper.ReadingTime
 import org.redaksi.data.remote.response.ArticleDetailResponse
 import org.redaksi.data.remote.response.base.Category
@@ -32,3 +33,5 @@ fun fromResponse(response: ArticleDetailResponse): ArtikelDetailUi {
 fun Category.toCategoryUi(): CategoryUi {
     return CategoryUi(this.name.uppercase(), R.drawable.ic_transkrip)
 }
+
+data class BottomBarIcon(@DrawableRes val icon: Int, @StringRes val label: Int, val onClick: (Int) -> Unit)

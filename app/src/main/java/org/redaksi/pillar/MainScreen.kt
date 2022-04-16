@@ -30,12 +30,14 @@ import org.redaksi.pillar.BottomNavRoute.cariRoute
 import org.redaksi.pillar.BottomNavRoute.edisiDetailRoute
 import org.redaksi.pillar.BottomNavRoute.edisiRoute
 import org.redaksi.pillar.BottomNavRoute.issueNumberArg
+import org.redaksi.pillar.BottomNavRoute.komentarRoute
 import org.redaksi.ui.R
 import org.redaksi.ui.artikel.ArtikelScreen
 import org.redaksi.ui.artikel.detail.ArtikelDetailScreen
 import org.redaksi.ui.cari.CariScreen
 import org.redaksi.ui.edisi.EdisiScreen
 import org.redaksi.ui.edisi.detail.EdisiDetailScreen
+import org.redaksi.ui.komentar.KomentarScreen
 
 @Preview
 @Composable
@@ -59,16 +61,18 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
             composable(edisiRoute) { EdisiScreen(onClick = { navController.navigate("$edisiDetailRoute/$it") }) }
             composable(artikelRoute) { ArtikelScreen(onClickArtikel = { navController.navigate("$artikelDetailRoute/$it") }) }
             composable(cariRoute) { CariScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
-            composable("$edisiDetailRoute/{$issueNumberArg}") { navBackStackEntry ->
-                val issueNumber = navBackStackEntry.arguments?.getString(issueNumberArg)
-                issueNumber?.let {
-                    EdisiDetailScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") })
-                }
+            composable("$edisiDetailRoute/{$issueNumberArg}") {
+                EdisiDetailScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") })
             }
             composable(
                 route = "$artikelDetailRoute/{$artikelIdArg}",
                 arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
-            ) { ArtikelDetailScreen(paddingValues) }
+            ) { ArtikelDetailScreen(onClickKomentar = { navController.navigate("$komentarRoute/$it") }) }
+
+            composable(
+                route = "$komentarRoute/{$artikelIdArg}",
+                arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
+            ) { KomentarScreen() }
         }
     }
 }
@@ -91,6 +95,7 @@ object BottomNavRoute {
     const val artikelRoute = "artikel"
     const val artikelDetailRoute = "artikelDetail"
     const val cariRoute = "cari"
+    const val komentarRoute = "komentar"
 
     const val issueNumberArg = "issueNumber"
     const val artikelIdArg = "artikelId"

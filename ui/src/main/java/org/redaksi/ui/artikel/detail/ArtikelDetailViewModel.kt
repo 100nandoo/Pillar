@@ -14,12 +14,10 @@ import javax.inject.Inject
 class ArtikelDetailViewModel @Inject constructor(private val pillarApi: PillarApi, savedStateHandle: SavedStateHandle) : ViewModel() {
     private val viewModelState = MutableStateFlow(ArtikelDetailViewModelState())
     val uiState = viewModelState
-
+    var artikelId: Int? = null
     init {
-        val artikelId: Int? = savedStateHandle["artikelId"]
-        artikelId?.let {
-            loadArtikelDetail(it)
-        }
+        artikelId = savedStateHandle["artikelId"]
+        artikelId?.let { loadArtikelDetail(it) }
     }
 
     private fun loadArtikelDetail(artikelId: Int) {

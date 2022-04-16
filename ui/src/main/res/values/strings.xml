@@ -19,5 +19,7 @@
 
     <!--  Cari  -->
     <string name="masukan_kata_kunci">Masukan kata kunci...</string>
+    <string name="komentar">Komentar</string>
+    <string name="share">Share</string>
 
 </resources>
