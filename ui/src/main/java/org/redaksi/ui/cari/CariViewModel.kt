@@ -31,7 +31,7 @@ class CariViewModel @Inject constructor(private val pillarApi: PillarApi) : View
         }
     }
 
-    fun updateTextFieldValue(textFieldValue: TextFieldValue){
+    fun updateTextFieldValue(textFieldValue: TextFieldValue) {
         viewModelState.update { it.copy(textFieldValue = textFieldValue) }
     }
 }

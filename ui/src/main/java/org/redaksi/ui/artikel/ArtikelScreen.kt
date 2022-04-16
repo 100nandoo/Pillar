@@ -1,7 +1,6 @@
 package org.redaksi.ui.artikel
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -117,7 +116,6 @@ fun Modifier.disabledHorizontalPointerInputScroll(disabled: Boolean = true) =
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun PageContent(pages: List<Page>, uiState: ArtikelViewModelState, pagerState: PagerState, onClick: (artikelId: Int) -> Unit) {
-
     HorizontalPager(
         modifier = Modifier.disabledHorizontalPointerInputScroll(),
         count = pages.size,

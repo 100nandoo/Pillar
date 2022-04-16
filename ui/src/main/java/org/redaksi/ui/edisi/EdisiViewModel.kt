@@ -23,7 +23,7 @@ class EdisiViewModel @Inject constructor(private val pillarApi: PillarApi) : Vie
 
     fun loadEdisi() {
         viewModelScope.launch {
-            viewModelState.value = EdisiViewModelState(isLoading = true)
+            viewModelState.update { it.copy(isLoading = true) }
             val result = withContext(Dispatchers.Default) { runCatching { pillarApi.issues() } }
             val response = result.getOrNull()?.body()
             when {

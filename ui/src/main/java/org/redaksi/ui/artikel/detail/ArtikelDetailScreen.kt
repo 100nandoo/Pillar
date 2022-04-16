@@ -46,12 +46,10 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtikelDetailScreen(
-    paddingValues: PaddingValues,
-    id: Int
+    paddingValues: PaddingValues
 ) {
     val viewModel: ArtikelDetailViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
-    viewModel.loadArtikelDetail(id)
     Scaffold(
         modifier = Modifier.padding(paddingValues)
     ) {

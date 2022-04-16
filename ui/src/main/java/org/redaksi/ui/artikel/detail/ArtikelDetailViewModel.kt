@@ -1,5 +1,6 @@
 package org.redaksi.ui.artikel.detail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,13 +11,20 @@ import org.redaksi.data.remote.PillarApi
 import javax.inject.Inject
 
 @HiltViewModel
-class ArtikelDetailViewModel @Inject constructor(private val pillarApi: PillarApi) : ViewModel() {
+class ArtikelDetailViewModel @Inject constructor(private val pillarApi: PillarApi, savedStateHandle: SavedStateHandle) : ViewModel() {
     private val viewModelState = MutableStateFlow(ArtikelDetailViewModelState())
     val uiState = viewModelState
 
-    fun loadArtikelDetail(artikelId: Int) {
+    init {
+        val artikelId: Int? = savedStateHandle["artikelId"]
+        artikelId?.let {
+            loadArtikelDetail(it)
+        }
+    }
+
+    private fun loadArtikelDetail(artikelId: Int) {
         viewModelScope.launch {
-            viewModelState.value = ArtikelDetailViewModelState(isLoading = true)
+            viewModelState.update { it.copy(isLoading = true) }
             val result = runCatching { pillarApi.articleDetail(artikelId) }
             val response = result.getOrNull()?.body()
             when {

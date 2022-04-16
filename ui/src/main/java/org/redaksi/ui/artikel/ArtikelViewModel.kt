@@ -27,7 +27,7 @@ class ArtikelViewModel @Inject constructor(private val pillarApi: PillarApi) : V
 
     fun loadArticlesByCategory(@CategoryId categoryId: Int) {
         viewModelScope.launch {
-            viewModelState.value = ArtikelViewModelState(isLoading = true)
+            viewModelState.update { it.copy(isLoading = true) }
             val result = runCatching { pillarApi.articlesByCategory(categoryId) }
             val response = result.getOrNull()?.body()
             when {

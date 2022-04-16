@@ -35,14 +35,10 @@ import java.util.Date
 @Composable
 fun EdisiDetailScreen(
     modifier: PaddingValues,
-    issueNumber: String,
     onClick: (artikelId: Int) -> Unit
 ) {
     val viewModel: EdisiDetailViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
-    if (uiState.articlesUi.isEmpty()) {
-        viewModel.loadArticles(issueNumber = issueNumber)
-    }
     Scaffold(
         Modifier.padding(modifier)
     ) {
@@ -64,7 +60,7 @@ fun EdisiDetailScreen(
 @Preview(showSystemUi = true)
 @Composable
 fun EdisiDetailScreenPreview() {
-    EdisiDetailScreen(issueNumber = "", modifier = PaddingValues()) {}
+    EdisiDetailScreen(modifier = PaddingValues()) {}
 }
 
 @Composable

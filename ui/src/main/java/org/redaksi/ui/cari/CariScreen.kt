@@ -48,7 +48,7 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
             Modifier
                 .fillMaxSize()
                 .background(PillarColor.background)
-                .padding(paddingValues),
+                .padding(paddingValues)
         ) {
             CariTextField(
                 uiState = uiState,
@@ -56,7 +56,8 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
                 onSearch = {
                     viewModel.loadSearchArticle(it)
                     keyboardController?.hide()
-                })
+                }
+            )
 
             if (uiState.isLoading) {
                 LoadingScreen()
