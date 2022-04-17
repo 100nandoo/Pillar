@@ -16,6 +16,7 @@ object PillarColor {
 
     val onBackground = Color(0xff000000)
 
+    val bottomBarSelected = Color(0xffAD484A)
     val edisiBackground = Color(0xFFFFF6E3)
     val edisiNumber = Color(0xFFF9E397)
     val edisiTitle = Color(0xFFFFECC2)

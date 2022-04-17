@@ -1,5 +1,6 @@
 # TODO
 - [ ] Insert Komentar UI
+- [ ] Cari inside artikel
 - [ ] Icon for artikel category
 - [ ] Deep link
 

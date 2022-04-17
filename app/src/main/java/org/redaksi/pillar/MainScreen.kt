@@ -6,6 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -31,6 +32,10 @@ import org.redaksi.pillar.BottomNavRoute.edisiDetailRoute
 import org.redaksi.pillar.BottomNavRoute.edisiRoute
 import org.redaksi.pillar.BottomNavRoute.issueNumberArg
 import org.redaksi.pillar.BottomNavRoute.komentarRoute
+import org.redaksi.ui.PillarColor.bottomBarSelected
+import org.redaksi.ui.PillarColor.primary
+import org.redaksi.ui.PillarColor.secondaryVar
+import org.redaksi.ui.PillarColor.surface
 import org.redaksi.ui.R
 import org.redaksi.ui.artikel.ArtikelScreen
 import org.redaksi.ui.artikel.detail.ArtikelDetailScreen
@@ -108,16 +113,18 @@ val topRoundedCornerModifier = Modifier.clip(RoundedCornerShape(BOTTOM_NAV_CORNE
 fun NavBar(modifier: Modifier, items: List<NavBarItem>, navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    NavigationBar(modifier = modifier) {
+    NavigationBar(modifier = modifier, containerColor = primary) {
         items.forEachIndexed { _, item ->
+            val color = if (currentDestination?.hierarchy?.any { it.route == item.route } == true) surface else secondaryVar
 
             NavigationBarItem(
                 icon = {
                     Icon(painter = painterResource(id = item.icon), contentDescription = stringResource(item.label))
                 },
-                label = { Text(stringResource(item.label)) },
+                label = { Text(stringResource(item.label), color = color ) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
-                onClick = { onClickNavBarItem(navController, item) }
+                onClick = { onClickNavBarItem(navController, item) },
+                colors = NavigationBarItemDefaults.colors(surface, secondaryVar, indicatorColor = bottomBarSelected)
             )
         }
     }
