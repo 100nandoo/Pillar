@@ -7,6 +7,7 @@
     <string name="renungan">Renungan</string>
     <string name="resensi">Resensi</string>
     <string name="lain_lain">Lain-lain</string>
+    <string name="komentar">Komentar</string>
 
     <!-- Edisi -->
     <string name="buletin_grii">Buletin Pemuda\nGereja Reformed Injili Indonesia</string>
@@ -19,8 +20,13 @@
 
     <!--  Cari  -->
     <string name="masukan_kata_kunci">Masukan kata kunci...</string>
-    <string name="komentar">Komentar</string>
     <string name="share">Share</string>
     <string name="buat_komentar">Buat komentar</string>
 
+    <!--  Buat Komentar  -->
+    <string name="hapus">Hapus</string>
+    <string name="nama">Nama</string>
+    <string name="kota">Kota</string>
+    <string name="email">Email</string>
+    <string name="tulis_komentar">Tulis Komentar</string>
 </resources>

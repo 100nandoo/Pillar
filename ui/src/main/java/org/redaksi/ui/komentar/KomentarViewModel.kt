@@ -1,6 +1,5 @@
 package org.redaksi.ui.komentar
 
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,9 +14,9 @@ import javax.inject.Inject
 class KomentarViewModel @Inject constructor(private val pillarApi: PillarApi, savedStateHandle: SavedStateHandle) : ViewModel() {
     private val viewModelState = MutableStateFlow(KomentarViewModelState())
     val uiState = viewModelState
-
+    var artikelId: Int? = null
     init {
-        val artikelId: Int? = savedStateHandle["artikelId"]
+         artikelId = savedStateHandle["artikelId"]
         artikelId?.let { loadComments(it) }
     }
 
@@ -34,18 +33,9 @@ class KomentarViewModel @Inject constructor(private val pillarApi: PillarApi, sa
             }
         }
     }
-
-    fun changeInsertMode() {
-        viewModelState.update { it.copy(isInsertMode = viewModelState.value.isInsertMode.not()) }
-    }
 }
 
 data class KomentarViewModelState(
     val komentarUiList: List<KomentarUi> = listOf(),
-    val isLoading: Boolean = true,
-    val isInsertMode: Boolean = false,
-    val namaValue: TextFieldValue = TextFieldValue(),
-    val kotaValue: TextFieldValue = TextFieldValue(),
-    val emailValue: TextFieldValue = TextFieldValue(),
-    val komentarValue: TextFieldValue = TextFieldValue(),
+    val isLoading: Boolean = true
 )

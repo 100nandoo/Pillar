@@ -1,8 +1,8 @@
 # TODO
-- [ ] Insert Komentar UI
+- [ ] Highlight ayat alkitab 
+- [ ] Dialog & app intent ayat alkitab
 - [ ] Cari inside artikel
 - [ ] Icon for artikel category
-- [ ] Deep link
 
 Done
 - [x] Setup pillar app icon
@@ -16,3 +16,4 @@ Done
 - [x] Cari UI
 - [x] Komentar List UI
 - [x] Share sheet UI
+- [x] Insert Komentar UI

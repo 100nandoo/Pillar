@@ -31,6 +31,7 @@ object PillarColor {
     val cariPlaceholder = Color(0xFFE28E78)
 
     val komentarBody = Color(0xBF000000)
+    val komentarBackground = Color(0xFFF7E4DE)
 }
 
 enum class ColorPallet {
