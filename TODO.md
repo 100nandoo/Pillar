@@ -1,6 +1,9 @@
 # TODO
+- [ ] Placeholder empty comment
 - [ ] Highlight ayat alkitab 
 - [ ] Dialog & app intent ayat alkitab
+- [ ] Komentar Terbaru Screen
+- [ ] Tentang Screen
 - [ ] Cari inside artikel
 - [ ] Icon for artikel category
 
