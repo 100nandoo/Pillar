@@ -40,7 +40,7 @@ import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.Dimens.twelve
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
-import org.redaksi.ui.PillarTypography
+import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
 import org.redaksi.ui.Symbol
 
@@ -105,8 +105,8 @@ fun EdisiItem(modifier: Modifier = Modifier, onClick: () -> Unit, issue: IssueUi
                     painter = painterResource(id = R.drawable.ic_logos),
                     contentDescription = "Logo logos"
                 )
-                Text(modifier = modifier, style = PillarTypography.titleLarge, text = issue.number)
-                Text(modifier = modifier, style = PillarTypography.bodySmall, text = issue.dateDisplay)
+                Text(modifier = modifier, style = PillarTypography3.titleLarge, text = issue.number)
+                Text(modifier = modifier, style = PillarTypography3.bodySmall, text = issue.dateDisplay)
             }
             Box(modifier = Modifier) {
                 Column(
@@ -117,7 +117,7 @@ fun EdisiItem(modifier: Modifier = Modifier, onClick: () -> Unit, issue: IssueUi
                     horizontalAlignment = Alignment.End
                 ) {
                     Text(textAlign = TextAlign.End, text = stringResource(id = R.string.buletin_grii))
-                    Text(style = PillarTypography.titleMedium, text = "Pillar")
+                    Text(style = PillarTypography3.titleMedium, text = "Pillar")
                 }
                 Icon(
                     modifier = Modifier
@@ -136,7 +136,7 @@ fun EdisiItem(modifier: Modifier = Modifier, onClick: () -> Unit, issue: IssueUi
         @Composable
         fun ArtikelItem(modifier: Modifier, title: String) {
             val staticModifier = modifier.padding(0.dp, 0.dp, 0.dp, 4.dp)
-            val style = PillarTypography.bodyMedium
+            val style = PillarTypography3.bodyMedium
             Row(
                 modifier = staticModifier
             ) {
@@ -155,7 +155,7 @@ fun EdisiItem(modifier: Modifier = Modifier, onClick: () -> Unit, issue: IssueUi
             if (issue.title.isNotBlank()) {
                 Text(
                     modifier = modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
-                    style = PillarTypography.titleSmall,
+                    style = PillarTypography3.titleSmall,
                     text = issue.title
                 )
             }
@@ -206,7 +206,7 @@ fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
         .background(PillarColor.background)
         .padding(sixteen.dp, sixteen.dp, sixteen.dp, 0.dp)
         .fillMaxWidth()
-    Text(modifier = staticModifier, style = PillarTypography.titleLarge, text = stringResource(id = id))
+    Text(modifier = staticModifier, style = PillarTypography3.titleLarge, text = stringResource(id = id))
 }
 
 @Preview(

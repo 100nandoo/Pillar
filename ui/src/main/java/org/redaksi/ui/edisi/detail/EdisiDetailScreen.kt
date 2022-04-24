@@ -27,7 +27,7 @@ import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.edisiDetailBody
 import org.redaksi.ui.PillarColor.edisiDetailTitle
-import org.redaksi.ui.PillarTypography
+import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
 import java.util.Date
 
@@ -73,14 +73,14 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
     ) {
         Text(
             modifier = modifier.fillMaxWidth(),
-            style = PillarTypography.headlineSmall,
+            style = PillarTypography3.headlineSmall,
             color = edisiDetailTitle,
             text = articleUi.title
         )
         if (articleUi.body.isNotBlank()) {
             Text(
                 modifier = paddingTop,
-                style = PillarTypography.bodyMedium,
+                style = PillarTypography3.bodyMedium,
                 color = edisiDetailBody,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -91,14 +91,14 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
             Text(
                 modifier = Modifier
                     .weight(1f),
-                style = PillarTypography.labelSmall,
+                style = PillarTypography3.labelSmall,
                 color = edisiDetailBody,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 text = stringResource(id = R.string.oleh) + " " + articleUi.authors
             )
             Text(
-                style = PillarTypography.labelSmall,
+                style = PillarTypography3.labelSmall,
                 color = edisiDetailBody,
                 text = detailScreenDate(LocalContext.current, articleUi.date)
             )

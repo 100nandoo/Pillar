@@ -46,7 +46,7 @@ import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.categoryTranskrip
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.PillarColor.surface
-import org.redaksi.ui.PillarTypography
+import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
 import org.redaksi.ui.Symbol.bullet
 import org.redaksi.ui.edisi.detail.detailScreenDate
@@ -166,21 +166,21 @@ fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
     ) {
         Text(
             modifier = Modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
-            style = PillarTypography.titleLarge,
+            style = PillarTypography3.titleLarge,
             text = artikelDetailUi.title,
             textAlign = TextAlign.Center
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(style = PillarTypography.labelSmall, text = artikelDetailUi.authors)
-            Text(style = PillarTypography.labelSmall, text = " $bullet ")
-            Text(style = PillarTypography.labelSmall, text = detailScreenDate(LocalContext.current, artikelDetailUi.date))
+            Text(style = PillarTypography3.labelSmall, text = artikelDetailUi.authors)
+            Text(style = PillarTypography3.labelSmall, text = " $bullet ")
+            Text(style = PillarTypography3.labelSmall, text = detailScreenDate(LocalContext.current, artikelDetailUi.date))
             Spacer(Modifier.weight(1f))
             Text(
                 modifier = Modifier
                     .clip(RoundedCornerShape(eight.dp))
                     .background(PillarColor.secondaryVar)
                     .padding(8.dp),
-                style = PillarTypography.bodySmall,
+                style = PillarTypography3.bodySmall,
                 text = artikelDetailUi.estimation
             )
         }

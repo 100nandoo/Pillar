@@ -27,6 +27,7 @@ import androidx.navigation.navArgument
 import org.redaksi.pillar.BottomNavRoute.artikelDetailRoute
 import org.redaksi.pillar.BottomNavRoute.artikelIdArg
 import org.redaksi.pillar.BottomNavRoute.artikelRoute
+import org.redaksi.pillar.BottomNavRoute.buatKomentarRoute
 import org.redaksi.pillar.BottomNavRoute.cariRoute
 import org.redaksi.pillar.BottomNavRoute.edisiDetailRoute
 import org.redaksi.pillar.BottomNavRoute.edisiRoute
@@ -43,6 +44,7 @@ import org.redaksi.ui.cari.CariScreen
 import org.redaksi.ui.edisi.EdisiScreen
 import org.redaksi.ui.edisi.detail.EdisiDetailScreen
 import org.redaksi.ui.komentar.KomentarScreen
+import org.redaksi.ui.komentar.buat.BuatKomentarScreen
 
 @Preview
 @Composable
@@ -77,7 +79,16 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
             composable(
                 route = "$komentarRoute/{$artikelIdArg}",
                 arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
-            ) { KomentarScreen() }
+            ) { KomentarScreen(onClickBuatKomentar = { navController.navigate("$buatKomentarRoute/$it") }) }
+
+            composable(
+                route = "$buatKomentarRoute/{$artikelIdArg}",
+                arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
+            ) {
+                BuatKomentarScreen(onKomentarInserted = {
+                    navController.popBackStack("$komentarRoute/{$artikelIdArg}", false)
+                })
+            }
         }
     }
 }
@@ -101,6 +112,7 @@ object BottomNavRoute {
     const val artikelDetailRoute = "artikelDetail"
     const val cariRoute = "cari"
     const val komentarRoute = "komentar"
+    const val buatKomentarRoute = "buatKomentar"
 
     const val issueNumberArg = "issueNumber"
     const val artikelIdArg = "artikelId"
@@ -121,7 +133,7 @@ fun NavBar(modifier: Modifier, items: List<NavBarItem>, navController: NavContro
                 icon = {
                     Icon(painter = painterResource(id = item.icon), contentDescription = stringResource(item.label))
                 },
-                label = { Text(stringResource(item.label), color = color ) },
+                label = { Text(stringResource(item.label), color = color) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = { onClickNavBarItem(navController, item) },
                 colors = NavigationBarItemDefaults.colors(surface, secondaryVar, indicatorColor = bottomBarSelected)
