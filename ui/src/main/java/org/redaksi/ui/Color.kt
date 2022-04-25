@@ -16,6 +16,7 @@ object PillarColor {
 
     val onBackground = Color(0xff000000)
 
+    val bottomBarSelected = Color(0xffAD484A)
     val edisiBackground = Color(0xFFFFF6E3)
     val edisiNumber = Color(0xFFF9E397)
     val edisiTitle = Color(0xFFFFECC2)
@@ -24,8 +25,14 @@ object PillarColor {
     val edisiDetailBody = Color(0x99000000)
 
     val artikelDetailTitleBackground = Color(0xFFF8DFD8)
+    val artikelDetailTitle = Color(0xFF3A1819)
 
     val categoryTranskrip = Color(0xFFFFE485)
+
+    val cariPlaceholder = Color(0xFFE28E78)
+
+    val komentarBody = Color(0xBF000000)
+    val komentarBackground = Color(0xFFF7E4DE)
 }
 
 enum class ColorPallet {

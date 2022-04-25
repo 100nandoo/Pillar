@@ -18,7 +18,7 @@ import java.math.RoundingMode
  */
 class ReadingTime @JvmOverloads constructor(
     text: String,
-    wpm: Int = 275,
+    wpm: Int = 250,
     var postfix: String = "menit",
     var plural: String = "menit",
     excludeImages: Boolean = false,

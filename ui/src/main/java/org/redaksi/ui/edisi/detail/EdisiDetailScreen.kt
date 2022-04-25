@@ -27,7 +27,7 @@ import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.edisiDetailBody
 import org.redaksi.ui.PillarColor.edisiDetailTitle
-import org.redaksi.ui.PillarTypography
+import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
 import java.util.Date
 
@@ -35,14 +35,10 @@ import java.util.Date
 @Composable
 fun EdisiDetailScreen(
     modifier: PaddingValues,
-    issueNumber: String,
     onClick: (artikelId: Int) -> Unit
 ) {
     val viewModel: EdisiDetailViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
-    if(uiState.articlesUi.isEmpty()){
-        viewModel.loadArticles(issueNumber = issueNumber)
-    }
     Scaffold(
         Modifier.padding(modifier)
     ) {
@@ -64,7 +60,7 @@ fun EdisiDetailScreen(
 @Preview(showSystemUi = true)
 @Composable
 fun EdisiDetailScreenPreview() {
-    EdisiDetailScreen(issueNumber = "", modifier = PaddingValues()) {}
+    EdisiDetailScreen(modifier = PaddingValues()) {}
 }
 
 @Composable
@@ -73,41 +69,42 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
     Column(
         modifier
             .padding(sixteen.dp, eight.dp, sixteen.dp, 0.dp)
-            .clickable { onClick(articleUi.id) }) {
+            .clickable { onClick(articleUi.id) }
+    ) {
         Text(
             modifier = modifier.fillMaxWidth(),
-            style = PillarTypography.headlineSmall,
+            style = PillarTypography3.headlineSmall,
             color = edisiDetailTitle,
             text = articleUi.title
         )
         if (articleUi.body.isNotBlank()) {
             Text(
                 modifier = paddingTop,
-                style = PillarTypography.bodyMedium,
+                style = PillarTypography3.bodyMedium,
                 color = edisiDetailBody,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 text = articleUi.body
             )
         }
-        Row(modifier = paddingTop) {
+        Row(modifier = modifier.padding(0.dp, eight.dp)) {
             Text(
                 modifier = Modifier
                     .weight(1f),
-                style = PillarTypography.labelSmall,
+                style = PillarTypography3.labelSmall,
                 color = edisiDetailBody,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 text = stringResource(id = R.string.oleh) + " " + articleUi.authors
             )
             Text(
-                style = PillarTypography.labelSmall,
+                style = PillarTypography3.labelSmall,
                 color = edisiDetailBody,
                 text = detailScreenDate(LocalContext.current, articleUi.date)
             )
         }
         if (isLast.not()) {
-            Divider(modifier = paddingTop, color = PillarColor.secondaryVar)
+            Divider(modifier = modifier, color = PillarColor.secondaryVar)
         }
     }
 }
@@ -144,4 +141,3 @@ fun ArticleItemLoadingPreview() {
         false
     ) {}
 }
-
