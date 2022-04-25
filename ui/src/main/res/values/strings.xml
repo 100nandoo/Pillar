@@ -12,6 +12,9 @@
     <string name="resensi">Resensi</string>
     <string name="lain_lain">Lain-lain</string>
     <string name="komentar">Komentar</string>
+    <string name="ok">Ok</string>
+    <string name="ya">Ya</string>
+    <string name="tidak">Tidak</string>
 
     <!-- Edisi -->
     <string name="buletin_grii">Buletin Pemuda\nGereja Reformed Injili Indonesia</string>

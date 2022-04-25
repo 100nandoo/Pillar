@@ -1,9 +1,13 @@
 package org.redaksi.ui.artikel.detail
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
 import android.os.Build
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,7 +20,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -38,6 +44,10 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import org.redaksi.core.helper.verse.DesktopVerseParser
+import org.redaksi.core.helper.verse.Launcher
+import org.redaksi.core.helper.verse.VerseFinder
+import org.redaksi.core.helper.verse.VerseProvider
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.LoadingScreen
@@ -57,6 +67,7 @@ fun ArtikelDetailScreen(
     onClickKomentar: (Int) -> Unit
 ) {
     val viewModel: ArtikelDetailViewModel = hiltViewModel()
+    val verseFinder = viewModel.verseFinder
     val uiState by viewModel.uiState.collectAsState()
     val artikelId = remember { viewModel.artikelId }
     val context = LocalContext.current
@@ -90,10 +101,126 @@ fun ArtikelDetailScreen(
                     .verticalScroll(rememberScrollState())
             ) {
                 ArtikelHeader(artikelDetailUi = uiState.articleDetailUi)
-                ArtikelBody(modifier = Modifier.padding(it), artikelDetailUi = uiState.articleDetailUi)
+                ArtikelBody(
+                    modifier = Modifier.padding(it),
+                    artikelDetailUi = uiState.articleDetailUi,
+                    verseFinder,
+                    context,
+                    {
+                        viewModel.showNotKnownDialog(it)
+                    }) {
+                    viewModel.showKnownDialog(true)
+                }
+
+                // viewModel.checkAlkitabIsInstalled(LocalContext.current)
+
+                if (uiState.showNotKnownDialog.first) {
+                    NotKnownVerseDialog(verse = uiState.showNotKnownDialog.second, dismissDialog = { viewModel.dismissNotKnownDialog() })
+                }
+
+                if (uiState.showAlkitabInstalledDialog) {
+                    AlkitabDialog(dismissDialog = { viewModel.dismissAlkitabIsInstalledDialog() }, {
+                        val isSuccess =
+                            runCatching { context.startActivity(Launcher.openGooglePlayDownloadPage(context, Launcher.Product.ALKITAB)) }.getOrNull()
+                        viewModel.playStoreDialog(isSuccess == null)
+                    })
+                }
+
+                if (uiState.showPlayStoreDialog) {
+                    PlayStoreDialog {
+                        viewModel.playStoreDialog(false)
+                    }
+                }
+
+                if (uiState.showKnownDialog) {
+
+                    VerseDialog("") {
+                        viewModel.showKnownDialog(false)
+                    }
+                }
             }
         }
     }
+}
+
+@Composable
+fun NotKnownVerseDialog(verse: String, dismissDialog: () -> Unit) {
+    AlertDialog(
+        text = {
+            Text("Tidak dapat mengenali $verse, silakan membukanya secara manual")
+        },
+        confirmButton = {
+            Button(onClick = {
+                dismissDialog()
+            }) {
+                Text(stringResource(id = R.string.ok))
+            }
+        },
+        onDismissRequest = {
+            dismissDialog()
+        })
+}
+
+@Composable
+fun AlkitabDialog(dismissDialog: () -> Unit, openPlayStore: () -> Unit) {
+    AlertDialog(
+        text = {
+            Text("Aplikasi Alkitab tidak terinstal. Instal Alkitab dari Play Store?")
+        },
+        confirmButton = {
+            Button(onClick = {
+                openPlayStore()
+                dismissDialog()
+            }) {
+                Text(stringResource(id = R.string.ya))
+            }
+        },
+        dismissButton = {
+            Button(onClick = {
+                dismissDialog()
+            }) {
+                Text(stringResource(id = R.string.tidak))
+            }
+        },
+        onDismissRequest = {
+            dismissDialog()
+        })
+}
+
+@Composable
+fun PlayStoreDialog(dismissDialog: () -> Unit) {
+    AlertDialog(
+        text = {
+            Text("Play Store tidak tersedia")
+        },
+        confirmButton = {
+            Button(onClick = {
+                dismissDialog()
+            }) {
+                Text(stringResource(id = R.string.ok))
+            }
+        },
+        onDismissRequest = {
+            dismissDialog()
+        })
+}
+
+@Composable
+fun VerseDialog(verse: String, dismissDialog: () -> Unit) {
+    AlertDialog(
+        text = {
+            Text(verse)
+        },
+        confirmButton = {
+            Button(onClick = {
+                dismissDialog()
+            }) {
+                Text(stringResource(id = R.string.ok))
+            }
+        },
+        onDismissRequest = {
+            dismissDialog()
+        })
 }
 
 @Composable
@@ -202,7 +329,14 @@ fun ArtikelHeaderPreview() {
 }
 
 @Composable
-fun ArtikelBody(modifier: Modifier, artikelDetailUi: ArtikelDetailUi) {
+fun ArtikelBody(
+    modifier: Modifier,
+    artikelDetailUi: ArtikelDetailUi,
+    verseFinder: VerseFinder,
+    context: Context,
+    notKnown: (String) -> Unit,
+    known: (String) -> Unit
+) {
     Column(
         modifier
             .background(PillarColor.background)
@@ -223,7 +357,30 @@ fun ArtikelBody(modifier: Modifier, artikelDetailUi: ArtikelDetailUi) {
                     }
                 }
             },
-            update = { it.text = HtmlCompat.fromHtml(artikelDetailUi.body, HtmlCompat.FROM_HTML_MODE_LEGACY) }
+            update = {
+                val sb = SpannableStringBuilder(HtmlCompat.fromHtml(artikelDetailUi.body, HtmlCompat.FROM_HTML_MODE_LEGACY))
+                val list = verseFinder.findInText(artikelDetailUi.body)
+
+                list.forEach {
+                    val intArrayList = DesktopVerseParser.verseStringToAri(it.third)
+                    val ranges = VerseProvider.VerseRanges()
+                    if (intArrayList != null) {
+                        ranges.addRange(it.first, it.second)
+                    }
+
+                    val verses = VerseProvider(context.contentResolver).getVerses(ranges)
+                    if(verses != null) {
+                        for (verse in verses) {
+                            val sbLength = sb.length
+                            sb.append(verse.bookName).append(" ").append("" + verse.chapter).append(":").append("" + verse.verse).append(" ")
+                            sb.setSpan(ForegroundColorSpan(0xbbbbbc), sbLength, sb.length, 0)
+                            sb.setSpan(RelativeSizeSpan(0.7f), sbLength, sb.length, 0)
+                            sb.append(verse.text).append("\n")
+                        }
+                    }
+                }
+                it.text = sb
+            }
         )
     }
 }
@@ -231,7 +388,7 @@ fun ArtikelBody(modifier: Modifier, artikelDetailUi: ArtikelDetailUi) {
 @Preview(showBackground = true)
 @Composable
 fun ArtikelBodyPreview() {
-    ArtikelBody(Modifier, artikelDetailUi)
+    ArtikelBody(Modifier, artikelDetailUi, verseFinder = VerseFinder(), LocalContext.current, {}) {}
 }
 
 @Composable

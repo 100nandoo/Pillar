@@ -26,4 +26,7 @@
         </activity>
     </application>
 
+    <queries>
+        <provider android:authorities="yuku.alkitab.provider" />
+    </queries>
 </manifest>
