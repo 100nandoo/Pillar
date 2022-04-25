@@ -72,6 +72,7 @@ retrofit_converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-seri
 accompanist_swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 accompanist_pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist"}
 accompanist_pager_indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist"}
+accompanist_webview = { module = "com.google.accompanist:accompanist-webview", version = "0.24.7-alpha"}
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
