@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.redaksi.data.remote.PillarApi
+import org.redaksi.ui.ScreenState
 import org.redaksi.ui.edisi.detail.ArticleUi
 import org.redaksi.ui.edisi.detail.fromResponse
 import javax.inject.Inject
@@ -19,13 +20,14 @@ class CariViewModel @Inject constructor(private val pillarApi: PillarApi) : View
 
     fun loadSearchArticle(keyword: String) {
         viewModelScope.launch {
-            viewModelState.update { it.copy(isLoading = true) }
+            viewModelState.update { it.copy(screenState = ScreenState.LOADING) }
             val result = runCatching { pillarApi.searchArticle(keyword) }
             val response = result.getOrNull()?.body()
             when {
                 result.isSuccess && response != null -> {
-                    val issuesUi = fromResponse(response)
-                    viewModelState.update { it.copy(articlesUi = issuesUi, isLoading = false) }
+                    val articlesUi = fromResponse(response)
+                    val screenState = if (articlesUi.isEmpty()) ScreenState.EMPTY else ScreenState.CONTENT
+                    viewModelState.update { it.copy(articlesUi = articlesUi, screenState = screenState) }
                 }
             }
         }
@@ -39,5 +41,5 @@ class CariViewModel @Inject constructor(private val pillarApi: PillarApi) : View
 data class CariViewModelState(
     val articlesUi: List<ArticleUi> = listOf(),
     val textFieldValue: TextFieldValue = TextFieldValue(),
-    val isLoading: Boolean = false
+    val screenState: ScreenState = ScreenState.BLANK
 )

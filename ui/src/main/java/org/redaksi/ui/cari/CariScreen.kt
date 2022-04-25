@@ -33,11 +33,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.cariPlaceholder
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.R
+import org.redaksi.ui.ScreenState
 import org.redaksi.ui.edisi.detail.ArticleItem
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -60,23 +62,27 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
                     viewModel.updateTextFieldValue(it)
                 },
                 onSearch = {
-                    if(it.isNotBlank()){
+                    if (it.isNotBlank()) {
                         viewModel.loadSearchArticle(it)
                         keyboardController?.hide()
                     }
-                },
+                }
             )
 
-            if (uiState.isLoading) {
-                LoadingScreen()
-            } else {
-                LazyColumn {
-                    uiState.articlesUi.forEachIndexed { index, articleUi ->
-                        item {
-                            val isLast = index == uiState.articlesUi.size - 1
-                            ArticleItem(articleUi = articleUi, isLast = isLast) { onClick(articleUi.id) }
+            when (uiState.screenState) {
+                ScreenState.LOADING -> LoadingScreen()
+                ScreenState.CONTENT -> {
+                    LazyColumn {
+                        uiState.articlesUi.forEachIndexed { index, articleUi ->
+                            item {
+                                val isLast = index == uiState.articlesUi.size - 1
+                                ArticleItem(articleUi = articleUi, isLast = isLast) { onClick(articleUi.id) }
+                            }
                         }
                     }
+                }
+                ScreenState.EMPTY -> {
+                    EmptyScreen(message = stringResource(id = R.string.tidak_ada_hasil))
                 }
             }
         }
@@ -87,7 +93,7 @@ class AlphaNumericVisualTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val result = text.replace(Regex("[^A-Za-z0-9]"), "")
         val offset = object : OffsetMapping {
-            override fun originalToTransformed(offset: Int): Int = offset-(text.length - result.length)
+            override fun originalToTransformed(offset: Int): Int = offset - (text.length - result.length)
             override fun transformedToOriginal(offset: Int): Int = offset
         }
         return TransformedText(

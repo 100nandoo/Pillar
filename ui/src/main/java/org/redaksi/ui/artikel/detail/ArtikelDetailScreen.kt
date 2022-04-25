@@ -168,7 +168,8 @@ fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
             modifier = Modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
             style = PillarTypography3.titleLarge,
             text = artikelDetailUi.title,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = PillarColor.artikelDetailTitle
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(style = PillarTypography3.labelSmall, text = artikelDetailUi.authors)
@@ -217,7 +218,7 @@ fun ArtikelBody(modifier: Modifier, artikelDetailUi: ArtikelDetailUi) {
                     }
                 }
             },
-            update = { it.text = HtmlCompat.fromHtml(artikelDetailUi.body, HtmlCompat.FROM_HTML_MODE_COMPACT) }
+            update = { it.text = HtmlCompat.fromHtml(artikelDetailUi.body, HtmlCompat.FROM_HTML_MODE_LEGACY) }
         )
     }
 }

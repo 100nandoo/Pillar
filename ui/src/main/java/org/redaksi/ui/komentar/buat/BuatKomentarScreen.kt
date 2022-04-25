@@ -69,8 +69,6 @@ fun BuatKomentarScreen(
                 val artikelId = viewModel.artikelId
                 if (artikelId != null) {
                     viewModel.insertComment(artikelId)
-                } else {
-                    // todo show snack bar
                 }
             }, shape = CircleShape, containerColor = PillarColor.secondaryVar) {
                 Icon(
@@ -79,9 +77,8 @@ fun BuatKomentarScreen(
                     tint = PillarColor.primary
                 )
             }
-
         },
-        isFloatingActionButtonDocked = true,
+        isFloatingActionButtonDocked = true
     ) {
         when {
             uiState.isLoading -> {
@@ -103,14 +100,12 @@ fun BuatKomentarScreen(
                         arrayBuatTextField = arrayBuatTextField,
                         uiState = uiState,
                         onClear = { buatTextField -> viewModel.clearTextField(buatTextField) },
-                        onValueChanged = { buatTextField, textFieldValue -> viewModel.onValueChanged(buatTextField, textFieldValue) })
+                        onValueChanged = { buatTextField, textFieldValue -> viewModel.onValueChanged(buatTextField, textFieldValue) }
+                    )
                 }
             }
             uiState.pageState == PageState.INSERTED -> {
                 onKomentarInserted()
-            }
-            else -> {
-                // todo show snack bar
             }
         }
     }
@@ -157,7 +152,12 @@ fun InsertKomentar(
             }
 
             val keyboardOptions = when (buatTextField.enum) {
-                BuatTextFieldEnum.NAMA, BuatTextFieldEnum.KOTA -> KeyboardOptions(KeyboardCapitalization.Sentences, false, KeyboardType.Text, ImeAction.Next)
+                BuatTextFieldEnum.NAMA, BuatTextFieldEnum.KOTA -> KeyboardOptions(
+                    KeyboardCapitalization.Sentences,
+                    false,
+                    KeyboardType.Text,
+                    ImeAction.Next
+                )
                 BuatTextFieldEnum.EMAIL -> KeyboardOptions(KeyboardCapitalization.Sentences, false, KeyboardType.Email, ImeAction.Next)
                 else -> KeyboardOptions(KeyboardCapitalization.Sentences, true, KeyboardType.Text, ImeAction.Done)
             }
@@ -176,7 +176,7 @@ fun InsertKomentar(
                 ),
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActions,
-                onValueChange = { onValueChanged(buatTextField.enum, it) },
+                onValueChange = { onValueChanged(buatTextField.enum, it) }
             )
         }
     }

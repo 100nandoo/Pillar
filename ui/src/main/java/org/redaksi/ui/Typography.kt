@@ -45,6 +45,11 @@ val PillarTypography3 = Typography(
         fontFamily = Lato,
         fontSize = 12.sp
     ),
+    headlineMedium = TextStyle(
+        fontFamily = Lora,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp
+    ),
     headlineSmall = TextStyle(
         fontFamily = Lora,
         fontWeight = FontWeight.Bold,
@@ -116,4 +121,4 @@ val PillarTypography = androidx.compose.material.Typography(
         fontSize = 12.sp
     )
 
-) 
+)

@@ -3,9 +3,7 @@ package org.redaksi.ui
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
-import androidx.compose.material3.MaterialTheme as MaterialTheme3
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material3.Typography as Typography3
 import androidx.compose.material.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -21,6 +19,8 @@ import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.PillarColor.secondary
 import org.redaksi.ui.PillarColor.secondaryContainer
 import org.redaksi.ui.PillarColor.secondaryVar
+import androidx.compose.material3.MaterialTheme as MaterialTheme3
+import androidx.compose.material3.Typography as Typography3
 
 private val DarkMainColorPalette = darkColorScheme(
     primary = primary,
@@ -59,35 +59,35 @@ private val LightMainColorPalette = lightColorScheme(
 )
 
 private val darkColors = Colors(
-    primary= primary,
-    primaryVariant= primary,
-    secondary= secondary,
-    secondaryVariant= secondaryVar,
-    background= background,
-    surface= background,
-    error= Color.Red,
-    onPrimary= Color.White,
-    onSecondary= Color.Black,
-    onBackground= onBackground,
-    onSurface= onBackground,
-    onError= Color.Red,
-    isLight= false
+    primary = primary,
+    primaryVariant = primary,
+    secondary = secondary,
+    secondaryVariant = secondaryVar,
+    background = background,
+    surface = background,
+    error = Color.Red,
+    onPrimary = Color.White,
+    onSecondary = Color.Black,
+    onBackground = onBackground,
+    onSurface = onBackground,
+    onError = Color.Red,
+    isLight = false
 )
 
 private val lightColors = Colors(
-    primary= primary,
-    primaryVariant= primary,
-    secondary= secondary,
-    secondaryVariant= secondaryVar,
-    background= background,
-    surface= background,
-    error= Color.Red,
-    onPrimary= Color.White,
-    onSecondary= Color.Black,
-    onBackground= onBackground,
-    onSurface= onBackground,
-    onError= Color.Red,
-    isLight= true
+    primary = primary,
+    primaryVariant = primary,
+    secondary = secondary,
+    secondaryVariant = secondaryVar,
+    background = background,
+    surface = background,
+    error = Color.Red,
+    onPrimary = Color.White,
+    onSecondary = Color.Black,
+    onBackground = onBackground,
+    onSurface = onBackground,
+    onError = Color.Red,
+    isLight = true
 )
 
 @Composable
@@ -113,7 +113,7 @@ fun PillarTheme(
         } else LightMainColorPalette
     }
 
-    val colors = if(darkTheme) darkColors else lightColors
+    val colors = if (darkTheme) darkColors else lightColors
 
     MaterialTheme3(
         colorScheme = colorScheme,

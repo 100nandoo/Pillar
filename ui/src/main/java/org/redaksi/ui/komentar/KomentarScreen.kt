@@ -31,15 +31,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import org.redaksi.ui.Dimens
 import org.redaksi.ui.Dimens.four
 import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.background
 import org.redaksi.ui.PillarColor.komentarBody
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.PillarColor.secondaryVar
-import org.redaksi.ui.PillarColor.surface
 import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
+import org.redaksi.ui.ScreenState
 import org.redaksi.ui.edisi.detail.detailScreenDate
 import java.util.Date
 
@@ -60,30 +61,32 @@ fun KomentarScreen(
                 onClick = {
                     viewModel.artikelId?.let { onClickBuatKomentar(it) }
                 },
-                shape = CircleShape, containerColor = secondaryVar
+                shape = CircleShape,
+                containerColor = secondaryVar
             ) {
-                Icon(imageVector = Icons.Rounded.Create, contentDescription = stringResource(R.string.buat_komentar), tint = surface)
+                Icon(imageVector = Icons.Rounded.Create, contentDescription = stringResource(R.string.buat_komentar), tint = primary)
             }
-
         },
-        isFloatingActionButtonDocked = true,
+        isFloatingActionButtonDocked = true
     ) {
-        if (uiState.isLoading) {
-            LoadingScreen()
-        } else {
-            LazyColumn(
-                state = listState,
-                modifier = Modifier
-                    .padding(it)
-                    .background(background)
-                    .fillMaxSize()
-            ) {
-                uiState.komentarUiList.forEach { komentarUi ->
-                    item {
-                        KomentarItem(komentarUi)
+        when (uiState.screenState) {
+            ScreenState.LOADING -> LoadingScreen()
+            ScreenState.CONTENT -> {
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier
+                        .padding(it)
+                        .background(background)
+                        .fillMaxSize()
+                ) {
+                    uiState.komentarUiList.forEach { komentarUi ->
+                        item {
+                            KomentarItem(komentarUi)
+                        }
                     }
                 }
             }
+            ScreenState.EMPTY -> EmptyScreen(stringResource(id = R.string.belum_ada_komentar))
         }
     }
 }

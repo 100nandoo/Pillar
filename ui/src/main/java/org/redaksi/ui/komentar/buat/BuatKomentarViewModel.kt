@@ -40,7 +40,6 @@ class BuatKomentarViewModel @Inject constructor(private val pillarApi: PillarApi
                     viewModelState.update { it.copy(pageState = PageState.INSERTED, isLoading = false) }
                 }
                 else -> viewModelState.update { it.copy(pageState = PageState.FAILED, isLoading = false) }
-
             }
         }
     }
@@ -86,7 +85,7 @@ data class BuatKomentarViewModelState(
     val namaValue: TextFieldValue = TextFieldValue(),
     val kotaValue: TextFieldValue = TextFieldValue(),
     val emailValue: TextFieldValue = TextFieldValue(),
-    val komentarValue: TextFieldValue = TextFieldValue(),
+    val komentarValue: TextFieldValue = TextFieldValue()
 )
 
 data class BuatTextField(val enum: BuatTextFieldEnum, @StringRes val label: Int)

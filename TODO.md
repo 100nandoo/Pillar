@@ -1,6 +1,5 @@
 # TODO
-- [ ] Placeholder empty comment
-- [ ] Highlight ayat alkitab 
+- [ ] Highlight ayat alkitab
 - [ ] Dialog & app intent ayat alkitab
 - [ ] Komentar Terbaru Screen
 - [ ] Tentang Screen
@@ -20,3 +19,4 @@ Done
 - [x] Komentar List UI
 - [x] Share sheet UI
 - [x] Insert Komentar UI
+- [x] Placeholder empty comment
