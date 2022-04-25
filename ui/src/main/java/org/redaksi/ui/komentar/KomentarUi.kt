@@ -4,7 +4,7 @@ import org.redaksi.core.extension.capitalizeEveryWord
 import org.redaksi.data.remote.response.GenericCommentsResponse
 import java.util.Date
 
-data class KomentarUi(val body: String, val author: String, val city: String, val date: Date)
+data class KomentarUi(val body: String, val author: String, val city: String, val date: Date, val articleId: Int)
 
 fun fromResponse(response: GenericCommentsResponse): List<KomentarUi> {
     val comments = response.comments.items
@@ -14,7 +14,8 @@ fun fromResponse(response: GenericCommentsResponse): List<KomentarUi> {
             comment.body,
             comment.senderName.capitalizeEveryWord(),
             comment.senderCity.capitalizeEveryWord(),
-            Date(comment.createTime.toLong() * 1000)
+            Date(comment.createTime.toLong() * 1000),
+            comment.articleId
         )
     }
 }

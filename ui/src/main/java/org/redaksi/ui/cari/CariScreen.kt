@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
-import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.background
 import org.redaksi.ui.PillarColor.cariPlaceholder
 import org.redaksi.ui.PillarColor.primary
@@ -55,7 +54,7 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
         Column(
             Modifier
                 .fillMaxSize()
-                .background(PillarColor.background)
+                .background(background)
                 .padding(paddingValues)
         ) {
             CariTextField(

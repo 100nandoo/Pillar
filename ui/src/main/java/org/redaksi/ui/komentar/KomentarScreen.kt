@@ -1,6 +1,7 @@
 package org.redaksi.ui.komentar
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -81,7 +82,7 @@ fun KomentarScreen(
                 ) {
                     uiState.komentarUiList.forEach { komentarUi ->
                         item {
-                            KomentarItem(komentarUi)
+                            KomentarItem(komentarUi, false) {}
                         }
                     }
                 }
@@ -98,12 +99,13 @@ private fun KomentarScreenPreview() {
 }
 
 @Composable
-fun KomentarItem(komentarUi: KomentarUi) {
+fun KomentarItem(komentarUi: KomentarUi, isClickable: Boolean, onClick: (artikelId: Int) -> Unit) {
     val paddingTop = Modifier.padding(0.dp, Dimens.eight.dp, 0.dp, 0.dp)
     Column(
         modifier = Modifier
             .background(background)
             .padding(sixteen.dp, 0.dp)
+            .clickable(isClickable){ onClick(komentarUi.articleId) }
     ) {
         Text(modifier = paddingTop, style = PillarTypography3.bodyMedium, text = komentarUi.body, color = komentarBody)
         Row(modifier = Modifier.padding(0.dp, four.dp)) {
@@ -142,7 +144,9 @@ private fun KomentarItemPreview() {
                 "biar Nama Tuhan juga dipermuliakan di muka bumi ini. Gbu",
             "Budi Wijaya",
             "Jambi",
-            Date()
-        )
-    )
+            Date(),
+            2000
+        ),
+    false
+    ) {}
 }

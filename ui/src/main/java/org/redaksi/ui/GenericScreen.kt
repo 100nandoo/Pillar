@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import org.redaksi.ui.PillarColor.primary
 
 @Composable
 fun LoadingScreen(isLoading: Boolean = true) {
@@ -21,7 +22,7 @@ fun LoadingScreen(isLoading: Boolean = true) {
             .fillMaxSize()
     ) {
         if (isLoading) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(color = primary)
         }
     }
 }

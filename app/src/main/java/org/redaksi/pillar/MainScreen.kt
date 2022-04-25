@@ -33,6 +33,7 @@ import org.redaksi.pillar.BottomNavRoute.edisiDetailRoute
 import org.redaksi.pillar.BottomNavRoute.edisiRoute
 import org.redaksi.pillar.BottomNavRoute.issueNumberArg
 import org.redaksi.pillar.BottomNavRoute.komentarRoute
+import org.redaksi.pillar.BottomNavRoute.tanggapanRoute
 import org.redaksi.ui.PillarColor.bottomBarSelected
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.PillarColor.secondaryVar
@@ -45,6 +46,7 @@ import org.redaksi.ui.edisi.EdisiScreen
 import org.redaksi.ui.edisi.detail.EdisiDetailScreen
 import org.redaksi.ui.komentar.KomentarScreen
 import org.redaksi.ui.komentar.buat.BuatKomentarScreen
+import org.redaksi.ui.tanggapan.TanggapanScreen
 
 @Preview
 @Composable
@@ -59,7 +61,7 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
 
     Scaffold(
         bottomBar = {
-            if (currentRoute == edisiRoute || currentRoute == artikelRoute || currentRoute == cariRoute) {
+            if (currentRoute == edisiRoute || currentRoute == artikelRoute || currentRoute == cariRoute || currentRoute == tanggapanRoute) {
                 NavBar(topRoundedCornerModifier, items, navController)
             }
         }
@@ -68,6 +70,7 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
             composable(edisiRoute) { EdisiScreen(onClick = { navController.navigate("$edisiDetailRoute/$it") }) }
             composable(artikelRoute) { ArtikelScreen(onClickArtikel = { navController.navigate("$artikelDetailRoute/$it") }) }
             composable(cariRoute) { CariScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
+            composable(tanggapanRoute) { TanggapanScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
             composable("$edisiDetailRoute/{$issueNumberArg}") {
                 EdisiDetailScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") })
             }
@@ -102,7 +105,8 @@ fun NavBarPreview() {
 val navBarItemList = listOf(
     NavBarItem(R.string.edisi, R.drawable.ic_edisi, edisiRoute),
     NavBarItem(R.string.artikel, R.drawable.ic_artikel, artikelRoute),
-    NavBarItem(R.string.cari, R.drawable.ic_cari, cariRoute)
+    NavBarItem(R.string.cari, R.drawable.ic_cari, cariRoute),
+    NavBarItem(R.string.tanggapan, R.drawable.ic_komentar, tanggapanRoute)
 )
 
 object BottomNavRoute {
@@ -111,6 +115,8 @@ object BottomNavRoute {
     const val artikelRoute = "artikel"
     const val artikelDetailRoute = "artikelDetail"
     const val cariRoute = "cari"
+    const val lainnyaRoute = "lainnya"
+    const val tanggapanRoute = "tanggapan"
     const val komentarRoute = "komentar"
     const val buatKomentarRoute = "buatKomentar"
 
