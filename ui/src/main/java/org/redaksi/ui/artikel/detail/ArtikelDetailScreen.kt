@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -64,9 +63,8 @@ fun ArtikelDetailScreen(
 
     val bottomBarIcons = remember {
         listOf(
-            BottomBarIcon(R.drawable.ic_cari, R.string.cari) { },
-            BottomBarIcon(R.drawable.ic_komentar, R.string.komentar) { artikelId?.let(onClickKomentar) },
-            BottomBarIcon(R.drawable.ic_share, R.string.share) {
+            BottomBarIcon(R.drawable.ic_komentar, R.string.komentar, true) { artikelId?.let(onClickKomentar) },
+            BottomBarIcon(R.drawable.ic_share, R.string.share, false) {
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TITLE, it.articleDetailUi.title)
@@ -118,9 +116,8 @@ fun ArtikelDetailBottomBar(bottomBarIcons: List<BottomBarIcon>, uiState: Artikel
 fun ArtikelDetailBottomBarPreview() {
     ArtikelDetailBottomBar(
         listOf(
-            BottomBarIcon(R.drawable.ic_cari, R.string.cari) { },
-            BottomBarIcon(R.drawable.ic_komentar, R.string.komentar) { },
-            BottomBarIcon(R.drawable.ic_share, R.string.share) {}
+            BottomBarIcon(R.drawable.ic_komentar, R.string.komentar, true) { },
+            BottomBarIcon(R.drawable.ic_share, R.string.share, false) {}
         ),
         ArtikelDetailViewModelState()
     )
@@ -128,14 +125,22 @@ fun ArtikelDetailBottomBarPreview() {
 
 @Composable
 fun BottomBarItem(bottomBarIcon: BottomBarIcon, uiState: ArtikelDetailViewModelState) {
-    Box(
+    Row(
         modifier = Modifier
             .fillMaxHeight()
             .background(primary)
             .clickable { bottomBarIcon.onClick(uiState) }
             .padding(sixteen.dp),
-        contentAlignment = Alignment.Center
+        verticalAlignment = Alignment.CenterVertically
     ) {
+        if (uiState.articleDetailUi.commentCount.isNotBlank() && bottomBarIcon.isComment) {
+            Text(
+                modifier = Modifier.padding(eight.dp, 0.dp),
+                text = uiState.articleDetailUi.commentCount,
+                style = PillarTypography3.bodyMedium,
+                color = surface
+            )
+        }
         Icon(
             painter = painterResource(bottomBarIcon.icon),
             contentDescription = stringResource(bottomBarIcon.label),

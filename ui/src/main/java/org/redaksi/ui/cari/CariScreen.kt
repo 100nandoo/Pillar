@@ -14,6 +14,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
+import org.redaksi.ui.PillarColor.background
 import org.redaksi.ui.PillarColor.cariPlaceholder
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.R
@@ -122,6 +124,10 @@ fun CariTextField(uiState: CariViewModelState, onValueChange: (TextFieldValue) -
         keyboardActions = keyboardActions(uiState.textFieldValue.text) {
             onSearch(it)
         },
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = primary,
+            backgroundColor = background
+        ),
         maxLines = 1,
         visualTransformation = AlphaNumericVisualTransformation()
     )

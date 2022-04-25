@@ -16,7 +16,8 @@ data class ArtikelDetailUi(
     val estimation: String = "",
     val categoryUi: CategoryUi = CategoryUi(),
     val body: String = "",
-    val bodyStriped: String = ""
+    val bodyStriped: String = "",
+    val commentCount: String = ""
 )
 
 data class CategoryUi(
@@ -31,6 +32,12 @@ fun fromResponse(response: ArticleDetailResponse): ArtikelDetailUi {
     val estimation = ReadingTime(response.article.body ?: "").calcReadingTime()
 
     val bodyStriped = article.title + "\n\nDitulis oleh: $authors\n\n" + JsoupHelper.stripText(article.body ?: "")
+
+    val commentCount = if (article.commentCount > 0) {
+        runCatching { article.commentCount.toString() }.getOrElse { "" }
+    } else {
+        ""
+    }
     return ArtikelDetailUi(
         article.title,
         authors,
@@ -38,7 +45,8 @@ fun fromResponse(response: ArticleDetailResponse): ArtikelDetailUi {
         estimation,
         categoryUi,
         article.body ?: "",
-        bodyStriped
+        bodyStriped,
+        commentCount
     )
 }
 
@@ -46,4 +54,9 @@ fun Category.toCategoryUi(): CategoryUi {
     return CategoryUi(this.name.uppercase(), R.drawable.ic_transkrip)
 }
 
-data class BottomBarIcon(@DrawableRes val icon: Int, @StringRes val label: Int, val onClick: (ArtikelDetailViewModelState) -> Unit)
+data class BottomBarIcon(
+    @DrawableRes val icon: Int,
+    @StringRes val label: Int,
+    val isComment: Boolean,
+    val onClick: (ArtikelDetailViewModelState) -> Unit
+)

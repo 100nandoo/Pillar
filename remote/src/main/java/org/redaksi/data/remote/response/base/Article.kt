@@ -20,7 +20,9 @@ data class Article(
     val body: String?,
     val snippet: String,
     val url: String,
-    val authors: Authors
+    val authors: Authors,
+    @SerialName("comment_count")
+    val commentCount: Int
 )
 
 @Serializable
