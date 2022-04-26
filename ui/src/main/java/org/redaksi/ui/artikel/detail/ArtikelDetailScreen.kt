@@ -14,6 +14,8 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +24,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -407,12 +410,10 @@ fun ArtikelBody(
                     movementMethod = LinkMovementMethod.getInstance()
                     setTypeface(typeface)
                     setTextColor(ResourcesCompat.getColor(resources, R.color.black, null))
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        justificationMode = JUSTIFICATION_MODE_INTER_WORD
-                    }
                 }
             },
             update = {
+                (it.parent as? ViewGroup)?.clipChildren = false
                 val sb = SpannableStringBuilder(HtmlCompat.fromHtml(artikelDetailUi.body, HtmlCompat.FROM_HTML_MODE_LEGACY))
                 val provider = VerseProvider(context.contentResolver)
                 DesktopVerseFinder.findInText(sb, object : DesktopVerseFinder.DetectorListener {
@@ -438,7 +439,12 @@ fun ArtikelBody(
                                 val dialogSpan = AnnotatedString.Builder()
                                 if (verses != null) {
                                     for (item in verses) {
-                                        dialogSpan.withStyle(style = SpanStyle(fontStyle = FontStyle.Italic, fontFamily = FontFamily(Font(lato_regular)))) {
+                                        dialogSpan.withStyle(
+                                            style = SpanStyle(
+                                                fontStyle = FontStyle.Italic,
+                                                fontFamily = FontFamily(Font(lato_regular))
+                                            )
+                                        ) {
                                             val ayatKitab = "${item.bookName} ${item.chapter}:${item.verse}  "
                                             append(ayatKitab)
                                         }
@@ -448,7 +454,6 @@ fun ArtikelBody(
                                     }
                                 }
                                 known(true, dialogSpan.toAnnotatedString(), intArrayList.get(0))
-
                             }
 
                             override fun updateDrawState(ds: TextPaint) {
