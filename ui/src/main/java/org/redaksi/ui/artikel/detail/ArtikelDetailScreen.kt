@@ -1,9 +1,19 @@
 package org.redaksi.ui.artikel.detail
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
 import android.os.Build
+import android.text.SpannableStringBuilder
+import android.text.Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+import android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.view.View
 import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,7 +26,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -31,22 +44,36 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import org.redaksi.core.helper.verse.AlkitabIntegrationUtil
+import org.redaksi.core.helper.verse.ConnectionResult
+import org.redaksi.core.helper.verse.DesktopVerseFinder
+import org.redaksi.core.helper.verse.DesktopVerseParser
+import org.redaksi.core.helper.verse.Launcher
+import org.redaksi.core.helper.verse.VerseProvider
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
+import org.redaksi.ui.PillarColor.background
 import org.redaksi.ui.PillarColor.categoryTranskrip
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.PillarColor.surface
 import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
+import org.redaksi.ui.R.font.lato_regular
 import org.redaksi.ui.Symbol.bullet
 import org.redaksi.ui.edisi.detail.detailScreenDate
 import java.util.Date
@@ -90,10 +117,164 @@ fun ArtikelDetailScreen(
                     .verticalScroll(rememberScrollState())
             ) {
                 ArtikelHeader(artikelDetailUi = uiState.articleDetailUi)
-                ArtikelBody(modifier = Modifier.padding(it), artikelDetailUi = uiState.articleDetailUi)
+                ArtikelBody(
+                    modifier = Modifier.padding(it),
+                    artikelDetailUi = uiState.articleDetailUi,
+                    context,
+                    { viewModel.showNotKnownDialog(it) },
+                    installDialog = { viewModel.installDialog(true) },
+                    known = { isShown, verse, ari -> viewModel.showKnownDialog(isShown, verse, ari) })
+
+                // viewModel.checkAlkitabIsInstalled(LocalContext.current)
+
+                if (uiState.showNotKnownDialog.first) {
+                    NotKnownVerseDialog(verse = uiState.showNotKnownDialog.second, dismissDialog = { viewModel.dismissNotKnownDialog() })
+                }
+
+                if (uiState.showAlkitabInstalledDialog) {
+                    AlkitabDialog(dismissDialog = { viewModel.installDialog(false) }, {
+                        val isSuccess =
+                            runCatching { context.startActivity(Launcher.openGooglePlayDownloadPage(context, Launcher.Product.ALKITAB)) }.getOrNull()
+                        viewModel.playStoreDialog(isSuccess == null)
+                    })
+                }
+
+                if (uiState.showPlayStoreDialog) {
+                    PlayStoreDialog {
+                        viewModel.playStoreDialog(false)
+                    }
+                }
+
+                if (uiState.showKnownDialog.first) {
+                    VerseDialog(uiState.showKnownDialog.third, uiState.showKnownDialog.second, {
+                        val isSuccess = runCatching { context.startActivity(Launcher.openAppAtBibleLocation(it)) }.getOrNull()
+                    }) {
+                        viewModel.showKnownDialog(false)
+                    }
+                }
             }
         }
     }
+}
+
+@Composable
+fun NotKnownVerseDialog(verse: String, dismissDialog: () -> Unit) {
+    AlertDialog(
+        containerColor = background,
+        text = {
+            Text("Tidak dapat mengenali $verse, silakan membukanya secara manual")
+        },
+        confirmButton = {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = primary
+                ),
+                onClick = {
+                    dismissDialog()
+                }) {
+                Text(stringResource(id = R.string.ok))
+            }
+        },
+        onDismissRequest = {
+            dismissDialog()
+        })
+}
+
+@Composable
+fun AlkitabDialog(dismissDialog: () -> Unit, openPlayStore: () -> Unit) {
+    AlertDialog(
+        containerColor = background,
+        text = {
+            Text("Aplikasi Alkitab tidak terinstal. Instal Alkitab dari Play Store?")
+        },
+        confirmButton = {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = primary
+                ),
+                onClick = {
+                    openPlayStore()
+                    dismissDialog()
+                }) {
+                Text(stringResource(id = R.string.ya))
+            }
+        },
+        dismissButton = {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = primary
+                ),
+                onClick = {
+                    dismissDialog()
+                }) {
+                Text(stringResource(id = R.string.tidak))
+            }
+        },
+        onDismissRequest = {
+            dismissDialog()
+        })
+}
+
+@Composable
+fun PlayStoreDialog(dismissDialog: () -> Unit) {
+    AlertDialog(
+        containerColor = background,
+        text = {
+            Text("Play Store tidak tersedia")
+        },
+        confirmButton = {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = primary
+                ),
+                onClick = {
+                    dismissDialog()
+                }) {
+                Text(stringResource(id = R.string.ok))
+            }
+        },
+        onDismissRequest = {
+            dismissDialog()
+        })
+}
+
+@Composable
+fun VerseDialog(ari: Int, verse: AnnotatedString, openBible: (Int) -> Unit, dismissDialog: () -> Unit) {
+    AlertDialog(
+        containerColor = background,
+        text = {
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Text(verse)
+            }
+
+        },
+        confirmButton = {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = primary
+                ),
+                onClick = {
+                    dismissDialog()
+                }) {
+                Text(stringResource(id = R.string.ok))
+            }
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = primary
+                ),
+                onClick = {
+                    openBible(ari)
+                    dismissDialog()
+                }) {
+                Text(stringResource(id = R.string.buka_alkitab))
+            }
+        },
+        onDismissRequest = {
+            dismissDialog()
+        })
 }
 
 @Composable
@@ -202,10 +383,17 @@ fun ArtikelHeaderPreview() {
 }
 
 @Composable
-fun ArtikelBody(modifier: Modifier, artikelDetailUi: ArtikelDetailUi) {
+fun ArtikelBody(
+    modifier: Modifier,
+    artikelDetailUi: ArtikelDetailUi,
+    context: Context,
+    notKnown: (String) -> Unit,
+    installDialog: () -> Unit,
+    known: (Boolean, AnnotatedString, Int) -> Unit
+) {
     Column(
         modifier
-            .background(PillarColor.background)
+            .background(background)
             .padding(sixteen.dp)
     ) {
         ArtikelKategori(categoryUi = artikelDetailUi.categoryUi)
@@ -215,15 +403,66 @@ fun ArtikelBody(modifier: Modifier, artikelDetailUi: ArtikelDetailUi) {
                 TextView(context).apply {
                     setLineSpacing(12f, 1f)
                     textSize = 16f
-                    val typeface: Typeface? = ResourcesCompat.getFont(context, R.font.lato_regular)
+                    val typeface: Typeface? = ResourcesCompat.getFont(context, lato_regular)
+                    movementMethod = LinkMovementMethod.getInstance()
                     setTypeface(typeface)
-                    setTextColor(ResourcesCompat.getColor(resources, R.color.primary, null))
+                    setTextColor(ResourcesCompat.getColor(resources, R.color.black, null))
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         justificationMode = JUSTIFICATION_MODE_INTER_WORD
                     }
                 }
             },
-            update = { it.text = HtmlCompat.fromHtml(artikelDetailUi.body, HtmlCompat.FROM_HTML_MODE_LEGACY) }
+            update = {
+                val sb = SpannableStringBuilder(HtmlCompat.fromHtml(artikelDetailUi.body, HtmlCompat.FROM_HTML_MODE_LEGACY))
+                val provider = VerseProvider(context.contentResolver)
+                DesktopVerseFinder.findInText(sb, object : DesktopVerseFinder.DetectorListener {
+                    override fun onVerseDetected(start: Int, end: Int, verse: String?): Boolean {
+                        sb.setSpan(object : ClickableSpan() {
+                            override fun onClick(p0: View) {
+                                val intArrayList = DesktopVerseParser.verseStringToAri(verse)
+                                if (intArrayList == null) {
+                                    notKnown(verse ?: context.getString(R.string.ayat_ini))
+                                    return
+                                }
+
+                                if (AlkitabIntegrationUtil.isIntegrationAvailable(context) != ConnectionResult.SUCCESS) {
+                                    installDialog()
+                                    return
+                                }
+                                val ranges = VerseProvider.VerseRanges()
+                                for (i in 0 until intArrayList.size()) {
+                                    ranges.addRange(intArrayList[i], intArrayList[i + 1])
+                                }
+
+                                val verses = provider.getVerses(ranges)
+                                val dialogSpan = AnnotatedString.Builder()
+                                if (verses != null) {
+                                    for (item in verses) {
+                                        dialogSpan.withStyle(style = SpanStyle(fontStyle = FontStyle.Italic, fontFamily = FontFamily(Font(lato_regular)))) {
+                                            val ayatKitab = "${item.bookName} ${item.chapter}:${item.verse}  "
+                                            append(ayatKitab)
+                                        }
+                                        dialogSpan.append(item.text)
+                                        dialogSpan.append("\n\n")
+                                        sb.setSpan(ForegroundColorSpan(Color.BLACK), start, end, SPAN_EXCLUSIVE_INCLUSIVE)
+                                    }
+                                }
+                                known(true, dialogSpan.toAnnotatedString(), intArrayList.get(0))
+
+                            }
+
+                            override fun updateDrawState(ds: TextPaint) {
+                                ds.isUnderlineText = false
+                                ds.color = Color.parseColor("#E28E78")
+                            }
+                        }, start, end, SPAN_INCLUSIVE_INCLUSIVE)
+                        return true
+                    }
+
+                    override fun onNoMoreDetected() = Unit
+                })
+                it.text = sb
+            }
         )
     }
 }
@@ -231,7 +470,7 @@ fun ArtikelBody(modifier: Modifier, artikelDetailUi: ArtikelDetailUi) {
 @Preview(showBackground = true)
 @Composable
 fun ArtikelBodyPreview() {
-    ArtikelBody(Modifier, artikelDetailUi)
+    ArtikelBody(Modifier, artikelDetailUi, LocalContext.current, {}, {}) { _, _, _ -> }
 }
 
 @Composable
