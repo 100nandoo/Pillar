@@ -26,7 +26,7 @@ object Launcher {
     fun openAppAtBibleLocation(ari: Int): Intent {
         val res = Intent("yuku.alkitab.action.VIEW")
         res.putExtra("ari", ari)
-        res.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+        res.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
         return res
     }
 
@@ -39,7 +39,7 @@ object Launcher {
         val res = Intent("yuku.alkitab.action.VIEW")
         res.putExtra("ari", ari)
         res.putExtra("selectVerse", true)
-        res.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+        res.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
         return res
     }
 
@@ -58,7 +58,7 @@ object Launcher {
         )
         val res = Intent(Intent.ACTION_VIEW)
         res.data = uri
-        res.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+        res.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
         return res
     }
 

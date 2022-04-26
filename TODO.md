@@ -1,9 +1,6 @@
 # TODO
-- [ ] Highlight ayat alkitab
-- [ ] Dialog & app intent ayat alkitab
-- [ ] Komentar Terbaru Screen
-- [ ] Tentang Screen
-- [ ] Cari inside artikel
+- [ ] Download
+- [ ] Animasi
 - [ ] Icon for artikel category
 
 Done
@@ -20,3 +17,7 @@ Done
 - [x] Share sheet UI
 - [x] Insert Komentar UI
 - [x] Placeholder empty comment
+- [x] Komentar Terbaru Screen
+- [x] Tentang Screen
+- [x] Highlight ayat alkitab
+- [x] Dialog & app intent ayat alkitab
