@@ -46,7 +46,7 @@ body {
 <p><a href="http://www.buletinpillar.org">www.buletinpillar.org</a></p>
 
 <p><b>Pengembang:</b>
-    <br>Fernando Fransisco Halim
+    <br><a href="https://www.halim.dev">Fernando Fransisco Halim</a>
     <br>Randy Sugianto
 </p>
 
