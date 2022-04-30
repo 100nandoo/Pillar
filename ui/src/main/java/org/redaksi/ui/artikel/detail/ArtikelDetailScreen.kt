@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
-import android.os.Build
 import android.text.SpannableStringBuilder
 import android.text.Spanned.SPAN_EXCLUSIVE_INCLUSIVE
 import android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE
@@ -15,7 +13,6 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,7 +21,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -126,7 +122,8 @@ fun ArtikelDetailScreen(
                     context,
                     { viewModel.showNotKnownDialog(it) },
                     installDialog = { viewModel.installDialog(true) },
-                    known = { isShown, verse, ari -> viewModel.showKnownDialog(isShown, verse, ari) })
+                    known = { isShown, verse, ari -> viewModel.showKnownDialog(isShown, verse, ari) }
+                )
 
                 // viewModel.checkAlkitabIsInstalled(LocalContext.current)
 
@@ -174,13 +171,15 @@ fun NotKnownVerseDialog(verse: String, dismissDialog: () -> Unit) {
                 ),
                 onClick = {
                     dismissDialog()
-                }) {
+                }
+            ) {
                 Text(stringResource(id = R.string.ok))
             }
         },
         onDismissRequest = {
             dismissDialog()
-        })
+        }
+    )
 }
 
 @Composable
@@ -198,7 +197,8 @@ fun AlkitabDialog(dismissDialog: () -> Unit, openPlayStore: () -> Unit) {
                 onClick = {
                     openPlayStore()
                     dismissDialog()
-                }) {
+                }
+            ) {
                 Text(stringResource(id = R.string.ya))
             }
         },
@@ -209,13 +209,15 @@ fun AlkitabDialog(dismissDialog: () -> Unit, openPlayStore: () -> Unit) {
                 ),
                 onClick = {
                     dismissDialog()
-                }) {
+                }
+            ) {
                 Text(stringResource(id = R.string.tidak))
             }
         },
         onDismissRequest = {
             dismissDialog()
-        })
+        }
+    )
 }
 
 @Composable
@@ -232,13 +234,15 @@ fun PlayStoreDialog(dismissDialog: () -> Unit) {
                 ),
                 onClick = {
                     dismissDialog()
-                }) {
+                }
+            ) {
                 Text(stringResource(id = R.string.ok))
             }
         },
         onDismissRequest = {
             dismissDialog()
-        })
+        }
+    )
 }
 
 @Composable
@@ -252,7 +256,6 @@ fun VerseDialog(ari: Int, verse: AnnotatedString, openBible: (Int) -> Unit, dism
             ) {
                 Text(verse)
             }
-
         },
         confirmButton = {
             Button(
@@ -261,7 +264,8 @@ fun VerseDialog(ari: Int, verse: AnnotatedString, openBible: (Int) -> Unit, dism
                 ),
                 onClick = {
                     dismissDialog()
-                }) {
+                }
+            ) {
                 Text(stringResource(id = R.string.ok))
             }
             Button(
@@ -271,13 +275,15 @@ fun VerseDialog(ari: Int, verse: AnnotatedString, openBible: (Int) -> Unit, dism
                 onClick = {
                     openBible(ari)
                     dismissDialog()
-                }) {
+                }
+            ) {
                 Text(stringResource(id = R.string.buka_alkitab))
             }
         },
         onDismissRequest = {
             dismissDialog()
-        })
+        }
+    )
 }
 
 @Composable
@@ -416,56 +422,62 @@ fun ArtikelBody(
                 (it.parent as? ViewGroup)?.clipChildren = false
                 val sb = SpannableStringBuilder(HtmlCompat.fromHtml(artikelDetailUi.body, HtmlCompat.FROM_HTML_MODE_LEGACY))
                 val provider = VerseProvider(context.contentResolver)
-                DesktopVerseFinder.findInText(sb, object : DesktopVerseFinder.DetectorListener {
-                    override fun onVerseDetected(start: Int, end: Int, verse: String?): Boolean {
-                        sb.setSpan(object : ClickableSpan() {
-                            override fun onClick(p0: View) {
-                                val intArrayList = DesktopVerseParser.verseStringToAri(verse)
-                                if (intArrayList == null) {
-                                    notKnown(verse ?: context.getString(R.string.ayat_ini))
-                                    return
-                                }
-
-                                if (AlkitabIntegrationUtil.isIntegrationAvailable(context) != ConnectionResult.SUCCESS) {
-                                    installDialog()
-                                    return
-                                }
-                                val ranges = VerseProvider.VerseRanges()
-                                for (i in 0 until intArrayList.size()) {
-                                    ranges.addRange(intArrayList[i], intArrayList[i + 1])
-                                }
-
-                                val verses = provider.getVerses(ranges)
-                                val dialogSpan = AnnotatedString.Builder()
-                                if (verses != null) {
-                                    for (item in verses) {
-                                        dialogSpan.withStyle(
-                                            style = SpanStyle(
-                                                fontStyle = FontStyle.Italic,
-                                                fontFamily = FontFamily(Font(lato_regular))
-                                            )
-                                        ) {
-                                            val ayatKitab = "${item.bookName} ${item.chapter}:${item.verse}  "
-                                            append(ayatKitab)
+                DesktopVerseFinder.findInText(
+                    sb,
+                    object : DesktopVerseFinder.DetectorListener {
+                        override fun onVerseDetected(start: Int, end: Int, verse: String?): Boolean {
+                            sb.setSpan(
+                                object : ClickableSpan() {
+                                    override fun onClick(p0: View) {
+                                        val intArrayList = DesktopVerseParser.verseStringToAri(verse)
+                                        if (intArrayList == null) {
+                                            notKnown(verse ?: context.getString(R.string.ayat_ini))
+                                            return
                                         }
-                                        dialogSpan.append(item.text)
-                                        dialogSpan.append("\n\n")
-                                        sb.setSpan(ForegroundColorSpan(Color.BLACK), start, end, SPAN_EXCLUSIVE_INCLUSIVE)
+
+                                        if (AlkitabIntegrationUtil.isIntegrationAvailable(context) != ConnectionResult.SUCCESS) {
+                                            installDialog()
+                                            return
+                                        }
+                                        val ranges = VerseProvider.VerseRanges()
+                                        for (i in 0 until intArrayList.size()) {
+                                            ranges.addRange(intArrayList[i], intArrayList[i + 1])
+                                        }
+
+                                        val verses = provider.getVerses(ranges)
+                                        val dialogSpan = AnnotatedString.Builder()
+                                        if (verses != null) {
+                                            for (item in verses) {
+                                                dialogSpan.withStyle(
+                                                    style = SpanStyle(
+                                                        fontStyle = FontStyle.Italic,
+                                                        fontFamily = FontFamily(Font(lato_regular))
+                                                    )
+                                                ) {
+                                                    val ayatKitab = "${item.bookName} ${item.chapter}:${item.verse}  "
+                                                    append(ayatKitab)
+                                                }
+                                                dialogSpan.append(item.text)
+                                                dialogSpan.append("\n\n")
+                                                sb.setSpan(ForegroundColorSpan(Color.BLACK), start, end, SPAN_EXCLUSIVE_INCLUSIVE)
+                                            }
+                                        }
+                                        known(true, dialogSpan.toAnnotatedString(), intArrayList.get(0))
                                     }
-                                }
-                                known(true, dialogSpan.toAnnotatedString(), intArrayList.get(0))
-                            }
 
-                            override fun updateDrawState(ds: TextPaint) {
-                                ds.isUnderlineText = false
-                                ds.color = Color.parseColor("#E28E78")
-                            }
-                        }, start, end, SPAN_INCLUSIVE_INCLUSIVE)
-                        return true
+                                    override fun updateDrawState(ds: TextPaint) {
+                                        ds.isUnderlineText = false
+                                        ds.color = Color.parseColor("#E28E78")
+                                    }
+                                },
+                                start, end, SPAN_INCLUSIVE_INCLUSIVE
+                            )
+                            return true
+                        }
+
+                        override fun onNoMoreDetected() = Unit
                     }
-
-                    override fun onNoMoreDetected() = Unit
-                })
+                )
                 it.text = sb
             }
         )

@@ -79,7 +79,8 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
                 LainnyaScreen(
                     paddingValues,
                     { navController.navigate(tanggapanRoute) },
-                    { navController.navigate(tentangRoute) })
+                    { navController.navigate(tentangRoute) }
+                )
             }
             composable(tentangRoute) { TentangScreen() }
             composable("$edisiDetailRoute/{$issueNumberArg}") {

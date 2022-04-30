@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -32,6 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import org.redaksi.ui.Dimens
 import org.redaksi.ui.Dimens.four
 import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.Dimens.thirtyTwo
 import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
@@ -69,20 +72,29 @@ fun KomentarScreen(
             }
         },
         isFloatingActionButtonDocked = true
-    ) {
+    ) { paddingValue ->
         when (uiState.screenState) {
             ScreenState.LOADING -> LoadingScreen()
             ScreenState.CONTENT -> {
                 LazyColumn(
                     state = listState,
                     modifier = Modifier
-                        .padding(it)
+                        .padding(paddingValue)
                         .background(background)
                         .fillMaxSize()
                 ) {
-                    uiState.komentarUiList.forEach { komentarUi ->
+                    uiState.komentarUiList.forEachIndexed { index, komentarUi ->
                         item {
                             KomentarItem(komentarUi, false) {}
+                        }
+                        if (index == uiState.komentarUiList.size - 1) {
+                            item {
+                                Spacer(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(thirtyTwo.dp)
+                                )
+                            }
                         }
                     }
                 }
@@ -105,7 +117,7 @@ fun KomentarItem(komentarUi: KomentarUi, isClickable: Boolean, onClick: (artikel
         modifier = Modifier
             .background(background)
             .padding(sixteen.dp, 0.dp)
-            .clickable(isClickable){ onClick(komentarUi.articleId) }
+            .clickable(isClickable) { onClick(komentarUi.articleId) }
     ) {
         Text(modifier = paddingTop, style = PillarTypography3.bodyMedium, text = komentarUi.body, color = komentarBody)
         Row(modifier = Modifier.padding(0.dp, four.dp)) {
@@ -147,6 +159,6 @@ private fun KomentarItemPreview() {
             Date(),
             2000
         ),
-    false
+        false
     ) {}
 }

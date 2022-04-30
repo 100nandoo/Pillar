@@ -1,6 +1,5 @@
 package org.redaksi.ui.artikel.detail
 
-import android.text.SpannableStringBuilder
 import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

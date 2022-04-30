@@ -25,6 +25,10 @@ android {
             )
         }
     }
+
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -48,7 +52,7 @@ dependencies {
 
     // Animations
     implementation(libs.androidx.compose.animation)
-    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.ui.tooling.preview)
 
     // ----------------------------- UI ------------------------------
@@ -56,5 +60,4 @@ dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicator)
     implementation(libs.accompanist.webview)
-
 }

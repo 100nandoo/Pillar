@@ -51,7 +51,8 @@ fun LainnyaScreen(paddingValues: PaddingValues, onClickTanggapan: () -> Unit, on
                         modifier = Modifier
                             .padding(eight.dp, 0.dp)
                             .fillMaxHeight(),
-                        painter = painterResource(id = R.drawable.ic_komentar), contentDescription = stringResource(R.string.tanggapan)
+                        painter = painterResource(id = R.drawable.ic_komentar),
+                        contentDescription = stringResource(R.string.tanggapan)
                     )
                     Text(
                         modifier = Modifier
@@ -61,7 +62,6 @@ fun LainnyaScreen(paddingValues: PaddingValues, onClickTanggapan: () -> Unit, on
                         color = PillarColor.edisiDetailTitle,
                         text = stringResource(id = R.string.tanggapan)
                     )
-
                 }
                 Row(
                     modifier = Modifier
@@ -74,7 +74,8 @@ fun LainnyaScreen(paddingValues: PaddingValues, onClickTanggapan: () -> Unit, on
                         modifier = Modifier
                             .padding(eight.dp, 0.dp)
                             .fillMaxHeight(),
-                        painter = painterResource(id = R.drawable.ic_tentang), contentDescription = stringResource(R.string.tentang)
+                        painter = painterResource(id = R.drawable.ic_tentang),
+                        contentDescription = stringResource(R.string.tentang)
                     )
                     Text(
                         modifier = Modifier
@@ -82,9 +83,8 @@ fun LainnyaScreen(paddingValues: PaddingValues, onClickTanggapan: () -> Unit, on
                             .fillMaxWidth(),
                         style = PillarTypography3.headlineSmall,
                         color = PillarColor.edisiDetailTitle,
-                        text = stringResource(id = R.string.tentang),
+                        text = stringResource(id = R.string.tentang)
                     )
-
                 }
             }
         }

@@ -26,3 +26,7 @@ dependencies {
 
     kapt(libs.hilt.compiler)
 }
+
+kapt {
+    correctErrorTypes = true
+}

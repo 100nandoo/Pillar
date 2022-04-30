@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1031079909561",
+    "project_id": "pillar-1156c",
+    "storage_bucket": "pillar-1156c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031079909561:android:12aae91f5cc0d22298e368",
+        "android_client_info": {
+          "package_name": "org.redaksi.pillar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031079909561-nse1biiiae0e29k1mqpu5g1cstm8j4pl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACWl7CtbQzCoik-P1INYgWnFmGSZZU1xQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031079909561-nse1biiiae0e29k1mqpu5g1cstm8j4pl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031079909561:android:ef57212f9c74b56f98e368",
+        "android_client_info": {
+          "package_name": "org.redaksi.pillar.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031079909561-nse1biiiae0e29k1mqpu5g1cstm8j4pl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACWl7CtbQzCoik-P1INYgWnFmGSZZU1xQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031079909561-nse1biiiae0e29k1mqpu5g1cstm8j4pl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

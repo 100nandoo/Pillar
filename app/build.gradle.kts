@@ -1,13 +1,30 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     kotlin("android")
     kotlin("kapt")
 
     id("com.android.application")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
     compileSdk = AppCoordinates.compileSDK
+
+    signingConfigs {
+        val keystorePropertiesFile = rootProject.file("keystore.properties")
+        val properties = Properties()
+        properties.load(FileInputStream(keystorePropertiesFile))
+        create("release") {
+            keyAlias = properties.getProperty("keyAlias")
+            keyPassword = properties.getProperty("keyPassword")
+            storeFile = rootProject.file(properties.getProperty("storeFile"))
+            storePassword = properties.getProperty("storePassword")
+        }
+    }
 
     defaultConfig {
         minSdk = AppCoordinates.minSDK
@@ -32,6 +49,10 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
     buildTypes {
+        getByName("debug") {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+        }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -39,6 +60,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -49,17 +71,23 @@ android {
 }
 
 dependencies {
+    implementation(kotlin("stdlib-jdk8"))
     implementation(project(":ui"))
     implementation(project(":remote"))
-    implementation(kotlin("stdlib-jdk8"))
     implementation(libs.kotlinx.coroutines)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraint.layout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.navigation)
 
+    // ----------------------------- AndroidX ------------------------------
+    implementation(libs.androidx.viewmodel.ktx)
+
     implementation(libs.hilt.android)
+    implementation(libs.hilt.nav.compose)
+
     kapt(libs.hilt.compiler)
+    implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
 
     // ----------------------------- COMPOSE ------------------------------
     // Integration with activities
@@ -76,6 +104,11 @@ dependencies {
     // UI Tests
     androidTestImplementation(libs.androidx.test.compose.junit)
 
+    // ----------------------------- Other Libs ------------------------------
+    implementation(platform(libs.firebase.bom))
+    implementation(platform(libs.firebase.analytics))
+    implementation(platform(libs.firebase.crashlytics))
+
     // ----------------------------- TEST ------------------------------
     testImplementation(libs.junit)
 
@@ -83,6 +116,10 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.espresso.core)
+}
+
+kotlin.sourceSets.all {
+    languageSettings.optIn("kotlin.RequiresOptIn")
 }
 
 kapt {
