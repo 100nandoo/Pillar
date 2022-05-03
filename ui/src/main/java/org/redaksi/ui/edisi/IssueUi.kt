@@ -11,9 +11,12 @@ data class IssueUi(
 
 fun fromResponse(response: AllIssuesResponse): List<IssueUi> {
     val issues = response.issues.items
-
-    return issues.map { issue ->
+    val issuesUi = mutableListOf<IssueUi>()
+    issues.forEach { issue ->
         val articles = issue.articleTitles.items
-        IssueUi(issue.issueNumber, issue.monthDisplay, issue.title ?: "", articles)
+        if(articles.isNotEmpty()){
+            issuesUi.add(IssueUi(issue.issueNumber, issue.monthDisplay, issue.title ?: "", articles))
+        }
     }
+    return issuesUi
 }

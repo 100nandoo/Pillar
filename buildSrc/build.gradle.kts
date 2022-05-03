@@ -12,8 +12,8 @@ dependencies {
     implementation(libs.agp)
     implementation(libs.dokka.gradle.plugin)
     implementation(libs.dokka.core)
-    implementation(libs.firebase.crashlytics.plugin)
     implementation(libs.gms)
+    implementation(libs.firebase.crashlytics.plugin)
     implementation(libs.hilt.gradle.plugin)
 }
 
