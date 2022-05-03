@@ -18,6 +18,8 @@ const val QA = 4
 const val RESENSI = 5
 const val LIPUTAN = 6
 const val PROFILE = 7
+const val MEJA_REDAKSI = 8
+const val POKOK_DOA = 10
 const val RENUNGAN = 17
 
 @Retention(AnnotationRetention.SOURCE)

@@ -51,7 +51,7 @@ fun fromResponse(response: ArticleDetailResponse): ArtikelDetailUi {
 }
 
 fun Category.toCategoryUi(): CategoryUi {
-    return CategoryUi(this.name.uppercase(), R.drawable.ic_transkrip)
+    return CategoryUi(this.title, R.drawable.ic_transkrip)
 }
 
 data class BottomBarIcon(
