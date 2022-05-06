@@ -50,11 +50,12 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
     val uiState by viewModel.uiState.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    Scaffold {
+    Scaffold { it
         Column(
             Modifier
                 .fillMaxSize()
                 .background(background)
+                .padding(it)
                 .padding(paddingValues)
         ) {
             CariTextField(

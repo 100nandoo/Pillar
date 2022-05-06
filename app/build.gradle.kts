@@ -9,6 +9,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
 }
 
 android {
@@ -106,8 +107,10 @@ dependencies {
 
     // ----------------------------- Other Libs ------------------------------
     implementation(platform(libs.firebase.bom))
-    implementation(platform(libs.firebase.analytics))
-    implementation(platform(libs.firebase.crashlytics))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.performance)
+    implementation(libs.firebase.inapp.messaging)
 
     // ----------------------------- TEST ------------------------------
     testImplementation(libs.junit)

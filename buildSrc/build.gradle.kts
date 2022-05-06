@@ -14,6 +14,7 @@ dependencies {
     implementation(libs.dokka.core)
     implementation(libs.gms)
     implementation(libs.firebase.crashlytics.plugin)
+    implementation(libs.firebase.performance.plugin)
     implementation(libs.hilt.gradle.plugin)
 }
 
