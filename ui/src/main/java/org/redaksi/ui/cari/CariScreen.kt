@@ -92,7 +92,7 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
 
 class AlphaNumericVisualTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
-        val result = text.replace(Regex("[^A-Za-z0-9]"), "")
+        val result = text.replace(Regex("[^A-Za-z0-9 ]"), "")
         val offset = object : OffsetMapping {
             override fun originalToTransformed(offset: Int): Int = offset - (text.length - result.length)
             override fun transformedToOriginal(offset: Int): Int = offset
