@@ -1,0 +1,37 @@
+site_name: Pillar
+theme:
+  features:
+    - navigation.tabs
+    - navigation.instant
+    - navigation.top
+  font:
+    text: Noto Sans
+    code: Fira Mono
+  name: material
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
+  palette:
+    - scheme: slate
+      primary: pink
+      accent: indigo
+      toggle:
+        icon: material/brightness-4 
+        name: Switch to light mode
+    - scheme: default
+      primary: pink
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  
+
+nav:
+  - 'Overview': overview.md
+  - 'Screen': screen.md
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
