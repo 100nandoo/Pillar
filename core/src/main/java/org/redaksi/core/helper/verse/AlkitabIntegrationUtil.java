@@ -3,6 +3,7 @@ package org.redaksi.core.helper.verse;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.PackageInfoFlags;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ProviderInfo;
 import android.util.Log;
@@ -11,8 +12,6 @@ public class AlkitabIntegrationUtil {
     public static final String TAG = AlkitabIntegrationUtil.class.getSimpleName();
 
     public static final String DEFAULT_ALKITAB_PROVIDER_AUTHORITY = "yuku.alkitab.provider";
-    private static String overridenProviderAuthority = null;
-
     /**
      * Minimum Alkitab app package version (declared in AndroidManifest.xml android:versionCode)
      * in order to be compatible with this client version.
@@ -20,7 +19,7 @@ public class AlkitabIntegrationUtil {
     public static final int ALKITAB_APP_VERSION_CODE = 101;
 
     public static String getProviderAuthority() {
-        return overridenProviderAuthority != null? overridenProviderAuthority: DEFAULT_ALKITAB_PROVIDER_AUTHORITY;
+        return DEFAULT_ALKITAB_PROVIDER_AUTHORITY;
     }
 
     /** Verifies that Alkitab app is installed and enabled on this device,
@@ -30,7 +29,12 @@ public class AlkitabIntegrationUtil {
     public static int isIntegrationAvailable(Context context) {
         PackageManager pm = context.getPackageManager();
 
-        ProviderInfo providerInfo = pm.resolveContentProvider(getProviderAuthority(), 0);
+        ProviderInfo providerInfo;
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            providerInfo = pm.resolveContentProvider(getProviderAuthority(), PackageManager.ComponentInfoFlags.of(0));
+        } else {
+            providerInfo = pm.resolveContentProvider(getProviderAuthority(), 0);
+        }
         if (providerInfo == null) {
             return ConnectionResult.APP_MISSING;
         }
@@ -40,7 +44,12 @@ public class AlkitabIntegrationUtil {
         }
 
         try {
-            PackageInfo packageInfo = pm.getPackageInfo(providerInfo.packageName, 0);
+            PackageInfo packageInfo;
+            if (android.os.Build.VERSION.SDK_INT >= 33) {
+                packageInfo = pm.getPackageInfo(providerInfo.packageName, PackageInfoFlags.of(0));
+            } else {
+                packageInfo = pm.getPackageInfo(providerInfo.packageName, 0);
+            }
             if (packageInfo.versionCode < ALKITAB_APP_VERSION_CODE) {
                 return ConnectionResult.APP_VERSION_UPDATE_REQUIRED;
             }

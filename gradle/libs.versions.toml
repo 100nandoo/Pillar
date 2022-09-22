@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.6.10"
+kotlin = "1.7.0"
 ktlint = "0.43.2"
 detekt = "1.20.0-RC1"
 dokka = "1.6.10"
@@ -9,23 +9,23 @@ espresso_core = "3.4.0"
 androidx_test_ext = "1.1.3"
 androidx_test = "1.4.0"
 
-activity = "1.4.0"
-appcompat = "1.4.1"
-annotation = "1.3.0"
-compose = "1.1.1"
-constraint_layout = "2.1.2"
-core_ktx = "1.7.0"
-core_splashscreen = "1.0.0-rc01"
-viewmodel = "2.4.1"
+activity = "1.5.1"
+appcompat = "1.5.1"
+annotation = "1.4.0"
+compose = "1.2.1"
+constraint_layout = "2.1.4"
+core_ktx = "1.8.0"
+core_splashscreen = "1.0.0"
+viewmodel = "2.5.1"
 material3 = "1.0.0-alpha10"
-navigation = "2.4.2"
+navigation = "2.5.2"
 
-hilt = "2.41"
+hilt = "2.44"
 
 retrofit = "2.9.0"
 retrofit_converter = "0.8.0"
 
-accompanist = "0.23.1"
+accompanist = "0.25.1"
 
 [libraries]
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -54,7 +54,7 @@ androidx_test_ext_junit_ktx = { module = "androidx.test.ext:junit-ktx", version.
 androidx_test_compose_junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 
 espresso_core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso.core" }
-agp = { module = "com.android.tools.build:gradle", version = "7.2.0" }
+agp = { module = "com.android.tools.build:gradle", version = "7.3.0" }
 kgp = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 dokka_gradle_plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 dokka_core = { module = "org.jetbrains.dokka:dokka-core", version.ref = "dokka" }
@@ -81,7 +81,7 @@ firebase_inapp_messaging = { module = "com.google.firebase:firebase-inappmessagi
 
 firebase_performance_plugin = { module = "com.google.firebase:perf-plugin", version = "1.4.1" }
 firebase_crashlytics_plugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version = "2.8.1" }
-gms = { module = "com.google.gms:google-services", version = "4.3.10" }
+gms = { module = "com.google.gms:google-services", version = "4.3.14" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit_converter" }

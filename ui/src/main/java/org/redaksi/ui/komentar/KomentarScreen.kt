@@ -100,6 +100,7 @@ fun KomentarScreen(
                 }
             }
             ScreenState.EMPTY -> EmptyScreen(stringResource(id = R.string.belum_ada_komentar))
+            else -> EmptyScreen(stringResource(id = R.string.belum_ada_komentar))
         }
     }
 }

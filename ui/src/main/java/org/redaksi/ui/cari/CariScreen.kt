@@ -86,6 +86,9 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
                 ScreenState.EMPTY -> {
                     EmptyScreen(message = stringResource(id = R.string.tidak_ada_hasil))
                 }
+                else -> {
+                    EmptyScreen(message = stringResource(id = R.string.tidak_ada_hasil))
+                }
             }
         }
     }
@@ -105,7 +108,6 @@ class AlphaNumericVisualTransformation : VisualTransformation {
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CariTextField(uiState: CariViewModelState, onValueChange: (TextFieldValue) -> Unit, onSearch: (String) -> Unit) {
     OutlinedTextField(
