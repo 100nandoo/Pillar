@@ -1,43 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="artikel">Artikel</string>
-    <string name="edisi">Edisi</string>
+    <string name="utama">Utama</string>
     <string name="cari">Cari</string>
     <string name="lainnya">Lainnya</string>
-    <string name="tanggapan">Tanggapan</string>
     <string name="tentang">Tentang</string>
 
     <string name="transkrip">Transkrip</string>
+    <string name="alkitab_theologi">Alkitab &amp; Theologi</string>
+    <string name="iman_kristen_pekerjaan">Iman Kristen &amp; Pekerjaan</string>
+    <string name="kehidupan_kristen">Kehidupan Kristen</string>
+
     <string name="renungan">Renungan</string>
+    <string name="isu_terkini">Isu Terkini</string>
+    <string name="seni_budaya">Seni &amp; Budaya</string>
+    <string name="seputar_grii">Seputar GRII</string>
     <string name="resensi">Resensi</string>
+
     <string name="lain_lain">Lain-lain</string>
-    <string name="komentar">Komentar</string>
     <string name="ok">Ok</string>
     <string name="ya">Ya</string>
     <string name="tidak">Tidak</string>
+    <string name="oleh">Oleh</string>
 
-    <!-- Edisi -->
+    <!-- Utama -->
     <string name="buletin_grii">Buletin Pemuda\nGereja Reformed Injili Indonesia</string>
     <string name="tidak_ada_judul">"Tidak Ada Judul"</string>
-    <string name="terbaru">Terbaru</string>
-    <string name="sebelumnya">Sebelumnya</string>
-
-    <!-- Edisi Detail -->
-    <string name="oleh">Oleh</string>
+    <string name="artikel_terbaru">Artikel Terbaru</string>
+    <string name="pilihan_editor">Pilihan Editor</string>
 
     <!--  Cari  -->
     <string name="masukan_kata_kunci">Masukan kata kunci...</string>
     <string name="share">Share</string>
-    <string name="buat_komentar">Buat komentar</string>
     <string name="tidak_ada_hasil">Tidak Ada\nHasil Pencarian</string>
-
-    <!--  Buat Komentar  -->
-    <string name="hapus">Hapus</string>
-    <string name="nama">Nama</string>
-    <string name="kota">Kota</string>
-    <string name="email">Email</string>
-    <string name="tulis_komentar">Tulis Komentar</string>
-    <string name="belum_ada_komentar">Belum Ada Komentar</string>
 
     <!--  Artikel Detail  -->
     <string name="ayat_ini">ayat ini</string>

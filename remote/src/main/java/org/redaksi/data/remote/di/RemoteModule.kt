@@ -9,6 +9,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import org.redaksi.data.remote.PillarApi
+import org.redaksi.data.remote.baseUrl
 import javax.inject.Singleton
 
 @Module
@@ -25,7 +26,7 @@ object RemoteModule {
             isLenient = true
         }
         return retrofit2.Retrofit.Builder()
-            .baseUrl("https://www.buletinpillar.org/prog/api/app-apis.php/")
+            .baseUrl(baseUrl)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
             .create(PillarApi::class.java)

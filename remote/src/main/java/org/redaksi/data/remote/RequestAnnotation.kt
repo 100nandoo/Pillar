@@ -5,22 +5,23 @@ import androidx.annotation.StringDef
 
 @Retention(AnnotationRetention.SOURCE)
 @IntDef(
-    value = [LAIN_LAIN, TRANSKIP, ARTIKEL, PERKARA, QA, RESENSI, LIPUTAN, PROFILE, RENUNGAN],
+    value = [TRANSKIP, ALKITAB_N_THEOLOGI, IMAN_KRISTEN, KEHIDUPAN_KRISTEN, RENUNGAN, ISU_TERKINI, SENI_BUDAYA, SEPUTAR_GRII, RESENSI,
+        ARTIKEL_MINGGUAN, IMAN_KRISTEN_N_PEKERJAAN],
     open = false
 )
 annotation class CategoryId
 
-const val LAIN_LAIN = -1
-const val TRANSKIP = 1
-const val ARTIKEL = 2
-const val PERKARA = 3
-const val QA = 4
-const val RESENSI = 5
-const val LIPUTAN = 6
-const val PROFILE = 7
-const val MEJA_REDAKSI = 8
-const val POKOK_DOA = 10
-const val RENUNGAN = 17
+const val TRANSKIP = 27
+const val ALKITAB_N_THEOLOGI = 314
+const val IMAN_KRISTEN = 317
+const val KEHIDUPAN_KRISTEN = 23
+const val RENUNGAN = 526
+const val ISU_TERKINI = 315
+const val SENI_BUDAYA = 316
+const val SEPUTAR_GRII = 53
+const val RESENSI = 25
+const val ARTIKEL_MINGGUAN = 527
+const val IMAN_KRISTEN_N_PEKERJAAN = 317
 
 @Retention(AnnotationRetention.SOURCE)
 @StringDef(

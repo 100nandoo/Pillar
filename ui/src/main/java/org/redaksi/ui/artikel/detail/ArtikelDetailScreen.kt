@@ -17,11 +17,13 @@ import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -63,6 +65,7 @@ import org.redaksi.core.helper.verse.DesktopVerseParser
 import org.redaksi.core.helper.verse.Launcher
 import org.redaksi.core.helper.verse.VerseProvider
 import org.redaksi.ui.Dimens.eight
+import org.redaksi.ui.Dimens.four
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
@@ -74,22 +77,17 @@ import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
 import org.redaksi.ui.R.font.lato_regular
 import org.redaksi.ui.Symbol.bullet
-import org.redaksi.ui.edisi.detail.detailScreenDate
-import java.util.Date
+import org.redaksi.ui.utama.detailScreenDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArtikelDetailScreen(
-    onClickKomentar: (Int) -> Unit
-) {
+fun ArtikelDetailScreen() {
     val viewModel: ArtikelDetailViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
-    val artikelId = remember { viewModel.artikelId }
     val context = LocalContext.current
 
     val bottomBarIcons = remember {
         listOf(
-            BottomBarIcon(R.drawable.ic_komentar, R.string.komentar, true) { artikelId?.let(onClickKomentar) },
             BottomBarIcon(R.drawable.ic_share, R.string.share, false) {
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
@@ -306,7 +304,6 @@ fun ArtikelDetailBottomBar(bottomBarIcons: List<BottomBarIcon>, uiState: Artikel
 fun ArtikelDetailBottomBarPreview() {
     ArtikelDetailBottomBar(
         listOf(
-            BottomBarIcon(R.drawable.ic_komentar, R.string.komentar, true) { },
             BottomBarIcon(R.drawable.ic_share, R.string.share, false) {}
         ),
         ArtikelDetailViewModelState()
@@ -323,14 +320,6 @@ fun BottomBarItem(bottomBarIcon: BottomBarIcon, uiState: ArtikelDetailViewModelS
             .padding(sixteen.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (uiState.articleDetailUi.commentCount.isNotBlank() && bottomBarIcon.isComment) {
-            Text(
-                modifier = Modifier.padding(eight.dp, 0.dp),
-                text = uiState.articleDetailUi.commentCount,
-                style = PillarTypography3.bodyMedium,
-                color = surface
-            )
-        }
         Icon(
             painter = painterResource(bottomBarIcon.icon),
             contentDescription = stringResource(bottomBarIcon.label),
@@ -339,14 +328,13 @@ fun BottomBarItem(bottomBarIcon: BottomBarIcon, uiState: ArtikelDetailViewModelS
     }
 }
 
-val category = CategoryUi("Transkrip", R.drawable.ic_transkrip)
+val category = listOf(CategoryUi("Transkrip", R.drawable.ic_transkrip))
 val artikelDetailUi = ArtikelDetailUi(
     "Iman, Pengharapan, dan Kasih (Bagian 16): Doktrin Iman",
     "Adam R",
-    Date(),
-    "12 menit",
-    category,
-    "Iman adalah hal yang sangat unik, khususnya dalam agama Kristen, karena Alkitab berkata, “Tanpa iman, tidak ada orang yang " +
+    estimation = "12 menit",
+    categoryUi = category,
+    body = "Iman adalah hal yang sangat unik, khususnya dalam agama Kristen, karena Alkitab berkata, “Tanpa iman, tidak ada orang yang " +
         "diperkenan Allah.” Manusia beriman dan menjadi orang yang diperkenan Tuhan. Iman tidak berarti kita menyatakan jasa keyakinan kita dan " +
         "cukup syarat sehingga Tuhan harus terima. Justru iman membuktikan dan mengaku bahwa kita tidak berjasa, tidak layak, tidak berharga, dan " +
         "tidak bersyarat, kemudian datang kepada Tuhan, bersandar kepada-Nya, dan menerima jasa Yesus menjadi sumber iman kita. \n"
@@ -369,7 +357,7 @@ fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(style = PillarTypography3.labelSmall, text = artikelDetailUi.authors)
             Text(style = PillarTypography3.labelSmall, text = " $bullet ")
-            Text(style = PillarTypography3.labelSmall, text = detailScreenDate(LocalContext.current, artikelDetailUi.date))
+            Text(style = PillarTypography3.labelSmall, text = detailScreenDate(artikelDetailUi.zonedDateTime))
             Spacer(Modifier.weight(1f))
             Text(
                 modifier = Modifier
@@ -405,7 +393,7 @@ fun ArtikelBody(
             .background(background)
             .padding(sixteen.dp)
     ) {
-        ArtikelKategori(categoryUi = artikelDetailUi.categoryUi)
+        ArtikelKategori(categoryUis = artikelDetailUi.categoryUi)
         AndroidView(
             modifier = Modifier.padding(0.dp, eight.dp, 0.dp, 0.dp),
             factory = { context ->
@@ -491,22 +479,29 @@ fun ArtikelBodyPreview() {
 }
 
 @Composable
-fun ArtikelKategori(categoryUi: CategoryUi) {
-    Row(
+fun ArtikelKategori(categoryUis: List<CategoryUi>) {
+    LazyRow(
         modifier = Modifier
-            .padding(0.dp, 0.dp, eight.dp, 0.dp)
-            .clip(RoundedCornerShape(percent = 50))
-            .background(categoryTranskrip)
-            .padding(eight.dp)
+            .padding(four.dp)
 
     ) {
-        Icon(painter = painterResource(id = categoryUi.icon), contentDescription = categoryUi.label)
-        Text(categoryUi.label)
+        // Icon(painter = painterResource(id = categoryUi.icon), contentDescription = categoryUi.label)
+        categoryUis.forEach { categoryUi ->
+            item {
+                Box(modifier = Modifier
+                    .padding(0.dp, 0.dp, four.dp, 0.dp)
+                    .clip(RoundedCornerShape(percent = 50))
+                    .background(categoryTranskrip)
+                    .padding(eight.dp)){
+                    Text(categoryUi.label)
+                }
+            }
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun ArtikelKategoriPreview() {
-    ArtikelKategori(CategoryUi("Transkrip", R.drawable.ic_transkrip))
+    ArtikelKategori(listOf(CategoryUi("Transkrip", R.drawable.ic_transkrip)))
 }

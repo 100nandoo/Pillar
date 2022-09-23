@@ -47,6 +47,9 @@ androidx_compose_ui_tooling = { module = "androidx.compose.ui:ui-tooling", versi
 androidx_compose_ui_tooling_preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 androidx_compose_viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "viewmodel" }
 
+androidx_paging_compose = { module = "androidx.paging:paging-compose", version = "1.0.0-alpha16" }
+androidx_paging_runtime = { module = "androidx.paging:paging-runtime", version = "3.1.1" }
+
 androidx_test_rules = { module = "androidx.test:rules", version.ref = "androidx.test" }
 androidx_test_runner = { module = "androidx.test:runner", version.ref = "androidx.test" }
 androidx_test_ext_junit = { module = "androidx.test.ext:junit", version.ref = "androidx.test.ext" }
@@ -85,6 +88,8 @@ gms = { module = "com.google.gms:google-services", version = "4.3.14" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit_converter" }
+
+three_ten_abp = { module = "com.jakewharton.threetenabp:threetenabp", version = "1.4.0" }
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

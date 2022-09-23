@@ -113,6 +113,8 @@ dependencies {
     implementation(libs.firebase.performance)
     implementation(libs.firebase.inapp.messaging)
 
+    implementation(libs.three.ten.abp)
+
     // ----------------------------- TEST ------------------------------
     testImplementation(libs.junit)
 

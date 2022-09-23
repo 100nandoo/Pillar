@@ -27,15 +27,11 @@ import androidx.navigation.navArgument
 import org.redaksi.pillar.BottomNavRoute.artikelDetailRoute
 import org.redaksi.pillar.BottomNavRoute.artikelIdArg
 import org.redaksi.pillar.BottomNavRoute.artikelRoute
-import org.redaksi.pillar.BottomNavRoute.buatKomentarRoute
 import org.redaksi.pillar.BottomNavRoute.cariRoute
-import org.redaksi.pillar.BottomNavRoute.edisiDetailRoute
-import org.redaksi.pillar.BottomNavRoute.edisiRoute
-import org.redaksi.pillar.BottomNavRoute.issueNumberArg
 import org.redaksi.pillar.BottomNavRoute.komentarRoute
 import org.redaksi.pillar.BottomNavRoute.lainnyaRoute
-import org.redaksi.pillar.BottomNavRoute.tanggapanRoute
 import org.redaksi.pillar.BottomNavRoute.tentangRoute
+import org.redaksi.pillar.BottomNavRoute.utamaRoute
 import org.redaksi.ui.PillarColor.bottomBarSelected
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.PillarColor.secondaryVar
@@ -45,12 +41,8 @@ import org.redaksi.ui.TentangScreen
 import org.redaksi.ui.artikel.ArtikelScreen
 import org.redaksi.ui.artikel.detail.ArtikelDetailScreen
 import org.redaksi.ui.cari.CariScreen
-import org.redaksi.ui.edisi.EdisiScreen
-import org.redaksi.ui.edisi.detail.EdisiDetailScreen
-import org.redaksi.ui.komentar.KomentarScreen
-import org.redaksi.ui.komentar.buat.BuatKomentarScreen
 import org.redaksi.ui.lainnya.LainnyaScreen
-import org.redaksi.ui.tanggapan.TanggapanScreen
+import org.redaksi.ui.utama.UtamaScreen
 
 @Preview
 @Composable
@@ -65,45 +57,21 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
 
     Scaffold(
         bottomBar = {
-            if (currentRoute == edisiRoute || currentRoute == artikelRoute || currentRoute == cariRoute || currentRoute == lainnyaRoute) {
+            if (currentRoute == utamaRoute || currentRoute == artikelRoute || currentRoute == cariRoute || currentRoute == lainnyaRoute) {
                 NavBar(topRoundedCornerModifier, items, navController)
             }
         }
     ) { paddingValues ->
-        NavHost(navController, startDestination = edisiRoute) {
-            composable(edisiRoute) { EdisiScreen(onClick = { navController.navigate("$edisiDetailRoute/$it") }) }
-            composable(artikelRoute) { ArtikelScreen(onClickArtikel = { navController.navigate("$artikelDetailRoute/$it") }) }
+        NavHost(navController, startDestination = utamaRoute) {
+            composable(utamaRoute) { UtamaScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
+            composable(artikelRoute) { ArtikelScreen(paddingValues, onClickArtikel = { navController.navigate("$artikelDetailRoute/$it") }) }
             composable(cariRoute) { CariScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
-            composable(tanggapanRoute) { TanggapanScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
-            composable(lainnyaRoute) {
-                LainnyaScreen(
-                    paddingValues,
-                    { navController.navigate(tanggapanRoute) },
-                    { navController.navigate(tentangRoute) }
-                )
-            }
+            composable(lainnyaRoute) { LainnyaScreen(paddingValues, onClickTentang = { navController.navigate(tentangRoute) }) }
             composable(tentangRoute) { TentangScreen() }
-            composable("$edisiDetailRoute/{$issueNumberArg}") {
-                EdisiDetailScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") })
-            }
             composable(
                 route = "$artikelDetailRoute/{$artikelIdArg}",
                 arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
-            ) { ArtikelDetailScreen(onClickKomentar = { navController.navigate("$komentarRoute/$it") }) }
-
-            composable(
-                route = "$komentarRoute/{$artikelIdArg}",
-                arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
-            ) { KomentarScreen(onClickBuatKomentar = { navController.navigate("$buatKomentarRoute/$it") }) }
-
-            composable(
-                route = "$buatKomentarRoute/{$artikelIdArg}",
-                arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
-            ) {
-                BuatKomentarScreen(onKomentarInserted = {
-                    navController.popBackStack("$komentarRoute/{$artikelIdArg}", false)
-                })
-            }
+            ) { ArtikelDetailScreen() }
         }
     }
 }
@@ -115,25 +83,21 @@ fun NavBarPreview() {
 }
 
 val navBarItemList = listOf(
-    NavBarItem(R.string.edisi, R.drawable.ic_edisi, edisiRoute),
+    NavBarItem(R.string.utama, R.drawable.ic_utama, utamaRoute),
     NavBarItem(R.string.artikel, R.drawable.ic_artikel, artikelRoute),
     NavBarItem(R.string.cari, R.drawable.ic_cari, cariRoute),
     NavBarItem(R.string.lainnya, R.drawable.ic_lainnya, lainnyaRoute)
 )
 
 object BottomNavRoute {
-    const val edisiRoute = "edisi"
-    const val edisiDetailRoute = "edisiDetail"
+    const val utamaRoute = "utama"
     const val artikelRoute = "artikel"
     const val artikelDetailRoute = "artikelDetail"
     const val cariRoute = "cari"
     const val tentangRoute = "tentang"
     const val lainnyaRoute = "lainnya"
-    const val tanggapanRoute = "tanggapan"
     const val komentarRoute = "komentar"
-    const val buatKomentarRoute = "buatKomentar"
 
-    const val issueNumberArg = "issueNumber"
     const val artikelIdArg = "artikelId"
 }
 

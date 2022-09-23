@@ -1,7 +1,11 @@
 # TODO
+- [ ] Image on Utama
+- [ ] Image on Artikel
+- [ ] Image on Artikel Detail
+- [ ] Jump to Top Artikel Detail
+- [ ] Update Pillar Api Test
 - [ ] Download
 - [ ] Animasi
-- [ ] Icon for artikel category
 
 Done
 - [x] Setup pillar app icon
