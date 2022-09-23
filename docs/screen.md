@@ -6,13 +6,11 @@ graph LR
     C
     E
   end
-  A --> B
-  B --> D
+  A --> D
   C --> D
   E --> D
   D --> F
-  A(Edisi)
-  B(Edisi Detail)
+  A(Utama)
   C(Artikel)
   D(Artikel Detail)
   E(Cari)

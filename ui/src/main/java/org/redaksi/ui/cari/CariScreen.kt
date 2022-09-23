@@ -35,7 +35,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
@@ -44,7 +43,7 @@ import org.redaksi.ui.PillarColor.cariPlaceholder
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.R
 import org.redaksi.ui.ScreenState
-import org.redaksi.ui.edisi.detail.ArticleItem
+import org.redaksi.ui.artikel.ArticleItem
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -53,7 +52,7 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
     val uiState by viewModel.uiState.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    Scaffold { it
+    Scaffold { it ->
         Column(
             Modifier
                 .fillMaxSize()

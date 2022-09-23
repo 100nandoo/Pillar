@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.redaksi.data.remote.PillarApi
 import org.redaksi.ui.ScreenState
-import org.redaksi.ui.edisi.detail.ArticleUi
-import org.redaksi.ui.edisi.detail.fromResponse
+import org.redaksi.ui.utama.ArticleUi
+import org.redaksi.ui.utama.fromResponse
 import javax.inject.Inject
 
 @HiltViewModel

@@ -44,9 +44,8 @@ import org.redaksi.ui.PillarColor.secondaryVar
 import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
 import org.redaksi.ui.ScreenState
-import org.redaksi.ui.edisi.detail.detailScreenDate
+import org.redaksi.ui.utama.detailScreenDate
 import org.threeten.bp.ZonedDateTime
-import java.util.Date
 
 @Composable
 fun KomentarScreen(
@@ -124,7 +123,7 @@ fun KomentarItem(komentarUi: KomentarUi, isClickable: Boolean, onClick: (artikel
         Row(modifier = Modifier.padding(0.dp, four.dp)) {
             Text(
                 style = PillarTypography3.labelSmall,
-                color = PillarColor.edisiDetailBody,
+                color = PillarColor.utamaBody,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 fontStyle = FontStyle.Italic,
@@ -132,7 +131,7 @@ fun KomentarItem(komentarUi: KomentarUi, isClickable: Boolean, onClick: (artikel
             )
             Text(
                 style = PillarTypography3.labelSmall,
-                color = PillarColor.edisiDetailBody,
+                color = PillarColor.utamaBody,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 text = " - " + komentarUi.city
@@ -140,7 +139,7 @@ fun KomentarItem(komentarUi: KomentarUi, isClickable: Boolean, onClick: (artikel
             Spacer(Modifier.weight(1f))
             Text(
                 style = PillarTypography3.labelSmall,
-                color = PillarColor.edisiDetailBody,
+                color = PillarColor.utamaBody,
                 text = detailScreenDate(komentarUi.zonedDateTime)
             )
         }

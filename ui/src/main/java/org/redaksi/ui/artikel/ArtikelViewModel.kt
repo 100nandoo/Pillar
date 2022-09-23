@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.redaksi.data.remote.*
-import org.redaksi.ui.edisi.detail.ArticleUi
-import org.redaksi.ui.edisi.detail.fromResponse
+import org.redaksi.ui.utama.ArticleUi
+import org.redaksi.ui.utama.fromResponse
 import javax.inject.Inject
 
 @HiltViewModel

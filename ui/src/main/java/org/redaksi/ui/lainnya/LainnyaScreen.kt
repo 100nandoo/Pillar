@@ -59,7 +59,7 @@ fun LainnyaScreen(paddingValues: PaddingValues, onClickTanggapan: () -> Unit, on
                             .height(26.dp)
                             .fillMaxWidth(),
                         style = PillarTypography3.headlineSmall,
-                        color = PillarColor.edisiDetailTitle,
+                        color = PillarColor.utamaTitle,
                         text = stringResource(id = R.string.tanggapan)
                     )
                 }
@@ -82,7 +82,7 @@ fun LainnyaScreen(paddingValues: PaddingValues, onClickTanggapan: () -> Unit, on
                             .height(26.dp)
                             .fillMaxWidth(),
                         style = PillarTypography3.headlineSmall,
-                        color = PillarColor.edisiDetailTitle,
+                        color = PillarColor.utamaTitle,
                         text = stringResource(id = R.string.tentang)
                     )
                 }

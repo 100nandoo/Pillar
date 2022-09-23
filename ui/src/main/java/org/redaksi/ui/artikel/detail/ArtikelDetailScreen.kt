@@ -74,7 +74,7 @@ import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
 import org.redaksi.ui.R.font.lato_regular
 import org.redaksi.ui.Symbol.bullet
-import org.redaksi.ui.edisi.detail.detailScreenDate
+import org.redaksi.ui.utama.detailScreenDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

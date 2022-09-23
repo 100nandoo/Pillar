@@ -1,6 +1,5 @@
-package org.redaksi.ui.edisi.detail
+package org.redaksi.ui.utama
 
-import android.util.Log
 import org.redaksi.core.helper.JsoupHelper
 import org.redaksi.data.remote.response.base.NewArticle
 import org.threeten.bp.ZoneId

@@ -1,13 +1,17 @@
 package org.redaksi.ui.artikel
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
@@ -22,8 +26,10 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Velocity
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -39,13 +45,17 @@ import org.redaksi.data.remote.RESENSI
 import org.redaksi.data.remote.SENI_BUDAYA
 import org.redaksi.data.remote.SEPUTAR_GRII
 import org.redaksi.data.remote.TRANSKIP
+import org.redaksi.ui.Dimens
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.PillarColor.secondaryVar
 import org.redaksi.ui.PillarColor.surface
+import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
-import org.redaksi.ui.edisi.detail.ArticleItem
+import org.redaksi.ui.utama.ArticleUi
+import org.redaksi.ui.utama.detailScreenDate
+import org.threeten.bp.ZonedDateTime
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -169,4 +179,87 @@ private fun PageContent(pages: List<Page>, uiState: ArtikelViewModelState, pager
             }
         }
     }
+}
+
+@Composable
+fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boolean, onClick: (artikelId: Int) -> Unit) {
+    val paddingTop = modifier.padding(0.dp, Dimens.eight.dp, 0.dp, 0.dp)
+    Column(
+        modifier
+            .padding(Dimens.sixteen.dp, Dimens.eight.dp, Dimens.sixteen.dp, 0.dp)
+            .clickable { onClick(articleUi.id) }
+    ) {
+        Text(
+            modifier = modifier.fillMaxWidth(),
+            style = PillarTypography3.headlineSmall,
+            color = PillarColor.utamaTitle,
+            text = articleUi.title
+        )
+        if (articleUi.body.isNotBlank()) {
+            Text(
+                modifier = paddingTop,
+                style = PillarTypography3.bodyMedium,
+                color = PillarColor.utamaBody,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                text = articleUi.body
+            )
+        }
+        Row(modifier = modifier.padding(0.dp, Dimens.eight.dp)) {
+            if (articleUi.authors.isNotBlank()) {
+                androidx.compose.material3.Text(
+                    modifier = Modifier
+                        .weight(1f),
+                    style = PillarTypography3.labelSmall,
+                    color = PillarColor.utamaBody,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    text = stringResource(id = R.string.oleh) + " " + articleUi.authors
+                )
+            }
+            if (articleUi.zonedDateTime != null) {
+                androidx.compose.material3.Text(
+                    style = PillarTypography3.labelSmall,
+                    color = PillarColor.utamaBody,
+                    text = articleUi.zonedDateTime?.let { detailScreenDate(it) } ?: ""
+                )
+            }
+        }
+        if (isLast.not()) {
+            Divider(modifier = modifier, color = secondaryVar)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ArticleItemPreview() {
+    ArticleItem(
+        Modifier,
+
+        ArticleUi(
+            0,
+            "Doktrin Wahyu: Sebuah Introduksi",
+            "Bab pertama buku ini dimulai dengan penjelasan tentang aksiologi (teori nilai) dan hubungan nyata",
+            "John Doe",
+            ZonedDateTime.now()
+        ),
+        false
+    ) {}
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ArticleItemLoadingPreview() {
+    ArticleItem(
+        Modifier,
+        ArticleUi(
+            0,
+            "Doktrin Wahyu: Sebuah Introduksi",
+            "Bab pertama buku ini dimulai dengan penjelasan tentang aksiologi (teori nilai) dan hubungan nyata",
+            "John Doe",
+            ZonedDateTime.now()
+        ),
+        false
+    ) {}
 }

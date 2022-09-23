@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="artikel">Artikel</string>
-    <string name="edisi">Edisi</string>
+    <string name="utama">Utama</string>
     <string name="cari">Cari</string>
     <string name="lainnya">Lainnya</string>
     <string name="tanggapan">Tanggapan</string>
@@ -23,15 +23,13 @@
     <string name="ok">Ok</string>
     <string name="ya">Ya</string>
     <string name="tidak">Tidak</string>
+    <string name="oleh">Oleh</string>
 
-    <!-- Edisi -->
+    <!-- Utama -->
     <string name="buletin_grii">Buletin Pemuda\nGereja Reformed Injili Indonesia</string>
     <string name="tidak_ada_judul">"Tidak Ada Judul"</string>
     <string name="artikel_terbaru">Artikel Terbaru</string>
     <string name="pilihan_editor">Pilihan Editor</string>
-
-    <!-- Edisi Detail -->
-    <string name="oleh">Oleh</string>
 
     <!--  Cari  -->
     <string name="masukan_kata_kunci">Masukan kata kunci...</string>

@@ -2,7 +2,6 @@ package org.redaksi.data.remote
 
 import org.redaksi.data.remote.response.AllIssuesResponse
 import org.redaksi.data.remote.response.ArticleDetailResponse
-import org.redaksi.data.remote.response.GenericArticlesResponse
 import org.redaksi.data.remote.response.GenericCommentsResponse
 import org.redaksi.data.remote.response.GenericIssueWithArticlesResponse
 import org.redaksi.data.remote.response.InsertCommentResponse
@@ -40,7 +39,7 @@ interface PillarApi {
     suspend fun editorChoicesArticles(
         @Query("pilihan")
         pilihan: String = "yes"
-    ): Response<GenericArticlesResponse>
+    ): Response<List<NewArticle>>
 
     @GET("posts")
     suspend fun newestArticles(
