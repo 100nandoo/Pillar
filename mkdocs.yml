@@ -28,6 +28,7 @@ theme:
 nav:
   - 'Overview': index.md
   - 'Screen': screen.md
+  - 'Changelog': CHANGELOG.md
 
 markdown_extensions:
   - pymdownx.superfences:
