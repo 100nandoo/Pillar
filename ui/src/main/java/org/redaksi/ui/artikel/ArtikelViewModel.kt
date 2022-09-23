@@ -27,17 +27,17 @@ class ArtikelViewModel @Inject constructor(private val pillarApi: PillarApi) : V
             val response = result.getOrNull()?.body()
             when {
                 result.isSuccess && response != null -> {
-                    val issuesUi = fromResponse(response)
+                    val articleUis = fromResponse(response)
                     when (categoryId) {
-                        TRANSKIP -> { viewModelState.update { it.copy(transkripArticles = issuesUi, isLoading = false) } }
-                        ALKITAB_THEOLOGI -> { viewModelState.update { it.copy(alkitabTheologiArticles = issuesUi, isLoading = false) } }
-                        IMAN_KRISTEN -> { viewModelState.update { it.copy(imanKristenArticles = issuesUi, isLoading = false) } }
-                        KEHIDUPAN_KRISTEN -> { viewModelState.update { it.copy(kehidupanKristenArticles = issuesUi, isLoading = false) } }
-                        RENUNGAN -> { viewModelState.update { it.copy(renunganArticles = issuesUi, isLoading = false) } }
-                        ISU_TERKINI -> { viewModelState.update { it.copy(isuTerkiniArticles = issuesUi, isLoading = false) } }
-                        SENI_BUDAYA -> { viewModelState.update { it.copy(seniBudayaArticles = issuesUi, isLoading = false) } }
-                        SEPUTAR_GRII -> { viewModelState.update { it.copy(seputarGriiArticles = issuesUi, isLoading = false) } }
-                        else -> { viewModelState.update { it.copy(resensiArticles = issuesUi, isLoading = false) } }
+                        TRANSKIP -> { viewModelState.update { it.copy(transkripArticles = articleUis, isLoading = false) } }
+                        ALKITAB_THEOLOGI -> { viewModelState.update { it.copy(alkitabTheologiArticles = articleUis, isLoading = false) } }
+                        IMAN_KRISTEN -> { viewModelState.update { it.copy(imanKristenArticles = articleUis, isLoading = false) } }
+                        KEHIDUPAN_KRISTEN -> { viewModelState.update { it.copy(kehidupanKristenArticles = articleUis, isLoading = false) } }
+                        RENUNGAN -> { viewModelState.update { it.copy(renunganArticles = articleUis, isLoading = false) } }
+                        ISU_TERKINI -> { viewModelState.update { it.copy(isuTerkiniArticles = articleUis, isLoading = false) } }
+                        SENI_BUDAYA -> { viewModelState.update { it.copy(seniBudayaArticles = articleUis, isLoading = false) } }
+                        SEPUTAR_GRII -> { viewModelState.update { it.copy(seputarGriiArticles = articleUis, isLoading = false) } }
+                        else -> { viewModelState.update { it.copy(resensiArticles = articleUis, isLoading = false) } }
                     }
                 }
             }
