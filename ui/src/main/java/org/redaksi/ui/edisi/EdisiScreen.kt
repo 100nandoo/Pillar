@@ -67,14 +67,12 @@ fun EdisiScreen(
                                 HeaderItem(Modifier.background(PillarColor.background), R.string.artikel_terbaru)
                             }
                             item {
-                                EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
                             }
                             item {
                                 HeaderItem(Modifier.background(PillarColor.background), R.string.pilihan_editor)
                             }
                         } else {
                             item {
-                                EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
                             }
                         }
                     }
@@ -88,118 +86,6 @@ fun EdisiScreen(
 @Composable
 private fun EdisiScreenPreview() {
     EdisiScreen {}
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun EdisiItem(modifier: Modifier = Modifier, onClick: () -> Unit, issue: IssueUi) {
-    @Composable
-    fun EdisiHeader(modifier: Modifier, issue: IssueUi) {
-        Row(modifier = modifier.height(IntrinsicSize.Min)) {
-            Column(
-                modifier = Modifier
-                    .background(PillarColor.edisiNumber)
-                    .padding(sixteen.dp)
-                    .fillMaxHeight(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_logos),
-                    contentDescription = "Logo logos"
-                )
-                Text(modifier = modifier, style = PillarTypography3.titleLarge, text = issue.number)
-                Text(modifier = modifier, style = PillarTypography3.bodySmall, text = issue.dateDisplay)
-            }
-            Box(modifier = Modifier) {
-                Column(
-                    modifier = Modifier
-                        .background(PillarColor.edisiTitle)
-                        .fillMaxSize()
-                        .padding(sixteen.dp),
-                    horizontalAlignment = Alignment.End
-                ) {
-                    Text(textAlign = TextAlign.End, text = stringResource(id = R.string.buletin_grii))
-                    Text(style = PillarTypography3.titleMedium, text = "Pillar")
-                }
-                Icon(
-                    modifier = Modifier
-                        .size(128.dp)
-                        .align(Alignment.CenterStart),
-                    painter = painterResource(id = R.drawable.image_pillar),
-                    contentDescription = "Gambar Pillar"
-
-                )
-            }
-        }
-    }
-
-    @Composable
-    fun EdisiContent(modifier: Modifier, issue: IssueUi) {
-        @Composable
-        fun ArtikelItem(modifier: Modifier, title: String) {
-            val staticModifier = modifier.padding(0.dp, 0.dp, 0.dp, 4.dp)
-            val style = PillarTypography3.bodyMedium
-            Row(
-                modifier = staticModifier
-            ) {
-                Text(
-                    style = style,
-                    text = Symbol.bullet + " "
-                )
-                Text(
-                    style = style,
-                    text = title
-                )
-            }
-        }
-
-        Column(modifier = modifier.padding(sixteen.dp)) {
-            if (issue.title.isNotBlank()) {
-                Text(
-                    modifier = modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
-                    style = PillarTypography3.titleSmall,
-                    text = issue.title
-                )
-            }
-            issue.articles.forEach { article ->
-                ArtikelItem(modifier, article)
-            }
-        }
-    }
-
-    Card(
-        Modifier
-            .background(PillarColor.background)
-            .padding(sixteen.dp, sixteen.dp, sixteen.dp, 0.dp)
-            .wrapContentHeight()
-            .clip(RoundedCornerShape(twelve.dp))
-            .clickable { onClick() },
-        colors = CardDefaults.cardColors(containerColor = PillarColor.edisiBackground)
-    ) {
-        EdisiHeader(modifier = modifier, issue = issue)
-        EdisiContent(modifier = modifier, issue = issue)
-    }
-}
-
-@Preview(
-    showBackground = true
-)
-@Composable
-private fun EdisiItemPreview() {
-    EdisiItem(
-        Modifier.background(PillarColor.background),
-        { },
-        IssueUi(
-            "224",
-            "Apr 2022",
-            "Iman, Pengharapan, dan Kasih (Bagian 14): Doktrin Iman",
-            listOf(
-                "Doktrin Wahyu: Sebuah Introduksi",
-                "The Doctrine of Revelation (2): The Condescension of the World",
-                "Doktrin Wahyu: Sebuah Introduksi"
-            )
-        )
-    )
 }
 
 @Composable
