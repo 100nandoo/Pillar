@@ -78,17 +78,13 @@ import org.redaksi.ui.utama.detailScreenDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArtikelDetailScreen(
-    onClickKomentar: (Int) -> Unit
-) {
+fun ArtikelDetailScreen() {
     val viewModel: ArtikelDetailViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
-    val artikelId = remember { viewModel.artikelId }
     val context = LocalContext.current
 
     val bottomBarIcons = remember {
         listOf(
-            BottomBarIcon(R.drawable.ic_komentar, R.string.komentar, true) { artikelId?.let(onClickKomentar) },
             BottomBarIcon(R.drawable.ic_share, R.string.share, false) {
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
@@ -305,7 +301,6 @@ fun ArtikelDetailBottomBar(bottomBarIcons: List<BottomBarIcon>, uiState: Artikel
 fun ArtikelDetailBottomBarPreview() {
     ArtikelDetailBottomBar(
         listOf(
-            BottomBarIcon(R.drawable.ic_komentar, R.string.komentar, true) { },
             BottomBarIcon(R.drawable.ic_share, R.string.share, false) {}
         ),
         ArtikelDetailViewModelState()

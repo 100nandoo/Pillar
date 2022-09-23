@@ -18,7 +18,6 @@
     <string name="resensi">Resensi</string>
 
     <string name="lain_lain">Lain-lain</string>
-    <string name="komentar">Komentar</string>
     <string name="ok">Ok</string>
     <string name="ya">Ya</string>
     <string name="tidak">Tidak</string>
@@ -33,16 +32,7 @@
     <!--  Cari  -->
     <string name="masukan_kata_kunci">Masukan kata kunci...</string>
     <string name="share">Share</string>
-    <string name="buat_komentar">Buat komentar</string>
     <string name="tidak_ada_hasil">Tidak Ada\nHasil Pencarian</string>
-
-    <!--  Buat Komentar  -->
-    <string name="hapus">Hapus</string>
-    <string name="nama">Nama</string>
-    <string name="kota">Kota</string>
-    <string name="email">Email</string>
-    <string name="tulis_komentar">Tulis Komentar</string>
-    <string name="belum_ada_komentar">Belum Ada Komentar</string>
 
     <!--  Artikel Detail  -->
     <string name="ayat_ini">ayat ini</string>

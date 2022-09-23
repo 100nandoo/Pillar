@@ -27,7 +27,6 @@ import androidx.navigation.navArgument
 import org.redaksi.pillar.BottomNavRoute.artikelDetailRoute
 import org.redaksi.pillar.BottomNavRoute.artikelIdArg
 import org.redaksi.pillar.BottomNavRoute.artikelRoute
-import org.redaksi.pillar.BottomNavRoute.buatKomentarRoute
 import org.redaksi.pillar.BottomNavRoute.cariRoute
 import org.redaksi.pillar.BottomNavRoute.komentarRoute
 import org.redaksi.pillar.BottomNavRoute.lainnyaRoute
@@ -42,8 +41,6 @@ import org.redaksi.ui.TentangScreen
 import org.redaksi.ui.artikel.ArtikelScreen
 import org.redaksi.ui.artikel.detail.ArtikelDetailScreen
 import org.redaksi.ui.cari.CariScreen
-import org.redaksi.ui.komentar.KomentarScreen
-import org.redaksi.ui.komentar.buat.BuatKomentarScreen
 import org.redaksi.ui.lainnya.LainnyaScreen
 import org.redaksi.ui.utama.UtamaScreen
 
@@ -74,21 +71,7 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
             composable(
                 route = "$artikelDetailRoute/{$artikelIdArg}",
                 arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
-            ) { ArtikelDetailScreen(onClickKomentar = { navController.navigate("$komentarRoute/$it") }) }
-
-            composable(
-                route = "$komentarRoute/{$artikelIdArg}",
-                arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
-            ) { KomentarScreen(onClickBuatKomentar = { navController.navigate("$buatKomentarRoute/$it") }) }
-
-            composable(
-                route = "$buatKomentarRoute/{$artikelIdArg}",
-                arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
-            ) {
-                BuatKomentarScreen(onKomentarInserted = {
-                    navController.popBackStack("$komentarRoute/{$artikelIdArg}", false)
-                })
-            }
+            ) { ArtikelDetailScreen() }
         }
     }
 }
@@ -114,7 +97,6 @@ object BottomNavRoute {
     const val tentangRoute = "tentang"
     const val lainnyaRoute = "lainnya"
     const val komentarRoute = "komentar"
-    const val buatKomentarRoute = "buatKomentar"
 
     const val artikelIdArg = "artikelId"
 }
