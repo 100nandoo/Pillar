@@ -31,7 +31,6 @@ import org.redaksi.pillar.BottomNavRoute.buatKomentarRoute
 import org.redaksi.pillar.BottomNavRoute.cariRoute
 import org.redaksi.pillar.BottomNavRoute.komentarRoute
 import org.redaksi.pillar.BottomNavRoute.lainnyaRoute
-import org.redaksi.pillar.BottomNavRoute.tanggapanRoute
 import org.redaksi.pillar.BottomNavRoute.tentangRoute
 import org.redaksi.pillar.BottomNavRoute.utamaRoute
 import org.redaksi.ui.PillarColor.bottomBarSelected
@@ -46,7 +45,6 @@ import org.redaksi.ui.cari.CariScreen
 import org.redaksi.ui.komentar.KomentarScreen
 import org.redaksi.ui.komentar.buat.BuatKomentarScreen
 import org.redaksi.ui.lainnya.LainnyaScreen
-import org.redaksi.ui.tanggapan.TanggapanScreen
 import org.redaksi.ui.utama.UtamaScreen
 
 @Preview
@@ -71,14 +69,7 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
             composable(utamaRoute) { UtamaScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
             composable(artikelRoute) { ArtikelScreen(paddingValues, onClickArtikel = { navController.navigate("$artikelDetailRoute/$it") }) }
             composable(cariRoute) { CariScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
-            composable(tanggapanRoute) { TanggapanScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
-            composable(lainnyaRoute) {
-                LainnyaScreen(
-                    paddingValues,
-                    { navController.navigate(tanggapanRoute) },
-                    { navController.navigate(tentangRoute) }
-                )
-            }
+            composable(lainnyaRoute) { LainnyaScreen(paddingValues, onClickTentang = { navController.navigate(tentangRoute) }) }
             composable(tentangRoute) { TentangScreen() }
             composable(
                 route = "$artikelDetailRoute/{$artikelIdArg}",
@@ -122,7 +113,6 @@ object BottomNavRoute {
     const val cariRoute = "cari"
     const val tentangRoute = "tentang"
     const val lainnyaRoute = "lainnya"
-    const val tanggapanRoute = "tanggapan"
     const val komentarRoute = "komentar"
     const val buatKomentarRoute = "buatKomentar"
 
