@@ -38,68 +38,53 @@ body {
   padding:8px;
 }
 </style>
-<h2>Aplikasi Buletin Pillar</h2>
+<h2>Aplikasi Buletin PILLAR</h2>
 
 <p><a href="http://www.buletinpillar.org">www.buletinpillar.org</a></p>
 
-<p><b>Pengembang:</b>
-    <br><a href="https://www.halim.dev">Fernando Fransisco Halim</a>
-    <br>Randy Sugianto
+<hr/>
+<p><b>Tujuan dari penerbitan PILLAR</b>
+<ol><li>Membawa pemuda untuk menghidupkan signifikansi gerakan Reformed Injili di dalam segala bidang.</li><li>Berperan sebagai wadah edukasi &amp; informasi yang menjawab kebutuhan pemuda.</li></ol>
+
+<p><b>Pengurus Buletin PILLAR</b>
+<br>Penasihat – Pdt. Benyamin F. Intan, Pdt. Sutjipto Subeno<br>Ketua – Pdt. Heruarto Salim<br>Sekretaris – Chai Su San<br>Bendahara – Yesaya Ishak
+</p>
+
+<p><b>Editorial:</b>
+<br>Ketua – Pdt. Heruarto Salim<br>Editor Bahasa – Darwin Kusuma, Noah Sundah, Juan Intan Kanggrawan, Yana Valentina<br>Konten – Pdt. Heruarto Salim, Adhya Kumara, Kevin Nobel, Elya Wibowo, Juan Intan Kanggrawan, Erwan Zhang, Biya Hannah
+</p>
+
+<p><b>Android App:</b>
+<br><a href="https://www.halim.dev">Fernando Fransisco Halim</a>
+<br><a href="https://www.hencewijaya.com/">Hence Wijaya</a>
+<br>Randy Sugianto
 </p>
 
 <p><b>Warna Aplikasi:</b>
-    <br>Maria Fransiska
+<br>Maria Fransiska
 </p>
 
-<hr/>
-
-<h2>Tujuan dari penerbitan Pillar</h2>
-
-<ol>
-    <li>Membawa pemuda untuk menghidupkan signifikansi gerakan Reformed Injili di dalam segala bidang.
-    <li>Berperan sebagai wadah edukasi & informasi yang menjawab kebutuhan pemuda.
-</ol>
-
-<h3>Penasihat:</h3>
-<p>
-        Pdt. Benyamin F. Intan
-    <br>Pdt. Sutjipto Subeno
+<p><b>Website:</b>
+<br>Ketua – Vik. Kenny Ruben<br>Desain Web – Andrian Cedric, Hosea Aldri<br>Programmer – Randy Sugianto, Hence Wijaya<br>Desain Grafis – Heryanto Tjandra, Michael Leang, Mellisa Gunawan
 </p>
 
-<h3>Redaksi:</h3>
-<p><b>Pemimpin Redaksi:</b> Ev. Edward Oei
-    <br><b>Wakil Pemimpin Redaksi:</b> Ev. Diana Ruth
-    <br><b>Redaksi Pelaksana:</b> Adhya Kumara, Heruarto Salim, Heryanto Tjandra
-    <br><b>Desain:</b> Mellisa Gunawan, Michael Leang
-    <br><b>Redaksi Bahasa:</b> Darwin Kusuma, Juan Intan Kanggrawan, Lukas Yuan Utomo, Mildred Sebastian, Yana Valentina
-    <br><b>Redaksi Umum:</b> Budiman Thia, Erwan, Hadi Salim Suroso, Randy Sugianto, Yesaya Ishak
+<p><b>Medsos:</b>
+<br>Ketua – Vik. William Sugiarto<br>Konten – Vik. William Sugiarto, Hadi Salim Suroso, Kevin Nobel, Joanne Emmanuel<br>Desain – Leony Novita, Kezia Leonardo, Stella Yohanna, Eunice Gabrielle<br>Admin – Chai Su San
 </p>
 
-<hr/>
+<hr class="wp-block-separator has-alpha-channel-opacity">
 
-<h2>Tata Cara Pengutipan</h2>
-
-<p>Pembaca bebas untuk memberikan hyperlink di blog atau website pribadi kalian ke situs Pillar -  www.buletinpillar.org  </p>
-
-<p>Sejak edisi pertama, Buletin Pillar terus berusaha mempertahankan kualitas dan mempertanggungjawabkan isi sebaik mungkin. Setiap artikel telah diperiksa oleh hamba Tuhan yang juga bertanggung jawab. Sehingga, setiap artikel memiliki basis gerakan Reformed Injili yang kuat. Oleh karena itu bila artikel ini dipakai oleh pihak lain, maka artikel ini dapat kami pertanggung jawabkan dan mempunyai stand point yang jelas. </p>
-
+<p><b>Tata Cara Pengutipan</b>
+<p>Pembaca bebas untuk memberikan hyperlink di blog atau website pribadi kalian ke situs Pillar – <a href="https://www.buletinpillar.org">www.buletinpillar.org</a></p>
+<p>Sejak edisi pertama, Bulletin Pillar terus berusaha mempertahankan kualitas dan mempertanggungjawabkan isi sebaik mungkin. Setiap artikel telah diperiksa oleh hamba Tuhan yang juga bertanggung jawab. Sehingga, setiap artikel memiliki basis gerakan Reformed Injili yang kuat. Oleh karena itu bila artikel ini dipakai oleh pihak lain, maka artikel ini dapat kami pertanggung jawabkan dan mempunyai stand point yang jelas.</p>
 <p>Bagi pembaca yang mendapatkan berkat melalui artikel-artikel dan ingin mengutip kalimat-kalimat yang ada di dalam artikel Pillar untuk hasil karya tulisan kalian? Beberapa hal yang terkait dengan pengutipan agar sesuai dengan kode etik hak cipta, silakan ikuti tata cara pengutipan di bawah:</p>
+<ul><li>Kutipan dari artikel buletin Pillar tidak diubah isi</li><li>Harus mencantumkan nama penulis artikel yang dikutip</li><li>Harus mencantumkan nara sumber yang lengkap</li></ul>
 
-<ul>
-    <li>Kutipan dari artikel buletin Pillar tidak diubah isi</li>
-    <li>Harus mencantumkan nama penulis artikel yang dikutip </li>
-    <li>Harus mencantumkan nara sumber yang lengkap</li>
-</ul>
-
-<p>contoh:
-    <br/>Dikutip dari Buletin Pillar (Buletin Pemuda Gereja Reformed Injili Indonesia) edisi no. <i>XXX (bulan, tahun)</i>, artikel <i>(judul artikel)</i> oleh <i>(penulis)</i>.
-    <br/>Bahkan anda bisa memuat alamat website kami, http://www.buletinpillar.org</p>
-
-<hr/>
-
-<p>Redaksi Pillar menantikan setiap masukan, saran, maupun kritik yang membangun baik itu untuk isi/konten artikel, desain maupun aplikasi Pillar.
-   Anda bisa menyampaikannya melalui <a href="mailto:redaksi@buletinpillar.org">redaksi@buletinpillar.org</a></p>
+<p>contoh:<br>Dikutip dari Bulletin Pillar (Bulletin Pemuda Gereja Reformed Injili Indonesia) edisi no.&nbsp;<em>XXX (bulan, tahun)</em>, artikel&nbsp;<em>(judul artikel)</em>&nbsp;oleh&nbsp;<em>(penulis)</em>.<br>Bahkan anda bisa memuat alamat website kami, <a href="https://www.buletinpillar.org">https://www.buletinpillar.org</a></p>
+<!-- AddThis Advanced Settings above via filter on the_content --><!-- AddThis Advanced Settings below via filter on the_content --><!-- AddThis Advanced Settings generic via filter on the_content --><!-- AddThis Share Buttons above via filter on the_content --><!-- AddThis Share Buttons below via filter on the_content --><div class="at-below-post-page addthis_tool" data-url="https://www.buletinpillar.org/tentang-pillar"></div><!-- AddThis Share Buttons generic via filter on the_content -->
+</div>
 
 </body>
 </html>
 """
+
