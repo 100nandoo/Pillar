@@ -16,14 +16,13 @@ class EdisiDetailViewModel @Inject constructor(private val pillarApi: PillarApi,
     val uiState = viewModelState
 
     init {
-        val issueNumber: String? = savedStateHandle["issueNumber"]
-        issueNumber?.let { loadArticles(it) }
+        loadArticles()
     }
 
-    private fun loadArticles(issueNumber: String) {
+    private fun loadArticles() {
         viewModelScope.launch {
             viewModelState.update { it.copy(isLoading = true) }
-            val result = runCatching { pillarApi.articlesByIssueNumber(issueNumber) }
+            val result = runCatching { pillarApi.newestArticles() }
             val response = result.getOrNull()?.body()
             when {
                 result.isSuccess && response != null -> {

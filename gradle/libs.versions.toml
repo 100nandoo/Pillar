@@ -86,6 +86,8 @@ gms = { module = "com.google.gms:google-services", version = "4.3.14" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit_converter" }
 
+three_ten_abp = { module = "com.jakewharton.threetenabp:threetenabp", version = "1.4.0" }
+
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "10.2.1" }

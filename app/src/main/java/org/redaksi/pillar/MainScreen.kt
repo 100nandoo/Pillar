@@ -72,7 +72,7 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
     ) { paddingValues ->
         NavHost(navController, startDestination = edisiRoute) {
             composable(edisiRoute) { EdisiScreen(onClick = { navController.navigate("$edisiDetailRoute/$it") }) }
-            composable(artikelRoute) { ArtikelScreen(onClickArtikel = { navController.navigate("$artikelDetailRoute/$it") }) }
+            composable(artikelRoute) { ArtikelScreen(paddingValues, onClickArtikel = { navController.navigate("$artikelDetailRoute/$it") }) }
             composable(cariRoute) { CariScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
             composable(tanggapanRoute) { TanggapanScreen(paddingValues, onClick = { navController.navigate("$artikelDetailRoute/$it") }) }
             composable(lainnyaRoute) {

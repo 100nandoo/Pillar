@@ -75,7 +75,6 @@ import org.redaksi.ui.R
 import org.redaksi.ui.R.font.lato_regular
 import org.redaksi.ui.Symbol.bullet
 import org.redaksi.ui.edisi.detail.detailScreenDate
-import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -343,10 +342,9 @@ val category = CategoryUi("Transkrip", R.drawable.ic_transkrip)
 val artikelDetailUi = ArtikelDetailUi(
     "Iman, Pengharapan, dan Kasih (Bagian 16): Doktrin Iman",
     "Adam R",
-    Date(),
-    "12 menit",
-    category,
-    "Iman adalah hal yang sangat unik, khususnya dalam agama Kristen, karena Alkitab berkata, “Tanpa iman, tidak ada orang yang " +
+    estimation = "12 menit",
+    categoryUi = category,
+    body = "Iman adalah hal yang sangat unik, khususnya dalam agama Kristen, karena Alkitab berkata, “Tanpa iman, tidak ada orang yang " +
         "diperkenan Allah.” Manusia beriman dan menjadi orang yang diperkenan Tuhan. Iman tidak berarti kita menyatakan jasa keyakinan kita dan " +
         "cukup syarat sehingga Tuhan harus terima. Justru iman membuktikan dan mengaku bahwa kita tidak berjasa, tidak layak, tidak berharga, dan " +
         "tidak bersyarat, kemudian datang kepada Tuhan, bersandar kepada-Nya, dan menerima jasa Yesus menjadi sumber iman kita. \n"
@@ -369,7 +367,7 @@ fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(style = PillarTypography3.labelSmall, text = artikelDetailUi.authors)
             Text(style = PillarTypography3.labelSmall, text = " $bullet ")
-            Text(style = PillarTypography3.labelSmall, text = detailScreenDate(LocalContext.current, artikelDetailUi.date))
+            Text(style = PillarTypography3.labelSmall, text = detailScreenDate(artikelDetailUi.zonedDateTime))
             Spacer(Modifier.weight(1f))
             Text(
                 modifier = Modifier

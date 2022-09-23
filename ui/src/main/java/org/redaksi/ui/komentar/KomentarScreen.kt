@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
@@ -46,6 +45,7 @@ import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
 import org.redaksi.ui.ScreenState
 import org.redaksi.ui.edisi.detail.detailScreenDate
+import org.threeten.bp.ZonedDateTime
 import java.util.Date
 
 @Composable
@@ -141,7 +141,7 @@ fun KomentarItem(komentarUi: KomentarUi, isClickable: Boolean, onClick: (artikel
             Text(
                 style = PillarTypography3.labelSmall,
                 color = PillarColor.edisiDetailBody,
-                text = detailScreenDate(LocalContext.current, komentarUi.date)
+                text = detailScreenDate(komentarUi.zonedDateTime)
             )
         }
         Divider(modifier = paddingTop, color = secondaryVar)
@@ -157,7 +157,7 @@ private fun KomentarItemPreview() {
                 "biar Nama Tuhan juga dipermuliakan di muka bumi ini. Gbu",
             "Budi Wijaya",
             "Jambi",
-            Date(),
+            ZonedDateTime.now(),
             2000
         ),
         false

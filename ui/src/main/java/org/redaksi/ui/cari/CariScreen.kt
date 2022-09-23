@@ -2,6 +2,7 @@ package org.redaksi.ui.cari
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +35,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import org.redaksi.ui.Dimens.eight
+import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor.background
@@ -58,18 +61,20 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
                 .padding(it)
                 .padding(paddingValues)
         ) {
-            CariTextField(
-                uiState = uiState,
-                onValueChange = {
-                    viewModel.updateTextFieldValue(it)
-                },
-                onSearch = {
-                    if (it.isNotBlank()) {
-                        viewModel.loadSearchArticle(it)
-                        keyboardController?.hide()
+            Box(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, sixteen.dp)) {
+                CariTextField(
+                    uiState = uiState,
+                    onValueChange = {
+                        viewModel.updateTextFieldValue(it)
+                    },
+                    onSearch = {
+                        if (it.isNotBlank()) {
+                            viewModel.loadSearchArticle(it)
+                            keyboardController?.hide()
+                        }
                     }
-                }
-            )
+                )
+            }
 
             when (uiState.screenState) {
                 ScreenState.LOADING -> LoadingScreen()
@@ -87,7 +92,7 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
                     EmptyScreen(message = stringResource(id = R.string.tidak_ada_hasil))
                 }
                 else -> {
-                    EmptyScreen(message = stringResource(id = R.string.tidak_ada_hasil))
+                    EmptyScreen(message = "")
                 }
             }
         }

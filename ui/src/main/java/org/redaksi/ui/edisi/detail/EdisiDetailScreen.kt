@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +28,7 @@ import org.redaksi.ui.PillarColor.edisiDetailBody
 import org.redaksi.ui.PillarColor.edisiDetailTitle
 import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
-import java.util.Date
+import org.threeten.bp.ZonedDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,20 +87,24 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
             )
         }
         Row(modifier = modifier.padding(0.dp, eight.dp)) {
-            Text(
-                modifier = Modifier
-                    .weight(1f),
-                style = PillarTypography3.labelSmall,
-                color = edisiDetailBody,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                text = stringResource(id = R.string.oleh) + " " + articleUi.authors
-            )
-            Text(
-                style = PillarTypography3.labelSmall,
-                color = edisiDetailBody,
-                text = detailScreenDate(LocalContext.current, articleUi.date)
-            )
+            if (articleUi.authors.isNotBlank()) {
+                Text(
+                    modifier = Modifier
+                        .weight(1f),
+                    style = PillarTypography3.labelSmall,
+                    color = edisiDetailBody,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    text = stringResource(id = R.string.oleh) + " " + articleUi.authors
+                )
+            }
+            if (articleUi.zonedDateTime != null) {
+                Text(
+                    style = PillarTypography3.labelSmall,
+                    color = edisiDetailBody,
+                    text = articleUi.zonedDateTime?.let { detailScreenDate(it) } ?: ""
+                )
+            }
         }
         if (isLast.not()) {
             Divider(modifier = modifier, color = PillarColor.secondaryVar)
@@ -120,7 +123,7 @@ fun ArticleItemPreview() {
             "Doktrin Wahyu: Sebuah Introduksi",
             "Bab pertama buku ini dimulai dengan penjelasan tentang aksiologi (teori nilai) dan hubungan nyata",
             "John Doe",
-            Date()
+            ZonedDateTime.now()
         ),
         false
     ) {}
@@ -136,7 +139,7 @@ fun ArticleItemLoadingPreview() {
             "Doktrin Wahyu: Sebuah Introduksi",
             "Bab pertama buku ini dimulai dengan penjelasan tentang aksiologi (teori nilai) dan hubungan nyata",
             "John Doe",
-            Date()
+            ZonedDateTime.now()
         ),
         false
     ) {}

@@ -2,7 +2,9 @@ package org.redaksi.ui.artikel
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -28,10 +30,14 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
-import org.redaksi.data.remote.ARTIKEL
-import org.redaksi.data.remote.LAIN_LAIN
+import org.redaksi.data.remote.ALKITAB_THEOLOGI
+import org.redaksi.data.remote.IMAN_KRISTEN
+import org.redaksi.data.remote.ISU_TERKINI
+import org.redaksi.data.remote.KEHIDUPAN_KRISTEN
 import org.redaksi.data.remote.RENUNGAN
 import org.redaksi.data.remote.RESENSI
+import org.redaksi.data.remote.SENI_BUDAYA
+import org.redaksi.data.remote.SEPUTAR_GRII
 import org.redaksi.data.remote.TRANSKIP
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
@@ -43,20 +49,24 @@ import org.redaksi.ui.edisi.detail.ArticleItem
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun ArtikelScreen(onClickArtikel: (artikelId: Int) -> Unit) {
+fun ArtikelScreen(paddingValues: PaddingValues, onClickArtikel: (artikelId: Int) -> Unit) {
     val viewModel: ArtikelViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
 
     val pages = remember {
         listOf(
             Page(R.string.transkrip, TRANSKIP),
-            Page(R.string.artikel, ARTIKEL),
+            Page(R.string.alkitab_theologi, ALKITAB_THEOLOGI),
+            Page(R.string.iman_kristen_pekerjaan, IMAN_KRISTEN),
+            Page(R.string.kehidupan_kristen, KEHIDUPAN_KRISTEN),
             Page(R.string.renungan, RENUNGAN),
-            Page(R.string.resensi, RESENSI),
-            Page(R.string.lain_lain, LAIN_LAIN)
+            Page(R.string.isu_terkini, ISU_TERKINI),
+            Page(R.string.seni_budaya, SENI_BUDAYA),
+            Page(R.string.seputar_grii, SEPUTAR_GRII),
+            Page(R.string.resensi, RESENSI)
         )
     }
-    Scaffold {
+    Scaffold { it ->
         val coroutineScope = rememberCoroutineScope()
         val pagerState = rememberPagerState()
 
@@ -66,10 +76,14 @@ fun ArtikelScreen(onClickArtikel: (artikelId: Int) -> Unit) {
             }
             val isArticlesEmpty = when (page.category) {
                 TRANSKIP -> uiState.transkripArticles.isEmpty()
-                ARTIKEL -> uiState.artikelArticles.isEmpty()
+                ALKITAB_THEOLOGI -> uiState.alkitabTheologiArticles.isEmpty()
+                IMAN_KRISTEN -> uiState.imanKristenArticles.isEmpty()
+                KEHIDUPAN_KRISTEN -> uiState.kehidupanKristenArticles.isEmpty()
                 RENUNGAN -> uiState.renunganArticles.isEmpty()
+                ISU_TERKINI -> uiState.isuTerkiniArticles.isEmpty()
+                SENI_BUDAYA -> uiState.seniBudayaArticles.isEmpty()
+                SEPUTAR_GRII -> uiState.seputarGriiArticles.isEmpty()
                 RESENSI -> uiState.resensiArticles.isEmpty()
-                LAIN_LAIN -> uiState.lainLainArticles.isEmpty()
                 else -> false
             }
             if (isArticlesEmpty) {
@@ -77,7 +91,12 @@ fun ArtikelScreen(onClickArtikel: (artikelId: Int) -> Unit) {
             }
         }
 
-        Column(modifier = Modifier.background(PillarColor.background)) {
+        Column(
+            modifier = Modifier
+                .background(PillarColor.background)
+                .padding(paddingValues)
+                .padding(it)
+        ) {
             ScrollableTabRow(
                 containerColor = primary,
                 selectedTabIndex = pagerState.currentPage,
@@ -102,7 +121,7 @@ fun ArtikelScreen(onClickArtikel: (artikelId: Int) -> Unit) {
 @Preview
 @Composable
 private fun ArtikelScreenPreview() {
-    ArtikelScreen {}
+    ArtikelScreen(PaddingValues()) {}
 }
 
 private val HorizontalScrollConsumer = object : NestedScrollConnection {
@@ -129,10 +148,14 @@ private fun PageContent(pages: List<Page>, uiState: ArtikelViewModelState, pager
             LazyColumn(Modifier.fillMaxSize()) {
                 val articlesUi = when (categoryId) {
                     TRANSKIP -> uiState.transkripArticles
-                    ARTIKEL -> uiState.artikelArticles
+                    ALKITAB_THEOLOGI -> uiState.alkitabTheologiArticles
+                    IMAN_KRISTEN -> uiState.imanKristenArticles
+                    KEHIDUPAN_KRISTEN -> uiState.kehidupanKristenArticles
                     RENUNGAN -> uiState.renunganArticles
-                    RESENSI -> uiState.resensiArticles
-                    else -> uiState.lainLainArticles
+                    ISU_TERKINI -> uiState.isuTerkiniArticles
+                    SENI_BUDAYA -> uiState.seniBudayaArticles
+                    SEPUTAR_GRII -> uiState.seputarGriiArticles
+                    else -> uiState.resensiArticles
                 }
 
                 articlesUi.forEachIndexed { index, articleUi ->

@@ -60,4 +60,7 @@ dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicator)
     implementation(libs.accompanist.webview)
+
+    implementation(libs.three.ten.abp)
+
 }

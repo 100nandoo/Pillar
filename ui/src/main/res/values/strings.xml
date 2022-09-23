@@ -8,8 +8,16 @@
     <string name="tentang">Tentang</string>
 
     <string name="transkrip">Transkrip</string>
+    <string name="alkitab_theologi">Alkitab &amp; Theologi</string>
+    <string name="iman_kristen_pekerjaan">Iman Kristen &amp; Pekerjaan</string>
+    <string name="kehidupan_kristen">Kehidupan Kristen</string>
+
     <string name="renungan">Renungan</string>
+    <string name="isu_terkini">Isu Terkini</string>
+    <string name="seni_budaya">Seni &amp; Budaya</string>
+    <string name="seputar_grii">Seputar GRII</string>
     <string name="resensi">Resensi</string>
+
     <string name="lain_lain">Lain-lain</string>
     <string name="komentar">Komentar</string>
     <string name="ok">Ok</string>

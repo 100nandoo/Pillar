@@ -7,12 +7,12 @@ import org.redaksi.core.helper.ReadingTime
 import org.redaksi.data.remote.response.ArticleDetailResponse
 import org.redaksi.data.remote.response.base.Category
 import org.redaksi.ui.R
-import java.util.Date
+import org.threeten.bp.ZonedDateTime
 
 data class ArtikelDetailUi(
     val title: String = "",
     val authors: String = "",
-    val date: Date = Date(),
+    val zonedDateTime: ZonedDateTime = ZonedDateTime.now(),
     val estimation: String = "",
     val categoryUi: CategoryUi = CategoryUi(),
     val body: String = "",
@@ -41,12 +41,11 @@ fun fromResponse(response: ArticleDetailResponse): ArtikelDetailUi {
     return ArtikelDetailUi(
         article.title,
         authors,
-        Date(article.createTime.toLong() * 1000),
-        estimation,
-        categoryUi,
-        article.body ?: "",
-        bodyStriped,
-        commentCount
+        estimation = estimation,
+        categoryUi = categoryUi,
+        body = article.body ?: "",
+        bodyStriped = bodyStriped,
+        commentCount = commentCount
     )
 }
 

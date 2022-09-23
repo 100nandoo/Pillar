@@ -68,8 +68,8 @@ internal class PillarApiTest {
     @Test
     fun searchArticle() {
         runBlocking {
-            val result = pillarApi.searchArticle("investasi", null, null)
-            val isNotEmpty = result.body()?.articles?.items?.size ?: 0 > 0
+            val result = pillarApi.searchArticle("investasi")
+            val isNotEmpty = (result.body()?.size ?: 0) > 0
 
             assertTrue(::searchArticle.name + MESSAGE_RESPONSE_FAILED, result.isSuccessful)
             assertTrue("Articles is empty", isNotEmpty)
@@ -80,7 +80,7 @@ internal class PillarApiTest {
     fun articlesByCategory() {
         runBlocking {
             val result = pillarApi.articlesByCategory(RENUNGAN)
-            val isNotEmpty = result.body()?.articles?.items?.size ?: 0 > 0
+            val isNotEmpty = (result.body()?.size ?: 0) > 0
 
             assertTrue(::articlesByCategory.name + MESSAGE_RESPONSE_FAILED, result.isSuccessful)
             assertTrue("Articles is empty", isNotEmpty)
