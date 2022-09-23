@@ -27,8 +27,8 @@
     <!-- Edisi -->
     <string name="buletin_grii">Buletin Pemuda\nGereja Reformed Injili Indonesia</string>
     <string name="tidak_ada_judul">"Tidak Ada Judul"</string>
-    <string name="terbaru">Terbaru</string>
-    <string name="sebelumnya">Sebelumnya</string>
+    <string name="artikel_terbaru">Artikel Terbaru</string>
+    <string name="pilihan_editor">Pilihan Editor</string>
 
     <!-- Edisi Detail -->
     <string name="oleh">Oleh</string>

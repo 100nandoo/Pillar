@@ -49,10 +49,11 @@ import org.redaksi.ui.Symbol
 fun EdisiScreen(
     onClick: (issueNumber: String) -> Unit
 ) {
-    Scaffold {
+    Scaffold { it ->
         val viewModel: EdisiViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsState()
         SwipeRefresh(
+            modifier = Modifier.padding(it),
             state = rememberSwipeRefreshState(uiState.isLoading),
             onRefresh = { viewModel.loadEdisi() }
         ) {
@@ -63,13 +64,13 @@ fun EdisiScreen(
                     uiState.issuesUi.forEachIndexed { index, issueWithArticle ->
                         if (index == 0) {
                             item {
-                                HeaderItem(Modifier.background(PillarColor.background), R.string.terbaru)
+                                HeaderItem(Modifier.background(PillarColor.background), R.string.artikel_terbaru)
                             }
                             item {
                                 EdisiItem(issue = issueWithArticle, onClick = { onClick(issueWithArticle.number) })
                             }
                             item {
-                                HeaderItem(Modifier.background(PillarColor.background), R.string.sebelumnya)
+                                HeaderItem(Modifier.background(PillarColor.background), R.string.pilihan_editor)
                             }
                         } else {
                             item {
@@ -217,10 +218,10 @@ fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
 @Composable
 private fun HeaderItemPreview() {
     Column {
-        HeaderItem(Modifier, R.string.terbaru)
-        HeaderItem(Modifier, R.string.sebelumnya)
+        HeaderItem(Modifier, R.string.artikel_terbaru)
+        HeaderItem(Modifier, R.string.pilihan_editor)
 
-        HeaderItem(Modifier, R.string.terbaru)
-        HeaderItem(Modifier, R.string.sebelumnya)
+        HeaderItem(Modifier, R.string.artikel_terbaru)
+        HeaderItem(Modifier, R.string.pilihan_editor)
     }
 }
