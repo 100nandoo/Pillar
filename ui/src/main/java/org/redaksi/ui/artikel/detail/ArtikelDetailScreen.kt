@@ -17,11 +17,13 @@ import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -63,6 +65,7 @@ import org.redaksi.core.helper.verse.DesktopVerseParser
 import org.redaksi.core.helper.verse.Launcher
 import org.redaksi.core.helper.verse.VerseProvider
 import org.redaksi.ui.Dimens.eight
+import org.redaksi.ui.Dimens.four
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
@@ -317,14 +320,6 @@ fun BottomBarItem(bottomBarIcon: BottomBarIcon, uiState: ArtikelDetailViewModelS
             .padding(sixteen.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (uiState.articleDetailUi.commentCount.isNotBlank() && bottomBarIcon.isComment) {
-            Text(
-                modifier = Modifier.padding(eight.dp, 0.dp),
-                text = uiState.articleDetailUi.commentCount,
-                style = PillarTypography3.bodyMedium,
-                color = surface
-            )
-        }
         Icon(
             painter = painterResource(bottomBarIcon.icon),
             contentDescription = stringResource(bottomBarIcon.label),
@@ -333,7 +328,7 @@ fun BottomBarItem(bottomBarIcon: BottomBarIcon, uiState: ArtikelDetailViewModelS
     }
 }
 
-val category = CategoryUi("Transkrip", R.drawable.ic_transkrip)
+val category = listOf(CategoryUi("Transkrip", R.drawable.ic_transkrip))
 val artikelDetailUi = ArtikelDetailUi(
     "Iman, Pengharapan, dan Kasih (Bagian 16): Doktrin Iman",
     "Adam R",
@@ -398,7 +393,7 @@ fun ArtikelBody(
             .background(background)
             .padding(sixteen.dp)
     ) {
-        ArtikelKategori(categoryUi = artikelDetailUi.categoryUi)
+        ArtikelKategori(categoryUis = artikelDetailUi.categoryUi)
         AndroidView(
             modifier = Modifier.padding(0.dp, eight.dp, 0.dp, 0.dp),
             factory = { context ->
@@ -484,22 +479,29 @@ fun ArtikelBodyPreview() {
 }
 
 @Composable
-fun ArtikelKategori(categoryUi: CategoryUi) {
-    Row(
+fun ArtikelKategori(categoryUis: List<CategoryUi>) {
+    LazyRow(
         modifier = Modifier
-            .padding(0.dp, 0.dp, eight.dp, 0.dp)
-            .clip(RoundedCornerShape(percent = 50))
-            .background(categoryTranskrip)
-            .padding(eight.dp)
+            .padding(four.dp)
 
     ) {
-        Icon(painter = painterResource(id = categoryUi.icon), contentDescription = categoryUi.label)
-        Text(categoryUi.label)
+        // Icon(painter = painterResource(id = categoryUi.icon), contentDescription = categoryUi.label)
+        categoryUis.forEach { categoryUi ->
+            item {
+                Box(modifier = Modifier
+                    .padding(0.dp, 0.dp, four.dp, 0.dp)
+                    .clip(RoundedCornerShape(percent = 50))
+                    .background(categoryTranskrip)
+                    .padding(eight.dp)){
+                    Text(categoryUi.label)
+                }
+            }
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun ArtikelKategoriPreview() {
-    ArtikelKategori(CategoryUi("Transkrip", R.drawable.ic_transkrip))
+    ArtikelKategori(listOf(CategoryUi("Transkrip", R.drawable.ic_transkrip)))
 }

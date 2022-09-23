@@ -36,7 +36,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
-import org.redaksi.data.remote.ALKITAB_THEOLOGI
+import org.redaksi.data.remote.ALKITAB_N_THEOLOGI
 import org.redaksi.data.remote.IMAN_KRISTEN
 import org.redaksi.data.remote.ISU_TERKINI
 import org.redaksi.data.remote.KEHIDUPAN_KRISTEN
@@ -66,7 +66,7 @@ fun ArtikelScreen(paddingValues: PaddingValues, onClickArtikel: (artikelId: Int)
     val pages = remember {
         listOf(
             Page(R.string.transkrip, TRANSKIP),
-            Page(R.string.alkitab_theologi, ALKITAB_THEOLOGI),
+            Page(R.string.alkitab_theologi, ALKITAB_N_THEOLOGI),
             Page(R.string.iman_kristen_pekerjaan, IMAN_KRISTEN),
             Page(R.string.kehidupan_kristen, KEHIDUPAN_KRISTEN),
             Page(R.string.renungan, RENUNGAN),
@@ -86,7 +86,7 @@ fun ArtikelScreen(paddingValues: PaddingValues, onClickArtikel: (artikelId: Int)
             }
             val isArticlesEmpty = when (page.category) {
                 TRANSKIP -> uiState.transkripArticles.isEmpty()
-                ALKITAB_THEOLOGI -> uiState.alkitabTheologiArticles.isEmpty()
+                ALKITAB_N_THEOLOGI -> uiState.alkitabTheologiArticles.isEmpty()
                 IMAN_KRISTEN -> uiState.imanKristenArticles.isEmpty()
                 KEHIDUPAN_KRISTEN -> uiState.kehidupanKristenArticles.isEmpty()
                 RENUNGAN -> uiState.renunganArticles.isEmpty()
@@ -158,7 +158,7 @@ private fun PageContent(pages: List<Page>, uiState: ArtikelViewModelState, pager
             LazyColumn(Modifier.fillMaxSize()) {
                 val articlesUi = when (categoryId) {
                     TRANSKIP -> uiState.transkripArticles
-                    ALKITAB_THEOLOGI -> uiState.alkitabTheologiArticles
+                    ALKITAB_N_THEOLOGI -> uiState.alkitabTheologiArticles
                     IMAN_KRISTEN -> uiState.imanKristenArticles
                     KEHIDUPAN_KRISTEN -> uiState.kehidupanKristenArticles
                     RENUNGAN -> uiState.renunganArticles

@@ -1,7 +1,7 @@
 package org.redaksi.ui.utama
 
 import org.redaksi.core.helper.JsoupHelper
-import org.redaksi.data.remote.response.base.NewArticle
+import org.redaksi.data.remote.response.base.Article
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -19,13 +19,13 @@ fun detailScreenDate(zonedDateTime: ZonedDateTime): String {
     return zonedDateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
 }
 
-fun fromResponse(articles: List<NewArticle>): List<ArticleUi> {
+fun fromResponse(articles: List<Article>): List<ArticleUi> {
     return articles.map { article ->
         val authors = article.postAuthors.joinToString { it.name }
         val zonedDateTime = runCatching {
             ZonedDateTime.parse(article.date + "Z", DateTimeFormatter.ISO_ZONED_DATE_TIME)
                 .withZoneSameInstant(ZoneId.systemDefault())
         }.getOrNull()
-        ArticleUi(article.id, JsoupHelper.stripText(article.title.rendered), JsoupHelper.stripText(article.content.rendered), authors, zonedDateTime)
+        ArticleUi(article.id, JsoupHelper.stripText(article.title.rendered), article.searchContent, authors, zonedDateTime)
     }
 }

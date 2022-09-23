@@ -30,7 +30,7 @@ class ArtikelViewModel @Inject constructor(private val pillarApi: PillarApi) : V
                     val articleUis = fromResponse(response)
                     when (categoryId) {
                         TRANSKIP -> { viewModelState.update { it.copy(transkripArticles = articleUis, isLoading = false) } }
-                        ALKITAB_THEOLOGI -> { viewModelState.update { it.copy(alkitabTheologiArticles = articleUis, isLoading = false) } }
+                        ALKITAB_N_THEOLOGI -> { viewModelState.update { it.copy(alkitabTheologiArticles = articleUis, isLoading = false) } }
                         IMAN_KRISTEN -> { viewModelState.update { it.copy(imanKristenArticles = articleUis, isLoading = false) } }
                         KEHIDUPAN_KRISTEN -> { viewModelState.update { it.copy(kehidupanKristenArticles = articleUis, isLoading = false) } }
                         RENUNGAN -> { viewModelState.update { it.copy(renunganArticles = articleUis, isLoading = false) } }

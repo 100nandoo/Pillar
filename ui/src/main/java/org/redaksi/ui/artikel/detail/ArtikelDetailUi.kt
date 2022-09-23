@@ -2,10 +2,13 @@ package org.redaksi.ui.artikel.detail
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toLowerCase
 import org.redaksi.core.helper.JsoupHelper
 import org.redaksi.core.helper.ReadingTime
-import org.redaksi.data.remote.response.ArticleDetailResponse
-import org.redaksi.data.remote.response.base.Category
+import org.redaksi.data.remote.*
+import org.redaksi.data.remote.response.base.Article
 import org.redaksi.ui.R
 import org.threeten.bp.ZonedDateTime
 
@@ -14,10 +17,9 @@ data class ArtikelDetailUi(
     val authors: String = "",
     val zonedDateTime: ZonedDateTime = ZonedDateTime.now(),
     val estimation: String = "",
-    val categoryUi: CategoryUi = CategoryUi(),
+    val categoryUi: List<CategoryUi> = listOf(),
     val body: String = "",
     val bodyStriped: String = "",
-    val commentCount: String = ""
 )
 
 data class CategoryUi(
@@ -25,32 +27,44 @@ data class CategoryUi(
     @DrawableRes val icon: Int = R.drawable.ic_transkrip
 )
 
-fun fromResponse(response: ArticleDetailResponse): ArtikelDetailUi {
-    val article = response.article
-    val authors = article.authors.items.joinToString { it.title ?: "" }
-    val categoryUi = article.category.toCategoryUi()
-    val estimation = ReadingTime(response.article.body ?: "").calcReadingTime()
+fun fromResponse(article: Article): ArtikelDetailUi {
+    val authors = article.postAuthors.joinToString { it.name }
 
-    val bodyStriped = article.title + "\n\nDitulis oleh: $authors\n\n" + JsoupHelper.stripText(article.body ?: "")
+    val categoryUi = article.categories.map { it.toCategoryUi() }
+    val estimation = ReadingTime(article.content.rendered).calcReadingTime()
+    val title = JsoupHelper.stripText(article.title.rendered)
 
-    val commentCount = if (article.commentCount > 0) {
-        runCatching { article.commentCount.toString() }.getOrElse { "" }
-    } else {
-        ""
-    }
+    val bodyStriped = title + "\n\nDitulis oleh: $authors\n\n" + JsoupHelper.stripText(article.content.rendered)
+
     return ArtikelDetailUi(
-        article.title,
+        title,
         authors,
         estimation = estimation,
         categoryUi = categoryUi,
-        body = article.body ?: "",
+        body = article.content.rendered,
         bodyStriped = bodyStriped,
-        commentCount = commentCount
     )
 }
 
-fun Category.toCategoryUi(): CategoryUi {
-    return CategoryUi(this.title, R.drawable.ic_transkrip)
+fun Int.toCategoryUi(): CategoryUi {
+    val title = when(this){
+        TRANSKIP -> ::TRANSKIP.name
+        ALKITAB_N_THEOLOGI -> ::ALKITAB_N_THEOLOGI.name
+        IMAN_KRISTEN -> ::IMAN_KRISTEN.name
+        KEHIDUPAN_KRISTEN -> ::KEHIDUPAN_KRISTEN.name
+        RENUNGAN -> ::RENUNGAN.name
+        ISU_TERKINI -> ::ISU_TERKINI.name
+        SENI_BUDAYA -> ::SENI_BUDAYA.name
+        SEPUTAR_GRII -> ::SEPUTAR_GRII.name
+        RESENSI -> ::RESENSI.name
+        ARTIKEL_MINGGUAN -> ::ARTIKEL_MINGGUAN.name
+        IMAN_KRISTEN_N_PEKERJAAN -> ::IMAN_KRISTEN_N_PEKERJAAN.name
+        else -> ""
+    }
+    val titleCapitalize = title.toLowerCase(Locale.current).capitalize(Locale.current)
+        .replace("_n_", " & ")
+        .replace("_", " ")
+    return CategoryUi(titleCapitalize, R.drawable.ic_transkrip)
 }
 
 data class BottomBarIcon(
