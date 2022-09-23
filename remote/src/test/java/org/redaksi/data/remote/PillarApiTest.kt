@@ -5,7 +5,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -49,7 +48,7 @@ internal class PillarApiTest {
     @Test
     fun articlesByCategory() {
         runBlocking {
-            val result = pillarApi.articlesByCategory(RENUNGAN)
+            val result = pillarApi.articlesByCategory(RENUNGAN,)
             val isNotEmpty = (result.body()?.size ?: 0) > 0
 
             assertTrue(::articlesByCategory.name + MESSAGE_RESPONSE_FAILED, result.isSuccessful)

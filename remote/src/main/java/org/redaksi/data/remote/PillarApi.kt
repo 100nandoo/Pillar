@@ -21,7 +21,9 @@ interface PillarApi {
     @GET("posts")
     suspend fun articlesByCategory(
         @CategoryId @Query("categories")
-        categories: Int
+        categories: Int,
+        @Query("page")
+        page: Int,
     ): Response<List<Article>>
 
     @GET("posts")

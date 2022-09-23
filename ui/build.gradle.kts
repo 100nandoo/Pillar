@@ -42,6 +42,9 @@ dependencies {
 
     kapt(libs.hilt.compiler)
 
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
+
     // ----------------------------- COMPOSE ------------------------------
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
     implementation(libs.androidx.compose.foundation)

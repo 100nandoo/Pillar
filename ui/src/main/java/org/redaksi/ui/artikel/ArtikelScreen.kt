@@ -2,15 +2,18 @@ package org.redaksi.ui.artikel
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
@@ -20,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -31,10 +35,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.redaksi.data.remote.ALKITAB_N_THEOLOGI
 import org.redaksi.data.remote.IMAN_KRISTEN
@@ -46,7 +55,6 @@ import org.redaksi.data.remote.SENI_BUDAYA
 import org.redaksi.data.remote.SEPUTAR_GRII
 import org.redaksi.data.remote.TRANSKIP
 import org.redaksi.ui.Dimens
-import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.PillarColor.secondaryVar
@@ -84,19 +92,20 @@ fun ArtikelScreen(paddingValues: PaddingValues, onClickArtikel: (artikelId: Int)
             coroutineScope.launch {
                 pagerState.animateScrollToPage(index)
             }
-            val isArticlesEmpty = when (page.category) {
-                TRANSKIP -> uiState.transkripArticles.isEmpty()
-                ALKITAB_N_THEOLOGI -> uiState.alkitabTheologiArticles.isEmpty()
-                IMAN_KRISTEN -> uiState.imanKristenArticles.isEmpty()
-                KEHIDUPAN_KRISTEN -> uiState.kehidupanKristenArticles.isEmpty()
-                RENUNGAN -> uiState.renunganArticles.isEmpty()
-                ISU_TERKINI -> uiState.isuTerkiniArticles.isEmpty()
-                SENI_BUDAYA -> uiState.seniBudayaArticles.isEmpty()
-                SEPUTAR_GRII -> uiState.seputarGriiArticles.isEmpty()
-                RESENSI -> uiState.resensiArticles.isEmpty()
+
+            val isLoaded = when (page.category) {
+                TRANSKIP -> uiState.transkripLoaded
+                ALKITAB_N_THEOLOGI -> uiState.alkitabTheologiLoaded
+                IMAN_KRISTEN -> uiState.imanKristenLoaded
+                KEHIDUPAN_KRISTEN -> uiState.kehidupanKristenLoaded
+                RENUNGAN -> uiState.renunganLoaded
+                ISU_TERKINI -> uiState.isuTerkiniLoaded
+                SENI_BUDAYA -> uiState.seniBudayaLoaded
+                SEPUTAR_GRII -> uiState.seputarGriiLoaded
+                RESENSI -> uiState.resensiLoaded
                 else -> false
             }
-            if (isArticlesEmpty) {
+            if (isLoaded.not()) {
                 action(page.category)
             }
         }
@@ -145,6 +154,7 @@ fun Modifier.disabledHorizontalPointerInputScroll(disabled: Boolean = true) =
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun PageContent(pages: List<Page>, uiState: ArtikelViewModelState, pagerState: PagerState, onClick: (artikelId: Int) -> Unit) {
+
     HorizontalPager(
         modifier = Modifier.disabledHorizontalPointerInputScroll(),
         count = pages.size,
@@ -152,33 +162,68 @@ private fun PageContent(pages: List<Page>, uiState: ArtikelViewModelState, pager
     ) { page ->
         val categoryId = pages[page].category
 
-        if (uiState.isLoading) {
-            LoadingScreen()
-        } else {
-            LazyColumn(Modifier.fillMaxSize()) {
-                val articlesUi = when (categoryId) {
-                    TRANSKIP -> uiState.transkripArticles
-                    ALKITAB_N_THEOLOGI -> uiState.alkitabTheologiArticles
-                    IMAN_KRISTEN -> uiState.imanKristenArticles
-                    KEHIDUPAN_KRISTEN -> uiState.kehidupanKristenArticles
-                    RENUNGAN -> uiState.renunganArticles
-                    ISU_TERKINI -> uiState.isuTerkiniArticles
-                    SENI_BUDAYA -> uiState.seniBudayaArticles
-                    SEPUTAR_GRII -> uiState.seputarGriiArticles
-                    else -> uiState.resensiArticles
-                }
+        val articlesUi = when (categoryId) {
+            TRANSKIP -> uiState.transkripArticles
+            ALKITAB_N_THEOLOGI -> uiState.alkitabTheologiArticles
+            IMAN_KRISTEN -> uiState.imanKristenArticles
+            KEHIDUPAN_KRISTEN -> uiState.kehidupanKristenArticles
+            RENUNGAN -> uiState.renunganArticles
+            ISU_TERKINI -> uiState.isuTerkiniArticles
+            SENI_BUDAYA -> uiState.seniBudayaArticles
+            SEPUTAR_GRII -> uiState.seputarGriiArticles
+            else -> uiState.resensiArticles
+        }
+        ArtikelList(articles = articlesUi, onClick = { onClick(it) })
+    }
+}
 
-                articlesUi.forEachIndexed { index, articleUi ->
-                    val isLast = index == articlesUi.size - 1
-                    item {
-                        ArticleItem(articleUi = articleUi, isLast = isLast) {
-                            onClick(articleUi.id)
-                        }
-                    }
+@Composable
+fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int) -> Unit) {
+    val articleItems = articles.collectAsLazyPagingItems()
+
+    LazyColumn(Modifier.fillMaxSize()) {
+        items(articleItems) { articleUi ->
+            ArticleItem(articleUi = articleUi!!, isLast = false) {
+                onClick(articleUi.id)
+            }
+        }
+
+        articleItems.apply {
+            when {
+                loadState.refresh is LoadState.Loading -> {
+                    item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
+                }
+                loadState.append is LoadState.Loading -> {
+                    item { LoadingItem() }
                 }
             }
         }
+
     }
+}
+
+@Composable
+fun LoadingView(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator(color = primary)
+    }
+}
+
+@Composable
+fun LoadingItem() {
+    CircularProgressIndicator(
+        color = primary,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .wrapContentWidth(Alignment.CenterHorizontally)
+    )
 }
 
 @Composable
