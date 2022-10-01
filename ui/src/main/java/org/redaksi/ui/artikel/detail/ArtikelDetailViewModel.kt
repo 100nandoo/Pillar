@@ -32,8 +32,8 @@ class ArtikelDetailViewModel @Inject constructor(
             val response = result.getOrNull()?.body()
             when {
                 result.isSuccess && response != null -> {
-                    val issuesUi = fromResponse(response)
-                    viewModelState.update { it.copy(articleDetailUi = issuesUi, isLoading = false) }
+                    val artikelDetailUi1 = fromResponse(response)
+                    viewModelState.update { it.copy(articleDetailUi = artikelDetailUi1, isLoading = false) }
                 }
             }
         }

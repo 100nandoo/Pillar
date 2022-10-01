@@ -66,10 +66,13 @@ fun UtamaScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit)
     }
 }
 
-@Preview
+@Preview(
+    name = "UtamaScreen",
+    showSystemUi = true
+)
 @Composable
 private fun UtamaScreenPreview() {
-    UtamaScreen(PaddingValues(), {})
+    UtamaScreen(PaddingValues()) {}
 }
 
 @Composable
@@ -79,7 +82,8 @@ fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
         .padding(sixteen.dp, sixteen.dp, sixteen.dp, 0.dp)
         .fillMaxWidth()
     Text(
-        modifier = staticModifier, style = PillarTypography3.headlineMedium,
+        modifier = staticModifier,
+        style = PillarTypography3.headlineMedium,
         color = PillarColor.utamaTitle,
         textAlign = TextAlign.Center,
         text = stringResource(id = id)

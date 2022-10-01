@@ -77,7 +77,6 @@ import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
 import org.redaksi.ui.R.font.lato_regular
 import org.redaksi.ui.Symbol.bullet
-import org.redaksi.ui.utama.detailScreenDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -332,6 +331,7 @@ val category = listOf(CategoryUi("Transkrip", R.drawable.ic_transkrip))
 val artikelDetailUi = ArtikelDetailUi(
     "Iman, Pengharapan, dan Kasih (Bagian 16): Doktrin Iman",
     "Adam R",
+    displayDate = "1 Okt 2023",
     estimation = "12 menit",
     categoryUi = category,
     body = "Iman adalah hal yang sangat unik, khususnya dalam agama Kristen, karena Alkitab berkata, “Tanpa iman, tidak ada orang yang " +
@@ -357,7 +357,7 @@ fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(style = PillarTypography3.labelSmall, text = artikelDetailUi.authors)
             Text(style = PillarTypography3.labelSmall, text = " $bullet ")
-            Text(style = PillarTypography3.labelSmall, text = detailScreenDate(artikelDetailUi.zonedDateTime))
+            Text(style = PillarTypography3.labelSmall, text = artikelDetailUi.displayDate)
             Spacer(Modifier.weight(1f))
             Text(
                 modifier = Modifier
@@ -458,7 +458,9 @@ fun ArtikelBody(
                                         ds.color = Color.parseColor("#E28E78")
                                     }
                                 },
-                                start, end, SPAN_INCLUSIVE_INCLUSIVE
+                                start,
+                                end,
+                                SPAN_INCLUSIVE_INCLUSIVE
                             )
                             return true
                         }
@@ -488,11 +490,13 @@ fun ArtikelKategori(categoryUis: List<CategoryUi>) {
         // Icon(painter = painterResource(id = categoryUi.icon), contentDescription = categoryUi.label)
         categoryUis.forEach { categoryUi ->
             item {
-                Box(modifier = Modifier
-                    .padding(0.dp, 0.dp, four.dp, 0.dp)
-                    .clip(RoundedCornerShape(percent = 50))
-                    .background(categoryTranskrip)
-                    .padding(eight.dp)){
+                Box(
+                    modifier = Modifier
+                        .padding(0.dp, 0.dp, four.dp, 0.dp)
+                        .clip(RoundedCornerShape(percent = 50))
+                        .background(categoryTranskrip)
+                        .padding(eight.dp)
+                ) {
                     Text(categoryUi.label)
                 }
             }

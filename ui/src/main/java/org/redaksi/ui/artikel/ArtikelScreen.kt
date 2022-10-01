@@ -62,8 +62,6 @@ import org.redaksi.ui.PillarColor.surface
 import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
 import org.redaksi.ui.utama.ArticleUi
-import org.redaksi.ui.utama.detailScreenDate
-import org.threeten.bp.ZonedDateTime
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -154,7 +152,6 @@ fun Modifier.disabledHorizontalPointerInputScroll(disabled: Boolean = true) =
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun PageContent(pages: List<Page>, uiState: ArtikelViewModelState, pagerState: PagerState, onClick: (artikelId: Int) -> Unit) {
-
     HorizontalPager(
         modifier = Modifier.disabledHorizontalPointerInputScroll(),
         count = pages.size,
@@ -198,7 +195,6 @@ fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int)
                 }
             }
         }
-
     }
 }
 
@@ -262,11 +258,11 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
                     text = stringResource(id = R.string.oleh) + " " + articleUi.authors
                 )
             }
-            if (articleUi.zonedDateTime != null) {
+            if (articleUi.displayDate.isNotBlank()) {
                 androidx.compose.material3.Text(
                     style = PillarTypography3.labelSmall,
                     color = PillarColor.utamaBody,
-                    text = articleUi.zonedDateTime?.let { detailScreenDate(it) } ?: ""
+                    text = articleUi.displayDate
                 )
             }
         }
@@ -287,7 +283,7 @@ fun ArticleItemPreview() {
             "Doktrin Wahyu: Sebuah Introduksi",
             "Bab pertama buku ini dimulai dengan penjelasan tentang aksiologi (teori nilai) dan hubungan nyata",
             "John Doe",
-            ZonedDateTime.now()
+            "1 Okt 2023"
         ),
         false
     ) {}
@@ -303,7 +299,7 @@ fun ArticleItemLoadingPreview() {
             "Doktrin Wahyu: Sebuah Introduksi",
             "Bab pertama buku ini dimulai dengan penjelasan tentang aksiologi (teori nilai) dan hubungan nyata",
             "John Doe",
-            ZonedDateTime.now()
+            "1 Okt 2023"
         ),
         false
     ) {}
