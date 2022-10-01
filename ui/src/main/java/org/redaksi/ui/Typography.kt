@@ -7,51 +7,48 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-val Lato = FontFamily(
-    Font(R.font.lato_regular, FontWeight.Normal)
-
+val Inter = FontFamily(
+    Font(R.font.inter_regular, FontWeight.Normal)
 )
 
-val Lora = FontFamily(
-    Font(R.font.lora_medium, FontWeight.Medium),
-    Font(R.font.lora_semibold, FontWeight.SemiBold),
-    Font(R.font.lora_bold, FontWeight.Bold)
+val Montserrat = FontFamily(
+    Font(R.font.montserrat_bold, FontWeight.Bold)
 )
 val PillarTypography3 = Typography(
     titleLarge = TextStyle(
-        fontFamily = Lora,
+        fontFamily = Montserrat,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp
     ),
     titleMedium = TextStyle(
-        fontFamily = Lora,
-        fontWeight = FontWeight.SemiBold,
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Bold,
         fontSize = 20.sp
     ),
     titleSmall = TextStyle(
-        fontFamily = Lora,
-        fontWeight = FontWeight.Medium,
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Bold,
         fontSize = 16.sp
     ),
     bodyLarge = TextStyle(
-        fontFamily = Lato,
+        fontFamily = Inter,
         fontSize = 16.sp
     ),
     bodyMedium = TextStyle(
-        fontFamily = Lato,
+        fontFamily = Inter,
         fontSize = 14.sp
     ),
     bodySmall = TextStyle(
-        fontFamily = Lato,
+        fontFamily = Inter,
         fontSize = 12.sp
     ),
     headlineMedium = TextStyle(
-        fontFamily = Lora,
+        fontFamily = Montserrat,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp
     ),
     headlineSmall = TextStyle(
-        fontFamily = Lora,
+        fontFamily = Montserrat,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp
     ),
@@ -63,49 +60,49 @@ val PillarTypography3 = Typography(
 
 val PillarTypography = androidx.compose.material.Typography(
     h1 = TextStyle(
-        fontFamily = Lora,
+        fontFamily = Montserrat,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp
     ),
     h2 = TextStyle(
-        fontFamily = Lora,
+        fontFamily = Montserrat,
         fontWeight = FontWeight.SemiBold,
         fontSize = 20.sp
     ),
     h3 = TextStyle(
-        fontFamily = Lora,
+        fontFamily = Montserrat,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp
     ),
     h4 = TextStyle(
-        fontFamily = Lora,
+        fontFamily = Montserrat,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp
     ),
     h5 = TextStyle(
-        fontFamily = Lora,
+        fontFamily = Montserrat,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp
     ),
     h6 = TextStyle(
-        fontFamily = Lora,
+        fontFamily = Montserrat,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp
     ),
     subtitle1 = TextStyle(
-        fontFamily = Lato,
+        fontFamily = Inter,
         fontSize = 14.sp
     ),
     subtitle2 = TextStyle(
-        fontFamily = Lato,
+        fontFamily = Inter,
         fontSize = 14.sp
     ),
     body1 = TextStyle(
-        fontFamily = Lato,
+        fontFamily = Inter,
         fontSize = 16.sp
     ),
     body2 = TextStyle(
-        fontFamily = Lato,
+        fontFamily = Inter,
         fontSize = 14.sp
     ),
     button = TextStyle(

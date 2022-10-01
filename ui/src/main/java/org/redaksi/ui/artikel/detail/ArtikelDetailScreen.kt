@@ -47,8 +47,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
@@ -67,6 +65,7 @@ import org.redaksi.core.helper.verse.VerseProvider
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.four
 import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.Inter
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.background
@@ -75,7 +74,7 @@ import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.PillarColor.surface
 import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
-import org.redaksi.ui.R.font.lato_regular
+import org.redaksi.ui.R.font.pt_serif_regular
 import org.redaksi.ui.Symbol.bullet
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -144,7 +143,7 @@ fun ArtikelDetailScreen() {
 
                 if (uiState.showKnownDialog.first) {
                     VerseDialog(uiState.showKnownDialog.third, uiState.showKnownDialog.second, {
-                        val isSuccess = runCatching { context.startActivity(Launcher.openAppAtBibleLocation(it)) }.getOrNull()
+                        runCatching { context.startActivity(Launcher.openAppAtBibleLocation(it)) }.getOrNull()
                     }) {
                         viewModel.showKnownDialog(false)
                     }
@@ -400,7 +399,7 @@ fun ArtikelBody(
                 TextView(context).apply {
                     setLineSpacing(12f, 1f)
                     textSize = 16f
-                    val typeface: Typeface? = ResourcesCompat.getFont(context, lato_regular)
+                    val typeface: Typeface? = ResourcesCompat.getFont(context, pt_serif_regular)
                     movementMethod = LinkMovementMethod.getInstance()
                     setTypeface(typeface)
                     setTextColor(ResourcesCompat.getColor(resources, R.color.black, null))
@@ -439,7 +438,7 @@ fun ArtikelBody(
                                                 dialogSpan.withStyle(
                                                     style = SpanStyle(
                                                         fontStyle = FontStyle.Italic,
-                                                        fontFamily = FontFamily(Font(lato_regular))
+                                                        fontFamily = Inter
                                                     )
                                                 ) {
                                                     val ayatKitab = "${item.bookName} ${item.chapter}:${item.verse}  "

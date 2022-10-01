@@ -8,8 +8,8 @@
 
 ## Specs
 * Fonts being used are:
-  - [Lora](https://fonts.google.com/specimen/Lora)
-  - [Lato](https://fonts.google.com/specimen/Lato)
+  - [Montserrat](https://fonts.google.com/specimen/Montserrat)
+  - [Inter](https://fonts.google.com/specimen/Inter)
 * Dependency injection using [Hilt](https://dagger.dev/hilt/)
 
 ## Features 🎨
