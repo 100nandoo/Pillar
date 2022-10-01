@@ -37,7 +37,7 @@ class ArtikelViewModel @Inject constructor(private val pillarApi: PillarApi) : V
 
     fun loadArticlesByCategory(@CategoryId categoryId: Int) {
         viewModelScope.launch {
-            val artikelPager = Pager(PagingConfig(pageSize = 10)){
+            val artikelPager = Pager(PagingConfig(pageSize = 10)) {
                 ArtikelSource(pillarApi, categoryId)
             }.flow.cachedIn(viewModelScope)
 
@@ -74,5 +74,5 @@ data class ArtikelViewModelState(
     val seputarGriiArticles: Flow<PagingData<ArticleUi>> = flowOf(),
     val seputarGriiLoaded: Boolean = false,
     val resensiArticles: Flow<PagingData<ArticleUi>> = flowOf(),
-    val resensiLoaded: Boolean = false,
+    val resensiLoaded: Boolean = false
 )

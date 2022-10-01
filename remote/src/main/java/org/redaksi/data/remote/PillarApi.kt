@@ -23,7 +23,7 @@ interface PillarApi {
         @CategoryId @Query("categories")
         categories: Int,
         @Query("page")
-        page: Int,
+        page: Int
     ): Response<List<Article>>
 
     @GET("posts")

@@ -28,7 +28,6 @@ import org.redaksi.pillar.BottomNavRoute.artikelDetailRoute
 import org.redaksi.pillar.BottomNavRoute.artikelIdArg
 import org.redaksi.pillar.BottomNavRoute.artikelRoute
 import org.redaksi.pillar.BottomNavRoute.cariRoute
-import org.redaksi.pillar.BottomNavRoute.komentarRoute
 import org.redaksi.pillar.BottomNavRoute.lainnyaRoute
 import org.redaksi.pillar.BottomNavRoute.tentangRoute
 import org.redaksi.pillar.BottomNavRoute.utamaRoute

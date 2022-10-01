@@ -65,5 +65,4 @@ dependencies {
     implementation(libs.accompanist.webview)
 
     implementation(libs.three.ten.abp)
-
 }
