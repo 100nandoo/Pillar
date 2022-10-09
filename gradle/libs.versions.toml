@@ -39,6 +39,7 @@ androidx_core_splashscreen = { module = "androidx.core:core-splashscreen", versi
 androidx_navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 androidx_viewmodel_ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewmodel" }
 
+androidx_compose_contraint_layout = { module = "androidx.constraintlayout:constraintlayout-compose", version = "1.0.1"}
 androidx_compose_foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx_compose_material = { module = "androidx.compose.material:material", version.ref = "compose" }
 androidx_compose_material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
@@ -75,6 +76,8 @@ accompanist_swiperefresh = { module = "com.google.accompanist:accompanist-swiper
 accompanist_pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
 accompanist_pager_indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
 accompanist_webview = { module = "com.google.accompanist:accompanist-webview", version = "0.24.7-alpha" }
+
+coil = { module = "io.coil-kt:coil-compose", version = "2.2.2"}
 
 firebase_bom = { module = "com.google.firebase:firebase-bom", version = "29.3.1" }
 firebase_analytics = { module = "com.google.firebase:firebase-analytics-ktx" }

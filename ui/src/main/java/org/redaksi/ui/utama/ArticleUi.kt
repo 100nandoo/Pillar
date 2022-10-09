@@ -12,7 +12,8 @@ data class ArticleUi(
     val title: String = "",
     val body: String = "",
     val authors: String = "",
-    val displayDate: String = ""
+    val displayDate: String = "",
+    val imageUrl: String = ""
 )
 
 fun detailScreenDate(zonedDateTime: ZonedDateTime?): String {
@@ -22,11 +23,20 @@ fun detailScreenDate(zonedDateTime: ZonedDateTime?): String {
 fun fromResponse(articles: List<Article>): List<ArticleUi> {
     return articles.map { article ->
         val authors = article.postAuthors.joinToString { it.name }
+
         val zonedDateTime = runCatching {
             ZonedDateTime.parse(article.date + "Z", DateTimeFormatter.ISO_ZONED_DATE_TIME)
                 .withZoneSameInstant(ZoneId.systemDefault())
         }.getOrNull()
         val displayDate = detailScreenDate(zonedDateTime)
-        ArticleUi(article.id, JsoupHelper.stripText(article.title.rendered), article.searchContent, authors, displayDate)
+
+        ArticleUi(
+            article.id,
+            JsoupHelper.stripText(article.title.rendered),
+            article.searchContent,
+            authors,
+            displayDate,
+            article.jetpackFeaturedMediaUrl
+        )
     }
 }

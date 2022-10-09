@@ -79,7 +79,7 @@ private fun UtamaScreenPreview() {
 fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
     val staticModifier = modifier
         .background(PillarColor.background)
-        .padding(sixteen.dp, sixteen.dp, sixteen.dp, 0.dp)
+        .padding(sixteen.dp)
         .fillMaxWidth()
     Text(
         modifier = staticModifier,

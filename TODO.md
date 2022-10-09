@@ -1,6 +1,6 @@
 # TODO
-- [ ] Image on Utama
-- [ ] Image on Artikel
+- [x] Image on Utama
+- [x] Image on Artikel
 - [ ] Image on Artikel Detail
 - [ ] Jump to Top Artikel Detail
 - [ ] Update Pillar Api Test

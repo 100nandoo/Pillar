@@ -48,6 +48,7 @@ dependencies {
     // ----------------------------- COMPOSE ------------------------------
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
     implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.contraint.layout)
     // Compose Material Design
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material3)
@@ -63,6 +64,8 @@ dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicator)
     implementation(libs.accompanist.webview)
+
+    implementation(libs.coil)
 
     implementation(libs.three.ten.abp)
 }
