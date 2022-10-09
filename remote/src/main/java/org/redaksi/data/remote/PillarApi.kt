@@ -34,7 +34,7 @@ interface PillarApi {
 
     @GET("posts")
     suspend fun newestArticles(
-        @Query("sticky")
-        sticky: String = "true"
+        @Query("per_page")
+        perPage: Int = 3
     ): Response<List<Article>>
 }

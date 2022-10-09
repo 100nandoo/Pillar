@@ -50,7 +50,7 @@ val PillarTypography3 = Typography(
     headlineSmall = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Bold,
-        fontSize = 16.sp
+        fontSize = 20.sp
     ),
     labelSmall = TextStyle(
         fontFamily = FontFamily.Serif,

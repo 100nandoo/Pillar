@@ -56,7 +56,10 @@ import org.redaksi.data.remote.SEPUTAR_GRII
 import org.redaksi.data.remote.TRANSKIP
 import org.redaksi.ui.Dimens
 import org.redaksi.ui.PillarColor
+import org.redaksi.ui.PillarColor.bottomBarIconColor
+import org.redaksi.ui.PillarColor.bottomBarSelected
 import org.redaksi.ui.PillarColor.primary
+import org.redaksi.ui.PillarColor.secondary
 import org.redaksi.ui.PillarColor.secondaryVar
 import org.redaksi.ui.PillarColor.surface
 import org.redaksi.ui.PillarTypography3
@@ -118,11 +121,11 @@ fun ArtikelScreen(paddingValues: PaddingValues, onClickArtikel: (artikelId: Int)
                 containerColor = primary,
                 selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
-                    TabRowDefaults.Indicator(modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions), color = surface)
+                    TabRowDefaults.Indicator(modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions), color = secondary)
                 }
             ) {
                 pages.forEachIndexed { index, page ->
-                    val color = if (index == pagerState.currentPage) surface else secondaryVar
+                    val color = if (index == pagerState.currentPage) secondary else bottomBarSelected
                     Tab(
                         text = { Text(color = color, text = stringResource(id = page.label)) },
                         selected = pagerState.currentPage == index,
@@ -233,7 +236,7 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
         Text(
             modifier = modifier.fillMaxWidth(),
             style = PillarTypography3.headlineSmall,
-            color = PillarColor.utamaTitle,
+            color = PillarColor.secondary,
             text = articleUi.title
         )
         if (articleUi.body.isNotBlank()) {

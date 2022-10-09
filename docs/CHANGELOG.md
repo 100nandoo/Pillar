@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.0.5] - 1 Oktober 2022
+* Ikon launcher baru
+* 
+
 ## [2.0.4] - 24 September 2022
 * Tambah permission `AD ID` (Untuk memenuhi Play Store Policy)
 

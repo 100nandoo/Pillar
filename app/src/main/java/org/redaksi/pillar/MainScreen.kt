@@ -31,12 +31,9 @@ import org.redaksi.pillar.BottomNavRoute.cariRoute
 import org.redaksi.pillar.BottomNavRoute.lainnyaRoute
 import org.redaksi.pillar.BottomNavRoute.tentangRoute
 import org.redaksi.pillar.BottomNavRoute.utamaRoute
-import org.redaksi.ui.PillarColor.bottomBarIconColor
 import org.redaksi.ui.PillarColor.bottomBarSelected
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.PillarColor.secondary
-import org.redaksi.ui.PillarColor.secondaryVar
-import org.redaksi.ui.PillarColor.surface
 import org.redaksi.ui.R
 import org.redaksi.ui.TentangScreen
 import org.redaksi.ui.artikel.ArtikelScreen
@@ -114,6 +111,7 @@ fun NavBar(modifier: Modifier, items: List<NavBarItem>, navController: NavContro
                 icon = {
                     Icon(painter = painterResource(id = item.icon), contentDescription = stringResource(item.label))
                 },
+                label = { Text(stringResource(item.label), color = secondary) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = { onClickNavBarItem(navController, item) },
                 colors = NavigationBarItemDefaults.colors(primary, secondary, indicatorColor = bottomBarSelected)

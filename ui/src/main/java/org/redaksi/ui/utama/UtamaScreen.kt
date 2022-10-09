@@ -85,7 +85,7 @@ fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
         modifier = staticModifier,
         style = PillarTypography3.headlineMedium,
         color = PillarColor.utamaTitle,
-        textAlign = TextAlign.Center,
+        textAlign = TextAlign.Left,
         text = stringResource(id = id)
     )
 }
@@ -97,9 +97,6 @@ fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
 @Composable
 private fun HeaderItemPreview() {
     Column {
-        HeaderItem(Modifier, R.string.artikel_terbaru)
-        HeaderItem(Modifier, R.string.pilihan_editor)
-
         HeaderItem(Modifier, R.string.artikel_terbaru)
         HeaderItem(Modifier, R.string.pilihan_editor)
     }
