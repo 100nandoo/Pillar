@@ -26,7 +26,7 @@ object PillarColor {
     val artikelDetailTitleBackground = Color(0xFFF8DFD8)
     val artikelDetailTitle = Color(0xFF3A1819)
 
-    val categoryTranskrip = Color(0xFFFFE485)
+    val kategori = Color(0xFFBC4F32)
 
     val cariPlaceholder = Color(0xFFE28E78)
 }

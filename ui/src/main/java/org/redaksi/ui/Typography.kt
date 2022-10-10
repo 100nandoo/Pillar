@@ -40,7 +40,7 @@ val PillarTypography3 = Typography(
     ),
     bodySmall = TextStyle(
         fontFamily = Inter,
-        fontSize = 12.sp
+        fontSize = 14.sp
     ),
     headlineMedium = TextStyle(
         fontFamily = Montserrat,
@@ -55,6 +55,10 @@ val PillarTypography3 = Typography(
     labelSmall = TextStyle(
         fontFamily = FontFamily.Serif,
         fontSize = 12.sp
+    ),
+    labelMedium = TextStyle(
+        fontFamily = FontFamily.Serif,
+        fontSize = 16.sp
     )
 )
 

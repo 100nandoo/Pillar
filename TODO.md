@@ -1,6 +1,4 @@
 # TODO
-- [x] Image on Utama
-- [x] Image on Artikel
 - [ ] Image on Artikel Detail
 - [ ] Jump to Top Artikel Detail
 - [ ] Update Pillar Api Test
@@ -25,3 +23,5 @@ Done
 - [x] Tentang Screen
 - [x] Highlight ayat alkitab
 - [x] Dialog & app intent ayat alkitab
+- [x] Image on Utama
+- [x] Image on Artikel

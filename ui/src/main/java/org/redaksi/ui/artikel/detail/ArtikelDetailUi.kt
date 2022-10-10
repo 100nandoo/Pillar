@@ -32,7 +32,8 @@ data class ArtikelDetailUi(
     val estimation: String = "",
     val categoryUi: List<CategoryUi> = listOf(),
     val body: String = "",
-    val bodyStriped: String = ""
+    val bodyStriped: String = "",
+    val imageUrl: String = ""
 )
 
 data class CategoryUi(
@@ -62,7 +63,8 @@ fun fromResponse(article: Article): ArtikelDetailUi {
         estimation = estimation,
         categoryUi = categoryUi,
         body = article.content.rendered,
-        bodyStriped = bodyStriped
+        bodyStriped = bodyStriped,
+        imageUrl = article.jetpackFeaturedMediaUrl
     )
 }
 
