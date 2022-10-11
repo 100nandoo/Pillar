@@ -1,4 +1,4 @@
-package org.redaksi.ui
+package org.redaksi.ui.lainnya
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding

@@ -1,5 +1,4 @@
 # TODO
-- [ ] Image on Artikel Detail
 - [ ] Jump to Top Artikel Detail
 - [ ] Update Pillar Api Test
 - [ ] Download
@@ -25,3 +24,4 @@ Done
 - [x] Dialog & app intent ayat alkitab
 - [x] Image on Utama
 - [x] Image on Artikel
+- [x] Image on Artikel Detail

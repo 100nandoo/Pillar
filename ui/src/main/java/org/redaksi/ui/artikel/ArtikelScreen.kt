@@ -60,7 +60,6 @@ import org.redaksi.data.remote.RESENSI
 import org.redaksi.data.remote.SENI_BUDAYA
 import org.redaksi.data.remote.SEPUTAR_GRII
 import org.redaksi.data.remote.TRANSKIP
-import org.redaksi.ui.Dimens
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.Dimens.thirtyTwo

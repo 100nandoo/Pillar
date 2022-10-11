@@ -35,11 +35,11 @@ import org.redaksi.ui.PillarColor.bottomBarSelected
 import org.redaksi.ui.PillarColor.primary
 import org.redaksi.ui.PillarColor.secondary
 import org.redaksi.ui.R
-import org.redaksi.ui.TentangScreen
 import org.redaksi.ui.artikel.ArtikelScreen
 import org.redaksi.ui.artikel.detail.ArtikelDetailScreen
 import org.redaksi.ui.cari.CariScreen
 import org.redaksi.ui.lainnya.LainnyaScreen
+import org.redaksi.ui.lainnya.TentangScreen
 import org.redaksi.ui.utama.UtamaScreen
 
 @Preview
