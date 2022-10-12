@@ -2,7 +2,6 @@ package org.redaksi.ui.artikel
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -15,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
@@ -64,6 +62,7 @@ import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.Dimens.thirtyTwo
 import org.redaksi.ui.Dimens.twelve
+import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.bottomBarSelected
 import org.redaksi.ui.PillarColor.primary
@@ -190,7 +189,7 @@ fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int)
 
     LazyColumn(Modifier.fillMaxSize()) {
         items(articleItems) { articleUi ->
-            ArticleItem(articleUi = articleUi!!, isLast = false) {
+            ArticleItem(articleUi = articleUi!!) {
                 onClick(articleUi.id)
             }
         }
@@ -198,10 +197,17 @@ fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int)
         articleItems.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
-                    item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
+                    item { LoadingScreen(Modifier.fillParentMaxSize()) }
                 }
                 loadState.append is LoadState.Loading -> {
-                    item { LoadingItem() }
+                    item {
+                        LoadingScreen(
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(sixteen.dp)
+                                .wrapContentWidth(Alignment.CenterHorizontally)
+                        )
+                    }
                 }
             }
         }
@@ -209,31 +215,7 @@ fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int)
 }
 
 @Composable
-fun LoadingView(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CircularProgressIndicator(color = primary)
-    }
-}
-
-@Composable
-fun LoadingItem() {
-    CircularProgressIndicator(
-        color = primary,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(sixteen.dp)
-            .wrapContentWidth(Alignment.CenterHorizontally)
-    )
-}
-
-@Composable
-fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boolean, onClick: (artikelId: Int) -> Unit) {
+fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isDividerShown: Boolean = false, onClick: (artikelId: Int) -> Unit) {
     ConstraintLayout(
         modifier = modifier
             .fillMaxWidth()
@@ -307,7 +289,7 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isLast: Boo
                     )
                 }
             }
-            if (isImageExist.not()) {
+            if (isImageExist.not() || isDividerShown) {
                 Divider(modifier = modifier, color = secondaryVar)
             }
         }

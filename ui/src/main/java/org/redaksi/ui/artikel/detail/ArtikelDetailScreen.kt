@@ -300,7 +300,7 @@ fun VerseDialog(ari: Int, verse: AnnotatedString, openBible: (Int) -> Unit, dism
     )
 }
 
-val category = listOf(CategoryUi("Transkrip", R.drawable.ic_transkrip))
+val category = listOf(CategoryUi("Transkrip"))
 val artikelDetailUi = ArtikelDetailUi(
     "Iman, Pengharapan, dan Kasih (Bagian 16): Doktrin Iman",
     "Adam R",

@@ -1,4 +1,5 @@
 # TODO
+- [ ] Fix Previews (Cari ✅)
 - [ ] Jump to Top Artikel Detail
 - [ ] Update Pillar Api Test
 - [ ] Download

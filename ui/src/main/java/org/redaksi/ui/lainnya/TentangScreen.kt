@@ -32,7 +32,7 @@ private fun TentangScreenPreview() {
 
 const val TENTANG_HTML = """
 <html>
-<body style="background-color:#FCF5F3;">
+<body style="background-color:#FCFAF7;">
 <style>
 body {
   padding:8px;
@@ -80,7 +80,7 @@ body {
 <p>Bagi pembaca yang mendapatkan berkat melalui artikel-artikel dan ingin mengutip kalimat-kalimat yang ada di dalam artikel Pillar untuk hasil karya tulisan kalian? Beberapa hal yang terkait dengan pengutipan agar sesuai dengan kode etik hak cipta, silakan ikuti tata cara pengutipan di bawah:</p>
 <ul><li>Kutipan dari artikel buletin Pillar tidak diubah isi</li><li>Harus mencantumkan nama penulis artikel yang dikutip</li><li>Harus mencantumkan nara sumber yang lengkap</li></ul>
 
-<p>contoh:<br>Dikutip dari Bulletin Pillar (Bulletin Pemuda Gereja Reformed Injili Indonesia) edisi no.&nbsp;<em>XXX (bulan, tahun)</em>, artikel&nbsp;<em>(judul artikel)</em>&nbsp;oleh&nbsp;<em>(penulis)</em>.<br>Bahkan anda bisa memuat alamat website kami, <a href="https://www.buletinpillar.org">https://www.buletinpillar.org</a></p>
+<p><b>contoh:</b><br>Dikutip dari Bulletin Pillar (Bulletin Pemuda Gereja Reformed Injili Indonesia) edisi no.&nbsp;<em>XXX (bulan, tahun)</em>, artikel&nbsp;<em>(judul artikel)</em>&nbsp;oleh&nbsp;<em>(penulis)</em>.<br>Bahkan anda bisa memuat alamat website kami, <a href="https://www.buletinpillar.org">https://www.buletinpillar.org</a></p>
 <!-- AddThis Advanced Settings above via filter on the_content --><!-- AddThis Advanced Settings below via filter on the_content --><!-- AddThis Advanced Settings generic via filter on the_content --><!-- AddThis Share Buttons above via filter on the_content --><!-- AddThis Share Buttons below via filter on the_content --><div class="at-below-post-page addthis_tool" data-url="https://www.buletinpillar.org/tentang-pillar"></div><!-- AddThis Share Buttons generic via filter on the_content -->
 </div>
 

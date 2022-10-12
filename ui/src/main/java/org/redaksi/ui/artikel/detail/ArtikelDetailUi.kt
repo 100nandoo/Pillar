@@ -19,7 +19,6 @@ import org.redaksi.data.remote.SENI_BUDAYA
 import org.redaksi.data.remote.SEPUTAR_GRII
 import org.redaksi.data.remote.TRANSKIP
 import org.redaksi.data.remote.response.base.Article
-import org.redaksi.ui.R
 import org.redaksi.ui.utama.detailScreenDate
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
@@ -36,10 +35,7 @@ data class ArtikelDetailUi(
     val imageUrl: String = ""
 )
 
-data class CategoryUi(
-    val label: String = "",
-    @DrawableRes val icon: Int = R.drawable.ic_transkrip
-)
+data class CategoryUi(val label: String = "")
 
 fun fromResponse(article: Article): ArtikelDetailUi {
     val authors = article.postAuthors.joinToString { it.name }
@@ -86,7 +82,7 @@ fun Int.toCategoryUi(): CategoryUi {
     val titleCapitalize = title.toLowerCase(Locale.current).capitalize(Locale.current)
         .replace("_n_", " & ")
         .replace("_", " ")
-    return CategoryUi(titleCapitalize, R.drawable.ic_transkrip)
+    return CategoryUi(titleCapitalize)
 }
 
 data class BottomBarIcon(
