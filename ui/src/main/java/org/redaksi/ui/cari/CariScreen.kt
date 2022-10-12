@@ -40,18 +40,38 @@ import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor.background
 import org.redaksi.ui.PillarColor.cariPlaceholder
-import org.redaksi.ui.PillarColor.primary
+import org.redaksi.ui.PillarColor.secondary
 import org.redaksi.ui.R
 import org.redaksi.ui.ScreenState
 import org.redaksi.ui.artikel.ArticleItem
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) {
+fun CariScreen(paddingValues: PaddingValues, onClick: (Int) -> Unit) {
     val viewModel: CariViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    CariScreenContent(
+        paddingValues = paddingValues,
+        uiState = uiState,
+        onClick = { onClick(it) },
+        onSearch = {
+            keyboardController?.hide()
+            viewModel.onEvent(CariEvent.LoadSearchArticle(it))
+        },
+        onValueChange = { viewModel.onEvent(CariEvent.UpdateTextFieldValue(it)) }
+    )
+}
+
+@Composable
+fun CariScreenContent(
+    paddingValues: PaddingValues,
+    uiState: CariViewModelState,
+    onClick: (Int) -> Unit,
+    onSearch: (String) -> Unit,
+    onValueChange: (TextFieldValue) -> Unit
+) {
     Scaffold { it ->
         Column(
             Modifier
@@ -64,12 +84,11 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
                 CariTextField(
                     uiState = uiState,
                     onValueChange = {
-                        viewModel.updateTextFieldValue(it)
+                        onValueChange(it)
                     },
                     onSearch = {
                         if (it.isNotBlank()) {
-                            viewModel.loadSearchArticle(it)
-                            keyboardController?.hide()
+                            onSearch(it)
                         }
                     }
                 )
@@ -82,7 +101,7 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) 
                         uiState.articlesUi.forEachIndexed { index, articleUi ->
                             item {
                                 val isLast = index == uiState.articlesUi.size - 1
-                                ArticleItem(articleUi = articleUi, isLast = isLast) { onClick(articleUi.id) }
+                                ArticleItem(articleUi = articleUi, isDividerShown = isLast) { onClick(articleUi.id) }
                             }
                         }
                     }
@@ -131,7 +150,7 @@ fun CariTextField(uiState: CariViewModelState, onValueChange: (TextFieldValue) -
             onSearch(it)
         },
         colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = primary,
+            focusedIndicatorColor = secondary,
             containerColor = background
         ),
         maxLines = 1,
@@ -150,7 +169,7 @@ fun TrailingIcon(query: String, onSearch: (String) -> Unit) {
             .padding(16.dp),
         painter = painterResource(id = R.drawable.ic_cari),
         contentDescription = stringResource(R.string.cari),
-        tint = primary
+        tint = secondary
     )
 }
 
@@ -161,6 +180,6 @@ fun Placeholder() {
 
 @Preview
 @Composable
-private fun CariScreenPreview() {
-    CariScreen(PaddingValues()) {}
+private fun CariScreenContentPreview() {
+    CariScreenContent(PaddingValues(), CariViewModelState(), {}, {}, {})
 }

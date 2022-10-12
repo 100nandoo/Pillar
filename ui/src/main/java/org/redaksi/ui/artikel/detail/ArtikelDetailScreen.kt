@@ -1,7 +1,6 @@
 package org.redaksi.ui.artikel.detail
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.text.SpannableStringBuilder
@@ -14,43 +13,41 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.font.FontStyle.Companion.Italic
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -58,6 +55,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import org.redaksi.core.helper.IntentHelper
 import org.redaksi.core.helper.verse.AlkitabIntegrationUtil
 import org.redaksi.core.helper.verse.ConnectionResult
 import org.redaksi.core.helper.verse.DesktopVerseFinder
@@ -65,45 +65,48 @@ import org.redaksi.core.helper.verse.DesktopVerseParser
 import org.redaksi.core.helper.verse.Launcher
 import org.redaksi.core.helper.verse.VerseProvider
 import org.redaksi.ui.Dimens.eight
-import org.redaksi.ui.Dimens.four
 import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.Inter
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.background
-import org.redaksi.ui.PillarColor.categoryTranskrip
+import org.redaksi.ui.PillarColor.kategori
 import org.redaksi.ui.PillarColor.primary
-import org.redaksi.ui.PillarColor.surface
 import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
-import org.redaksi.ui.R.font.lato_regular
-import org.redaksi.ui.Symbol.bullet
-import org.redaksi.ui.utama.detailScreenDate
+import org.redaksi.ui.R.font.pt_serif_regular
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun ArtikelDetailScreen() {
     val viewModel: ArtikelDetailViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
+    val scrollState = rememberScrollState()
 
-    val bottomBarIcons = remember {
-        listOf(
-            BottomBarIcon(R.drawable.ic_share, R.string.share, false) {
-                val sendIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TITLE, it.articleDetailUi.title)
-                    putExtra(Intent.EXTRA_TEXT, it.articleDetailUi.bodyStriped)
-                    type = "text/plain"
-                }
-
-                val shareIntent = Intent.createChooser(sendIntent, null)
-                context.startActivity(shareIntent)
-            }
-        )
+    fun share(title: String, text: String) {
+        context.startActivity(IntentHelper.shareSheetIntent(title, text))
     }
+
     Scaffold(
-        bottomBar = {
-            ArtikelDetailBottomBar(bottomBarIcons, uiState)
+        floatingActionButtonPosition = FabPosition.End,
+        floatingActionButton = {
+            AnimatedVisibility(
+                visible = scrollState.value == scrollState.maxValue || scrollState.value == 0,
+                enter = scaleIn(),
+                exit = scaleOut()
+            ) {
+                FloatingActionButton(
+                    onClick = { share(uiState.articleDetailUi.title, uiState.articleDetailUi.bodyStriped) },
+                    containerColor = PillarColor.secondary,
+                    contentColor = background
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_share),
+                        contentDescription = stringResource(R.string.share)
+                    )
+                }
+            }
         }
     ) {
         if (uiState.isLoading) {
@@ -111,8 +114,23 @@ fun ArtikelDetailScreen() {
         } else {
             Column(
                 Modifier
-                    .verticalScroll(rememberScrollState())
+                    .background(background)
+                    .verticalScroll(scrollState)
             ) {
+                val isImageExist = uiState.articleDetailUi.imageUrl.isNotBlank()
+                if (isImageExist) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(context = LocalContext.current)
+                            .data(uiState.articleDetailUi.imageUrl)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(2f)
+                    )
+                }
                 ArtikelHeader(artikelDetailUi = uiState.articleDetailUi)
                 ArtikelBody(
                     modifier = Modifier.padding(it),
@@ -122,8 +140,6 @@ fun ArtikelDetailScreen() {
                     installDialog = { viewModel.installDialog(true) },
                     known = { isShown, verse, ari -> viewModel.showKnownDialog(isShown, verse, ari) }
                 )
-
-                // viewModel.checkAlkitabIsInstalled(LocalContext.current)
 
                 if (uiState.showNotKnownDialog.first) {
                     NotKnownVerseDialog(verse = uiState.showNotKnownDialog.second, dismissDialog = { viewModel.dismissNotKnownDialog() })
@@ -145,7 +161,7 @@ fun ArtikelDetailScreen() {
 
                 if (uiState.showKnownDialog.first) {
                     VerseDialog(uiState.showKnownDialog.third, uiState.showKnownDialog.second, {
-                        val isSuccess = runCatching { context.startActivity(Launcher.openAppAtBibleLocation(it)) }.getOrNull()
+                        runCatching { context.startActivity(Launcher.openAppAtBibleLocation(it)) }.getOrNull()
                     }) {
                         viewModel.showKnownDialog(false)
                     }
@@ -284,54 +300,11 @@ fun VerseDialog(ari: Int, verse: AnnotatedString, openBible: (Int) -> Unit, dism
     )
 }
 
-@Composable
-fun ArtikelDetailBottomBar(bottomBarIcons: List<BottomBarIcon>, uiState: ArtikelDetailViewModelState) {
-    BottomAppBar(
-        modifier = Modifier.clip(RoundedCornerShape(sixteen.dp, sixteen.dp, 0.dp, 0.dp)),
-        containerColor = primary
-    ) {
-        Row(horizontalArrangement = Arrangement.End) {
-            Spacer(modifier = Modifier.weight(1f))
-            bottomBarIcons.forEach { bottomBarIcon ->
-                BottomBarItem(bottomBarIcon = bottomBarIcon, uiState)
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ArtikelDetailBottomBarPreview() {
-    ArtikelDetailBottomBar(
-        listOf(
-            BottomBarIcon(R.drawable.ic_share, R.string.share, false) {}
-        ),
-        ArtikelDetailViewModelState()
-    )
-}
-
-@Composable
-fun BottomBarItem(bottomBarIcon: BottomBarIcon, uiState: ArtikelDetailViewModelState) {
-    Row(
-        modifier = Modifier
-            .fillMaxHeight()
-            .background(primary)
-            .clickable { bottomBarIcon.onClick(uiState) }
-            .padding(sixteen.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            painter = painterResource(bottomBarIcon.icon),
-            contentDescription = stringResource(bottomBarIcon.label),
-            tint = surface
-        )
-    }
-}
-
-val category = listOf(CategoryUi("Transkrip", R.drawable.ic_transkrip))
+val category = listOf(CategoryUi("Transkrip"))
 val artikelDetailUi = ArtikelDetailUi(
     "Iman, Pengharapan, dan Kasih (Bagian 16): Doktrin Iman",
     "Adam R",
+    displayDate = "1 Okt 2023",
     estimation = "12 menit",
     categoryUi = category,
     body = "Iman adalah hal yang sangat unik, khususnya dalam agama Kristen, karena Alkitab berkata, “Tanpa iman, tidak ada orang yang " +
@@ -344,27 +317,28 @@ val artikelDetailUi = ArtikelDetailUi(
 fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
     Column(
         Modifier
-            .background(PillarColor.artikelDetailTitleBackground)
+            .background(PillarColor.primary)
             .padding(sixteen.dp)
     ) {
         Text(
             modifier = Modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
             style = PillarTypography3.titleLarge,
             text = artikelDetailUi.title,
-            textAlign = TextAlign.Center,
             color = PillarColor.artikelDetailTitle
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(style = PillarTypography3.labelSmall, text = artikelDetailUi.authors)
-            Text(style = PillarTypography3.labelSmall, text = " $bullet ")
-            Text(style = PillarTypography3.labelSmall, text = detailScreenDate(artikelDetailUi.zonedDateTime))
+            Text(
+                style = PillarTypography3.bodySmall,
+                fontStyle = Italic,
+                color = kategori,
+                text = artikelDetailUi.categoryUi.map { it.label }.joinToString(",")
+            )
+            Text(style = PillarTypography3.bodySmall, fontStyle = Italic, text = " - ")
+            Text(style = PillarTypography3.bodySmall, fontStyle = Italic, text = artikelDetailUi.authors)
             Spacer(Modifier.weight(1f))
             Text(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(eight.dp))
-                    .background(PillarColor.secondaryVar)
-                    .padding(8.dp),
                 style = PillarTypography3.bodySmall,
+                fontStyle = Italic,
                 text = artikelDetailUi.estimation
             )
         }
@@ -391,16 +365,14 @@ fun ArtikelBody(
     Column(
         modifier
             .background(background)
-            .padding(sixteen.dp)
     ) {
-        ArtikelKategori(categoryUis = artikelDetailUi.categoryUi)
         AndroidView(
-            modifier = Modifier.padding(0.dp, eight.dp, 0.dp, 0.dp),
+            modifier = Modifier.padding(sixteen.dp, eight.dp, sixteen.dp, 0.dp),
             factory = { context ->
                 TextView(context).apply {
                     setLineSpacing(12f, 1f)
                     textSize = 16f
-                    val typeface: Typeface? = ResourcesCompat.getFont(context, lato_regular)
+                    val typeface: Typeface? = ResourcesCompat.getFont(context, pt_serif_regular)
                     movementMethod = LinkMovementMethod.getInstance()
                     setTypeface(typeface)
                     setTextColor(ResourcesCompat.getColor(resources, R.color.black, null))
@@ -439,7 +411,7 @@ fun ArtikelBody(
                                                 dialogSpan.withStyle(
                                                     style = SpanStyle(
                                                         fontStyle = FontStyle.Italic,
-                                                        fontFamily = FontFamily(Font(lato_regular))
+                                                        fontFamily = Inter
                                                     )
                                                 ) {
                                                     val ayatKitab = "${item.bookName} ${item.chapter}:${item.verse}  "
@@ -458,7 +430,9 @@ fun ArtikelBody(
                                         ds.color = Color.parseColor("#E28E78")
                                     }
                                 },
-                                start, end, SPAN_INCLUSIVE_INCLUSIVE
+                                start,
+                                end,
+                                SPAN_INCLUSIVE_INCLUSIVE
                             )
                             return true
                         }
@@ -469,6 +443,11 @@ fun ArtikelBody(
                 it.text = sb
             }
         )
+        Text(
+            modifier = Modifier.padding(sixteen.dp, 0.dp, sixteen.dp, sixteen.dp),
+            style = PillarTypography3.labelMedium,
+            text = artikelDetailUi.displayDate
+        )
     }
 }
 
@@ -476,32 +455,4 @@ fun ArtikelBody(
 @Composable
 fun ArtikelBodyPreview() {
     ArtikelBody(Modifier, artikelDetailUi, LocalContext.current, {}, {}) { _, _, _ -> }
-}
-
-@Composable
-fun ArtikelKategori(categoryUis: List<CategoryUi>) {
-    LazyRow(
-        modifier = Modifier
-            .padding(four.dp)
-
-    ) {
-        // Icon(painter = painterResource(id = categoryUi.icon), contentDescription = categoryUi.label)
-        categoryUis.forEach { categoryUi ->
-            item {
-                Box(modifier = Modifier
-                    .padding(0.dp, 0.dp, four.dp, 0.dp)
-                    .clip(RoundedCornerShape(percent = 50))
-                    .background(categoryTranskrip)
-                    .padding(eight.dp)){
-                    Text(categoryUi.label)
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ArtikelKategoriPreview() {
-    ArtikelKategori(listOf(CategoryUi("Transkrip", R.drawable.ic_transkrip)))
 }

@@ -48,7 +48,7 @@ internal class PillarApiTest {
     @Test
     fun articlesByCategory() {
         runBlocking {
-            val result = pillarApi.articlesByCategory(RENUNGAN,)
+            val result = pillarApi.articlesByCategory(RENUNGAN)
             val isNotEmpty = (result.body()?.size ?: 0) > 0
 
             assertTrue(::articlesByCategory.name + MESSAGE_RESPONSE_FAILED, result.isSuccessful)

@@ -23,7 +23,7 @@ interface PillarApi {
         @CategoryId @Query("categories")
         categories: Int,
         @Query("page")
-        page: Int,
+        page: Int
     ): Response<List<Article>>
 
     @GET("posts")
@@ -34,7 +34,7 @@ interface PillarApi {
 
     @GET("posts")
     suspend fun newestArticles(
-        @Query("sticky")
-        sticky: String = "true"
+        @Query("per_page")
+        perPage: Int = 3
     ): Response<List<Article>>
 }

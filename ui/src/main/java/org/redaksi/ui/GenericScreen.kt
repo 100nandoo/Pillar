@@ -11,18 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import org.redaksi.ui.PillarColor.primary
+import org.redaksi.ui.PillarColor.secondaryVar
 
 @Composable
-fun LoadingScreen(isLoading: Boolean = true) {
+fun LoadingScreen(modifier: Modifier = Modifier, isLoading: Boolean = true) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier = modifier
             .background(PillarColor.background)
             .fillMaxSize()
     ) {
         if (isLoading) {
-            CircularProgressIndicator(color = primary)
+            CircularProgressIndicator(color = secondaryVar)
         }
     }
 }

@@ -51,10 +51,10 @@ object Launcher {
      */
     fun openGooglePlayDownloadPage(context: Context, product: Product): Intent {
         val uri = Uri.parse(
-            "market://details?id="
-                + product.packageName
-                + "&referrer=utm_source%3Dintegration%26utm_medium%3D"
-                + context.packageName
+            "market://details?id=" +
+                product.packageName +
+                "&referrer=utm_source%3Dintegration%26utm_medium%3D" +
+                context.packageName
         )
         val res = Intent(Intent.ACTION_VIEW)
         res.data = uri

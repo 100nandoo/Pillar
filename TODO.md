@@ -1,7 +1,5 @@
 # TODO
-- [ ] Image on Utama
-- [ ] Image on Artikel
-- [ ] Image on Artikel Detail
+- [ ] Fix Previews (Cari ✅)
 - [ ] Jump to Top Artikel Detail
 - [ ] Update Pillar Api Test
 - [ ] Download
@@ -25,3 +23,6 @@ Done
 - [x] Tentang Screen
 - [x] Highlight ayat alkitab
 - [x] Dialog & app intent ayat alkitab
+- [x] Image on Utama
+- [x] Image on Artikel
+- [x] Image on Artikel Detail

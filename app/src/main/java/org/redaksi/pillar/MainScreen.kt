@@ -28,20 +28,18 @@ import org.redaksi.pillar.BottomNavRoute.artikelDetailRoute
 import org.redaksi.pillar.BottomNavRoute.artikelIdArg
 import org.redaksi.pillar.BottomNavRoute.artikelRoute
 import org.redaksi.pillar.BottomNavRoute.cariRoute
-import org.redaksi.pillar.BottomNavRoute.komentarRoute
 import org.redaksi.pillar.BottomNavRoute.lainnyaRoute
 import org.redaksi.pillar.BottomNavRoute.tentangRoute
 import org.redaksi.pillar.BottomNavRoute.utamaRoute
 import org.redaksi.ui.PillarColor.bottomBarSelected
 import org.redaksi.ui.PillarColor.primary
-import org.redaksi.ui.PillarColor.secondaryVar
-import org.redaksi.ui.PillarColor.surface
+import org.redaksi.ui.PillarColor.secondary
 import org.redaksi.ui.R
-import org.redaksi.ui.TentangScreen
 import org.redaksi.ui.artikel.ArtikelScreen
 import org.redaksi.ui.artikel.detail.ArtikelDetailScreen
 import org.redaksi.ui.cari.CariScreen
 import org.redaksi.ui.lainnya.LainnyaScreen
+import org.redaksi.ui.lainnya.TentangScreen
 import org.redaksi.ui.utama.UtamaScreen
 
 @Preview
@@ -96,7 +94,6 @@ object BottomNavRoute {
     const val cariRoute = "cari"
     const val tentangRoute = "tentang"
     const val lainnyaRoute = "lainnya"
-    const val komentarRoute = "komentar"
 
     const val artikelIdArg = "artikelId"
 }
@@ -110,16 +107,14 @@ fun NavBar(modifier: Modifier, items: List<NavBarItem>, navController: NavContro
     val currentDestination = navBackStackEntry?.destination
     NavigationBar(modifier = modifier, containerColor = primary) {
         items.forEachIndexed { _, item ->
-            val color = if (currentDestination?.hierarchy?.any { it.route == item.route } == true) surface else secondaryVar
-
             NavigationBarItem(
                 icon = {
                     Icon(painter = painterResource(id = item.icon), contentDescription = stringResource(item.label))
                 },
-                label = { Text(stringResource(item.label), color = color) },
+                label = { Text(stringResource(item.label), color = secondary) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = { onClickNavBarItem(navController, item) },
-                colors = NavigationBarItemDefaults.colors(surface, secondaryVar, indicatorColor = bottomBarSelected)
+                colors = NavigationBarItemDefaults.colors(primary, secondary, indicatorColor = bottomBarSelected)
             )
         }
     }

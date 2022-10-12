@@ -18,7 +18,14 @@ class CariViewModel @Inject constructor(private val pillarApi: PillarApi) : View
     private val viewModelState = MutableStateFlow(CariViewModelState())
     val uiState = viewModelState
 
-    fun loadSearchArticle(keyword: String) {
+    fun onEvent(cariEvent: CariEvent) {
+        when (cariEvent) {
+            is CariEvent.LoadSearchArticle -> loadSearchArticle(cariEvent.keyword)
+            is CariEvent.UpdateTextFieldValue -> updateTextFieldValue(cariEvent.textFieldValue)
+        }
+    }
+
+    private fun loadSearchArticle(keyword: String) {
         viewModelScope.launch {
             viewModelState.update { it.copy(screenState = ScreenState.LOADING) }
             val result = runCatching { pillarApi.searchArticle(keyword) }
@@ -33,7 +40,7 @@ class CariViewModel @Inject constructor(private val pillarApi: PillarApi) : View
         }
     }
 
-    fun updateTextFieldValue(textFieldValue: TextFieldValue) {
+    private fun updateTextFieldValue(textFieldValue: TextFieldValue) {
         viewModelState.update { it.copy(textFieldValue = textFieldValue) }
     }
 }
@@ -43,3 +50,8 @@ data class CariViewModelState(
     val textFieldValue: TextFieldValue = TextFieldValue(),
     val screenState: ScreenState = ScreenState.BLANK
 )
+
+sealed class CariEvent {
+    data class LoadSearchArticle(val keyword: String) : CariEvent()
+    data class UpdateTextFieldValue(val textFieldValue: TextFieldValue) : CariEvent()
+}

@@ -9,15 +9,15 @@ Documentation for [PILLAR Buletin Pemuda GRII](https://play.google.com/store/app
 
 ## Specs 🔨
 
-| Component             | Link                                                                                                |
-|-----------------------|-----------------------------------------------------------------------------------------------------|
-|  UI                   | [Jetpack Compose](https://developer.android.com/jetpack/compose)                                    |
-|  Theme                | [Material 3](https://m3.material.io/)                                                               |
-|  Dependancy Injection | [Hilt](https://dagger.dev/hilt/)                                                                    |
-|  Navigation           | [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started)   |
-| State Handling        | [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)                   |
-|  Font                 | [Lora](https://fonts.google.com/specimen/Lora)                                                      |
-|  Font                 | [Lato](https://fonts.google.com/specimen/Lato)                                                      |
+| Component             | Link                                                                                              |
+|-----------------------|---------------------------------------------------------------------------------------------------|
+|  UI                   | [Jetpack Compose](https://developer.android.com/jetpack/compose)                                  |
+|  Theme                | [Material 3](https://m3.material.io/)                                                             |
+|  Dependancy Injection | [Hilt](https://dagger.dev/hilt/)                                                                  |
+|  Navigation           | [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started) |
+| State Handling        | [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)                 |
+|  Font                 | [Montserrat](https://fonts.google.com/specimen/Montserrat)                                                    |
+|  Font                 | [Inter](https://fonts.google.com/specimen/Inter)                                                     |
 
 ## Features 🎨
 

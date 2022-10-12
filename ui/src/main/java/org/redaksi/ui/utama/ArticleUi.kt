@@ -12,20 +12,31 @@ data class ArticleUi(
     val title: String = "",
     val body: String = "",
     val authors: String = "",
-    val zonedDateTime: ZonedDateTime? = ZonedDateTime.now()
+    val displayDate: String = "",
+    val imageUrl: String = ""
 )
 
-fun detailScreenDate(zonedDateTime: ZonedDateTime): String {
-    return zonedDateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+fun detailScreenDate(zonedDateTime: ZonedDateTime?): String {
+    return zonedDateTime?.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)) ?: ""
 }
 
 fun fromResponse(articles: List<Article>): List<ArticleUi> {
     return articles.map { article ->
         val authors = article.postAuthors.joinToString { it.name }
+
         val zonedDateTime = runCatching {
             ZonedDateTime.parse(article.date + "Z", DateTimeFormatter.ISO_ZONED_DATE_TIME)
                 .withZoneSameInstant(ZoneId.systemDefault())
         }.getOrNull()
-        ArticleUi(article.id, JsoupHelper.stripText(article.title.rendered), article.searchContent, authors, zonedDateTime)
+        val displayDate = detailScreenDate(zonedDateTime)
+
+        ArticleUi(
+            article.id,
+            JsoupHelper.stripText(article.title.rendered),
+            article.searchContent,
+            authors,
+            displayDate,
+            article.jetpackFeaturedMediaUrl
+        )
     }
 }
