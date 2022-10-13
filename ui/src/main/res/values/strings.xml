@@ -38,5 +38,5 @@
     <!--  Artikel Detail  -->
     <string name="ayat_ini">ayat ini</string>
     <string name="buka_alkitab">Buka Alkitab</string>
-
+    <string name="aplikasi_alkitab_tidak_terinstal">Aplikasi Alkitab tidak terinstal. Instal Alkitab dari Play Store?</string>
 </resources>

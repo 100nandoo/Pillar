@@ -88,6 +88,7 @@ hilt_gradle_plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", 
 hilt_nav_compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt.nav.compose" }
 
 # ----------------------------- Other Libs ------------------------------
+accompanist_flow_layout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
 accompanist_swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 accompanist_pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
 accompanist_pager_indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }

@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicator)
     implementation(libs.accompanist.webview)
+    implementation (libs.accompanist.flow.layout)
 
     implementation(libs.coil)
 

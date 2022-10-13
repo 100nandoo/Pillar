@@ -57,6 +57,7 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.google.accompanist.flowlayout.FlowRow
 import org.redaksi.core.helper.IntentHelper
 import org.redaksi.core.helper.verse.AlkitabIntegrationUtil
 import org.redaksi.core.helper.verse.ConnectionResult
@@ -72,6 +73,7 @@ import org.redaksi.ui.PillarColor
 import org.redaksi.ui.PillarColor.background
 import org.redaksi.ui.PillarColor.kategori
 import org.redaksi.ui.PillarColor.primary
+import org.redaksi.ui.PillarColor.secondary
 import org.redaksi.ui.PillarTypography3
 import org.redaksi.ui.R
 import org.redaksi.ui.R.font.pt_serif_regular
@@ -181,7 +183,7 @@ fun NotKnownVerseDialog(verse: String, dismissDialog: () -> Unit) {
         confirmButton = {
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = primary
+                    containerColor = secondary
                 ),
                 onClick = {
                     dismissDialog()
@@ -201,12 +203,12 @@ fun AlkitabDialog(dismissDialog: () -> Unit, openPlayStore: () -> Unit) {
     AlertDialog(
         containerColor = background,
         text = {
-            Text("Aplikasi Alkitab tidak terinstal. Instal Alkitab dari Play Store?")
+            Text(stringResource(id = R.string.aplikasi_alkitab_tidak_terinstal))
         },
         confirmButton = {
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = primary
+                    containerColor = secondary
                 ),
                 onClick = {
                     openPlayStore()
@@ -219,7 +221,7 @@ fun AlkitabDialog(dismissDialog: () -> Unit, openPlayStore: () -> Unit) {
         dismissButton = {
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = primary
+                    containerColor = secondary
                 ),
                 onClick = {
                     dismissDialog()
@@ -244,7 +246,7 @@ fun PlayStoreDialog(dismissDialog: () -> Unit) {
         confirmButton = {
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = primary
+                    containerColor = secondary
                 ),
                 onClick = {
                     dismissDialog()
@@ -274,7 +276,7 @@ fun VerseDialog(ari: Int, verse: AnnotatedString, openBible: (Int) -> Unit, dism
         confirmButton = {
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = primary
+                    containerColor = secondary
                 ),
                 onClick = {
                     dismissDialog()
@@ -284,7 +286,7 @@ fun VerseDialog(ari: Int, verse: AnnotatedString, openBible: (Int) -> Unit, dism
             }
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = primary
+                    containerColor = secondary
                 ),
                 onClick = {
                     openBible(ari)
@@ -327,15 +329,16 @@ fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
             color = PillarColor.artikelDetailTitle
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                style = PillarTypography3.bodySmall,
-                fontStyle = Italic,
-                color = kategori,
-                text = artikelDetailUi.categoryUi.map { it.label }.joinToString(",")
-            )
-            Text(style = PillarTypography3.bodySmall, fontStyle = Italic, text = " - ")
-            Text(style = PillarTypography3.bodySmall, fontStyle = Italic, text = artikelDetailUi.authors)
-            Spacer(Modifier.weight(1f))
+            FlowRow(Modifier.weight(1f)) {
+                Text(
+                    style = PillarTypography3.bodySmall,
+                    fontStyle = Italic,
+                    color = kategori,
+                    text = artikelDetailUi.categoryUi.map { it.label }.joinToString(", ")
+                )
+                Text(style = PillarTypography3.bodySmall, fontStyle = Italic, text = " - ")
+                Text(style = PillarTypography3.bodySmall, fontStyle = Italic, text = artikelDetailUi.authors)
+            }
             Text(
                 style = PillarTypography3.bodySmall,
                 fontStyle = Italic,
@@ -427,7 +430,7 @@ fun ArtikelBody(
 
                                     override fun updateDrawState(ds: TextPaint) {
                                         ds.isUnderlineText = false
-                                        ds.color = Color.parseColor("#E28E78")
+                                        ds.color = Color.parseColor("#7B3334")
                                     }
                                 },
                                 start,
