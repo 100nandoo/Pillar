@@ -38,9 +38,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
-import org.redaksi.ui.PillarColor.background
-import org.redaksi.ui.PillarColor.cariPlaceholder
-import org.redaksi.ui.PillarColor.secondary
+import org.redaksi.ui.compose.PillarColor.background
+import org.redaksi.ui.compose.PillarColor.cariPlaceholder
+import org.redaksi.ui.compose.PillarColor.secondary
 import org.redaksi.ui.R
 import org.redaksi.ui.ScreenState
 import org.redaksi.ui.artikel.ArticleItem

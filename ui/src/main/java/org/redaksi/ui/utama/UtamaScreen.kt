@@ -26,14 +26,26 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.LoadingScreen
-import org.redaksi.ui.PillarColor
-import org.redaksi.ui.PillarColor.primary
-import org.redaksi.ui.PillarTypography3
+import org.redaksi.ui.compose.PillarColor
+import org.redaksi.ui.compose.PillarColor.primary
+import org.redaksi.ui.compose.PillarTypography3
 import org.redaksi.ui.R
 import org.redaksi.ui.artikel.ArticleItem
 
 @Composable
 fun UtamaScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) {
+    val viewModel: UtamaViewModel = hiltViewModel()
+    val uiState by viewModel.uiState.collectAsState()
+
+    UtamaScreenContent(
+        uiState = uiState,
+        paddingValues = paddingValues,
+        onClick = { onClick(it) },
+        onRefresh = { viewModel.onEvent(UtamaEvent.LoadUtama()) })
+}
+
+@Composable
+fun UtamaScreenContent(uiState: UtamaViewModelState, paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit, onRefresh: () -> Unit) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(

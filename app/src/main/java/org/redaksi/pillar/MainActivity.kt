@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import org.redaksi.ui.PillarTheme
+import org.redaksi.ui.compose.PillarTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

@@ -20,7 +20,6 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -67,14 +66,13 @@ import org.redaksi.core.helper.verse.Launcher
 import org.redaksi.core.helper.verse.VerseProvider
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
-import org.redaksi.ui.Inter
+import org.redaksi.ui.compose.Inter
 import org.redaksi.ui.LoadingScreen
-import org.redaksi.ui.PillarColor
-import org.redaksi.ui.PillarColor.background
-import org.redaksi.ui.PillarColor.kategori
-import org.redaksi.ui.PillarColor.primary
-import org.redaksi.ui.PillarColor.secondary
-import org.redaksi.ui.PillarTypography3
+import org.redaksi.ui.compose.PillarColor
+import org.redaksi.ui.compose.PillarColor.background
+import org.redaksi.ui.compose.PillarColor.kategori
+import org.redaksi.ui.compose.PillarColor.secondary
+import org.redaksi.ui.compose.PillarTypography3
 import org.redaksi.ui.R
 import org.redaksi.ui.R.font.pt_serif_regular
 

@@ -1,4 +1,4 @@
-package org.redaksi.ui
+package org.redaksi.ui.compose
 
 import androidx.compose.ui.graphics.Color
 

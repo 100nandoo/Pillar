@@ -24,8 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
-import org.redaksi.ui.PillarColor
-import org.redaksi.ui.PillarTypography3
+import org.redaksi.ui.compose.PillarColor
+import org.redaksi.ui.compose.PillarTypography3
 import org.redaksi.ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)

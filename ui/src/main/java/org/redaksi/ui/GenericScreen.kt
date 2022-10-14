@@ -11,7 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import org.redaksi.ui.PillarColor.secondaryVar
+import org.redaksi.ui.compose.PillarColor
+import org.redaksi.ui.compose.PillarColor.secondaryVar
+import org.redaksi.ui.compose.PillarTypography3
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier, isLoading: Boolean = true) {

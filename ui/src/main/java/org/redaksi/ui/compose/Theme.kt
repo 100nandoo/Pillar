@@ -1,4 +1,4 @@
-package org.redaksi.ui
+package org.redaksi.ui.compose
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,13 +12,13 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import org.redaksi.ui.PillarColor.background
-import org.redaksi.ui.PillarColor.onBackground
-import org.redaksi.ui.PillarColor.onPrimaryContainer
-import org.redaksi.ui.PillarColor.primary
-import org.redaksi.ui.PillarColor.secondary
-import org.redaksi.ui.PillarColor.secondaryContainer
-import org.redaksi.ui.PillarColor.secondaryVar
+import org.redaksi.ui.compose.PillarColor.background
+import org.redaksi.ui.compose.PillarColor.onBackground
+import org.redaksi.ui.compose.PillarColor.onPrimaryContainer
+import org.redaksi.ui.compose.PillarColor.primary
+import org.redaksi.ui.compose.PillarColor.secondary
+import org.redaksi.ui.compose.PillarColor.secondaryContainer
+import org.redaksi.ui.compose.PillarColor.secondaryVar
 import androidx.compose.material3.MaterialTheme as MaterialTheme3
 import androidx.compose.material3.Typography as Typography3
 

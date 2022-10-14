@@ -63,16 +63,16 @@ import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.Dimens.thirtyTwo
 import org.redaksi.ui.Dimens.twelve
 import org.redaksi.ui.LoadingScreen
-import org.redaksi.ui.PillarColor
-import org.redaksi.ui.PillarColor.bottomBarSelected
-import org.redaksi.ui.PillarColor.primary
-import org.redaksi.ui.PillarColor.secondary
-import org.redaksi.ui.PillarColor.secondaryVar
-import org.redaksi.ui.PillarTypography3
+import org.redaksi.ui.compose.PillarColor
+import org.redaksi.ui.compose.PillarColor.bottomBarSelected
+import org.redaksi.ui.compose.PillarColor.primary
+import org.redaksi.ui.compose.PillarColor.secondary
+import org.redaksi.ui.compose.PillarColor.secondaryVar
+import org.redaksi.ui.compose.PillarTypography3
 import org.redaksi.ui.R
+import org.redaksi.ui.compose.ArticleUiProvider
 import org.redaksi.ui.utama.ArticleUi
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun ArtikelScreen(paddingValues: PaddingValues, onClickArtikel: (artikelId: Int) -> Unit) {
     val viewModel: ArtikelViewModel = hiltViewModel()
