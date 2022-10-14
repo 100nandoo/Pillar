@@ -45,7 +45,6 @@ import androidx.paging.compose.items
 import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -63,14 +62,14 @@ import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.Dimens.thirtyTwo
 import org.redaksi.ui.Dimens.twelve
 import org.redaksi.ui.LoadingScreen
+import org.redaksi.ui.R
 import org.redaksi.ui.compose.PillarColor
 import org.redaksi.ui.compose.PillarColor.bottomBarSelected
 import org.redaksi.ui.compose.PillarColor.primary
 import org.redaksi.ui.compose.PillarColor.secondary
 import org.redaksi.ui.compose.PillarColor.secondaryVar
 import org.redaksi.ui.compose.PillarTypography3
-import org.redaksi.ui.R
-import org.redaksi.ui.compose.ArticleUiProvider
+import org.redaksi.ui.compose.UiModelProvider
 import org.redaksi.ui.utama.ArticleUi
 
 @Composable
@@ -91,6 +90,39 @@ fun ArtikelScreen(paddingValues: PaddingValues, onClickArtikel: (artikelId: Int)
             Page(R.string.resensi, RESENSI)
         )
     }
+
+    ArtikelScreenContent(
+        pages = pages,
+        uiState = uiState,
+        paddingValues = paddingValues,
+        loadCategory = { viewModel.onEvent(ArtikelEvent.LoadArticlesByCategory(it)) },
+        onClick = { onClickArtikel(it) }
+    )
+}
+
+@Preview
+@Composable
+private fun ArtikelScreenPreview() {
+    ArtikelScreenContent(UiModelProvider.pageList, ArtikelViewModelState(), PaddingValues(), {}) {}
+}
+
+private val HorizontalScrollConsumer = object : NestedScrollConnection {
+    override fun onPreScroll(available: Offset, source: NestedScrollSource) = available.copy(y = 0f)
+    override suspend fun onPreFling(available: Velocity) = available.copy(y = 0f)
+}
+
+fun Modifier.disabledHorizontalPointerInputScroll(disabled: Boolean = true) =
+    if (disabled) this.nestedScroll(HorizontalScrollConsumer) else this
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+private fun ArtikelScreenContent(
+    pages: List<Page>,
+    uiState: ArtikelViewModelState,
+    paddingValues: PaddingValues,
+    loadCategory: (Int) -> Unit,
+    onClick: (artikelId: Int) -> Unit
+) {
     Scaffold { it ->
         val coroutineScope = rememberCoroutineScope()
         val pagerState = rememberPagerState()
@@ -135,51 +167,32 @@ fun ArtikelScreen(paddingValues: PaddingValues, onClickArtikel: (artikelId: Int)
                     Tab(
                         text = { Text(color = color, text = stringResource(id = page.label)) },
                         selected = pagerState.currentPage == index,
-                        onClick = { onClickTab(index, page) { viewModel.loadArticlesByCategory(it) } }
+                        onClick = { onClickTab(index, page) { loadCategory(it) } }
                     )
                 }
             }
-            PageContent(pages, uiState, pagerState) { onClickArtikel(it) }
+
+            HorizontalPager(
+                modifier = Modifier.disabledHorizontalPointerInputScroll(),
+                count = pages.size,
+                state = pagerState
+            ) { page ->
+                val categoryId = pages[page].category
+
+                val articlesUi = when (categoryId) {
+                    TRANSKIP -> uiState.transkripArticles
+                    ALKITAB_N_THEOLOGI -> uiState.alkitabTheologiArticles
+                    IMAN_KRISTEN -> uiState.imanKristenArticles
+                    KEHIDUPAN_KRISTEN -> uiState.kehidupanKristenArticles
+                    RENUNGAN -> uiState.renunganArticles
+                    ISU_TERKINI -> uiState.isuTerkiniArticles
+                    SENI_BUDAYA -> uiState.seniBudayaArticles
+                    SEPUTAR_GRII -> uiState.seputarGriiArticles
+                    else -> uiState.resensiArticles
+                }
+                ArtikelList(articles = articlesUi, onClick = { onClick(it) })
+            }
         }
-    }
-}
-
-@Preview
-@Composable
-private fun ArtikelScreenPreview() {
-    ArtikelScreen(PaddingValues()) {}
-}
-
-private val HorizontalScrollConsumer = object : NestedScrollConnection {
-    override fun onPreScroll(available: Offset, source: NestedScrollSource) = available.copy(y = 0f)
-    override suspend fun onPreFling(available: Velocity) = available.copy(y = 0f)
-}
-
-fun Modifier.disabledHorizontalPointerInputScroll(disabled: Boolean = true) =
-    if (disabled) this.nestedScroll(HorizontalScrollConsumer) else this
-
-@OptIn(ExperimentalPagerApi::class)
-@Composable
-private fun PageContent(pages: List<Page>, uiState: ArtikelViewModelState, pagerState: PagerState, onClick: (artikelId: Int) -> Unit) {
-    HorizontalPager(
-        modifier = Modifier.disabledHorizontalPointerInputScroll(),
-        count = pages.size,
-        state = pagerState
-    ) { page ->
-        val categoryId = pages[page].category
-
-        val articlesUi = when (categoryId) {
-            TRANSKIP -> uiState.transkripArticles
-            ALKITAB_N_THEOLOGI -> uiState.alkitabTheologiArticles
-            IMAN_KRISTEN -> uiState.imanKristenArticles
-            KEHIDUPAN_KRISTEN -> uiState.kehidupanKristenArticles
-            RENUNGAN -> uiState.renunganArticles
-            ISU_TERKINI -> uiState.isuTerkiniArticles
-            SENI_BUDAYA -> uiState.seniBudayaArticles
-            SEPUTAR_GRII -> uiState.seputarGriiArticles
-            else -> uiState.resensiArticles
-        }
-        ArtikelList(articles = articlesUi, onClick = { onClick(it) })
     }
 }
 
@@ -301,30 +314,7 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isDividerSh
 fun ArticleItemPreview() {
     ArticleItem(
         Modifier,
-
-        ArticleUi(
-            0,
-            "Doktrin Wahyu: Sebuah Introduksi",
-            "Bab pertama buku ini dimulai dengan penjelasan tentang aksiologi (teori nilai) dan hubungan nyata",
-            "John Doe",
-            "1 Okt 2023"
-        ),
-        false
-    ) {}
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ArticleItemLoadingPreview() {
-    ArticleItem(
-        Modifier,
-        ArticleUi(
-            0,
-            "Doktrin Wahyu: Sebuah Introduksi",
-            "Bab pertama buku ini dimulai dengan penjelasan tentang aksiologi (teori nilai) dan hubungan nyata",
-            "John Doe",
-            "1 Okt 2023"
-        ),
+        UiModelProvider.articleUiList.first(),
         false
     ) {}
 }

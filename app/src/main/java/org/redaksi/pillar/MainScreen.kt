@@ -31,13 +31,13 @@ import org.redaksi.pillar.BottomNavRoute.cariRoute
 import org.redaksi.pillar.BottomNavRoute.lainnyaRoute
 import org.redaksi.pillar.BottomNavRoute.tentangRoute
 import org.redaksi.pillar.BottomNavRoute.utamaRoute
-import org.redaksi.ui.compose.PillarColor.bottomBarSelected
-import org.redaksi.ui.compose.PillarColor.primary
-import org.redaksi.ui.compose.PillarColor.secondary
 import org.redaksi.ui.R
 import org.redaksi.ui.artikel.ArtikelScreen
 import org.redaksi.ui.artikel.detail.ArtikelDetailScreen
 import org.redaksi.ui.cari.CariScreen
+import org.redaksi.ui.compose.PillarColor.bottomBarSelected
+import org.redaksi.ui.compose.PillarColor.primary
+import org.redaksi.ui.compose.PillarColor.secondary
 import org.redaksi.ui.lainnya.LainnyaScreen
 import org.redaksi.ui.lainnya.TentangScreen
 import org.redaksi.ui.utama.UtamaScreen

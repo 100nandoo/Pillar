@@ -26,11 +26,12 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.LoadingScreen
+import org.redaksi.ui.R
+import org.redaksi.ui.artikel.ArticleItem
 import org.redaksi.ui.compose.PillarColor
 import org.redaksi.ui.compose.PillarColor.primary
 import org.redaksi.ui.compose.PillarTypography3
-import org.redaksi.ui.R
-import org.redaksi.ui.artikel.ArticleItem
+import org.redaksi.ui.compose.UiModelProvider
 
 @Composable
 fun UtamaScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit) {
@@ -41,7 +42,8 @@ fun UtamaScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit)
         uiState = uiState,
         paddingValues = paddingValues,
         onClick = { onClick(it) },
-        onRefresh = { viewModel.onEvent(UtamaEvent.LoadUtama()) })
+        onRefresh = { viewModel.onEvent(UtamaEvent.LoadUtama) }
+    )
 }
 
 @Composable
@@ -59,14 +61,12 @@ fun UtamaScreenContent(uiState: UtamaViewModelState, paddingValues: PaddingValue
             )
         }
     ) { it ->
-        val viewModel: UtamaViewModel = hiltViewModel()
-        val uiState by viewModel.uiState.collectAsState()
         SwipeRefresh(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(it),
             state = rememberSwipeRefreshState(uiState.isLoading),
-            onRefresh = { viewModel.loadUtama() }
+            onRefresh = { onRefresh() }
         ) {
             if (uiState.isLoading) {
                 LoadingScreen(isLoading = false)
@@ -95,12 +95,19 @@ fun UtamaScreenContent(uiState: UtamaViewModelState, paddingValues: PaddingValue
 }
 
 @Preview(
-    name = "UtamaScreen",
-    showSystemUi = true
+    name = "Utama Screen"
 )
 @Composable
 private fun UtamaScreenPreview() {
-    UtamaScreen(PaddingValues()) {}
+    UtamaScreenContent(
+        UtamaViewModelState(
+            newestArticles = UiModelProvider.articleUiList,
+            editorChoiceArticles = UiModelProvider.articleUiList,
+            false
+        ),
+        PaddingValues(),
+        {}
+    ) {}
 }
 
 @Composable
@@ -119,8 +126,7 @@ fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
 }
 
 @Preview(
-    name = "HeaderItem",
-    showSystemUi = true
+    name = "HeaderItem"
 )
 @Composable
 private fun HeaderItemPreview() {

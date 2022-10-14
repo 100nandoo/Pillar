@@ -25,6 +25,16 @@ class ArtikelDetailViewModel @Inject constructor(
         artikelId?.let { loadArtikelDetail(it) }
     }
 
+    fun onEvent(event: ArtikelDetailEvent) {
+        when (event) {
+            is ArtikelDetailEvent.ShowNotKnownDialog -> showNotKnownDialog(event.verse)
+            is ArtikelDetailEvent.DismissNotKnownDialog -> dismissNotKnownDialog()
+            is ArtikelDetailEvent.ShowKnownDialog -> showKnownDialog(event.isShown, event.verse, event.ari)
+            is ArtikelDetailEvent.PlayStoreDialog -> playStoreDialog(event.isShown)
+            is ArtikelDetailEvent.InstallDialog -> installDialog(event.isShown)
+        }
+    }
+
     private fun loadArtikelDetail(artikelId: Int) {
         viewModelScope.launch {
             viewModelState.update { it.copy(isLoading = true) }
@@ -39,23 +49,23 @@ class ArtikelDetailViewModel @Inject constructor(
         }
     }
 
-    fun showNotKnownDialog(verse: String) {
+    private fun showNotKnownDialog(verse: String) {
         viewModelState.update { it.copy(showNotKnownDialog = Pair(true, verse)) }
     }
 
-    fun dismissNotKnownDialog() {
+    private fun dismissNotKnownDialog() {
         viewModelState.update { it.copy(showNotKnownDialog = Pair(false, "")) }
     }
 
-    fun showKnownDialog(isShown: Boolean, verse: AnnotatedString = AnnotatedString(""), ari: Int = 0) {
+    private fun showKnownDialog(isShown: Boolean, verse: AnnotatedString = AnnotatedString(""), ari: Int = 0) {
         viewModelState.update { it.copy(showKnownDialog = Triple(isShown, verse, ari)) }
     }
 
-    fun playStoreDialog(isShown: Boolean) {
+    private fun playStoreDialog(isShown: Boolean) {
         viewModelState.update { it.copy(showPlayStoreDialog = isShown) }
     }
 
-    fun installDialog(isShown: Boolean) {
+    private fun installDialog(isShown: Boolean) {
         viewModelState.update { it.copy(showAlkitabInstalledDialog = isShown) }
     }
 }
@@ -68,3 +78,11 @@ data class ArtikelDetailViewModelState(
     val showAlkitabInstalledDialog: Boolean = false,
     val showPlayStoreDialog: Boolean = false
 )
+
+sealed class ArtikelDetailEvent {
+    data class ShowNotKnownDialog(val verse: String) : ArtikelDetailEvent()
+    object DismissNotKnownDialog : ArtikelDetailEvent()
+    data class ShowKnownDialog(val isShown: Boolean, val verse: AnnotatedString, val ari: Int) : ArtikelDetailEvent()
+    data class PlayStoreDialog(val isShown: Boolean) : ArtikelDetailEvent()
+    data class InstallDialog(val isShown: Boolean) : ArtikelDetailEvent()
+}

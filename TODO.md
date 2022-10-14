@@ -1,5 +1,4 @@
 # TODO
-- [ ] Fix Previews (Cari ✅)
 - [ ] Jump to Top Artikel Detail
 - [ ] Update Pillar Api Test
 - [ ] Download
@@ -26,3 +25,4 @@ Done
 - [x] Image on Utama
 - [x] Image on Artikel
 - [x] Image on Artikel Detail
+- [x] Fix Previews

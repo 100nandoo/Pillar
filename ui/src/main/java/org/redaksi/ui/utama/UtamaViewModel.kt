@@ -21,7 +21,13 @@ class UtamaViewModel @Inject constructor(private val pillarApi: PillarApi) : Vie
         loadUtama()
     }
 
-    fun loadUtama() {
+    fun onEvent(utamaEvent: UtamaEvent) {
+        when (utamaEvent) {
+            is UtamaEvent.LoadUtama -> loadUtama()
+        }
+    }
+
+    private fun loadUtama() {
         viewModelScope.launch {
             viewModelState.update { it.copy(isLoading = true) }
             val newestResult = withContext(Dispatchers.Default) { runCatching { pillarApi.newestArticles() } }
@@ -52,3 +58,7 @@ data class UtamaViewModelState(
     val editorChoiceArticles: List<ArticleUi> = listOf(),
     val isLoading: Boolean = true
 )
+
+sealed class UtamaEvent {
+    object LoadUtama : UtamaEvent()
+}

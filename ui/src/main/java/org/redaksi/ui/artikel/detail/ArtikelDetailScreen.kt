@@ -17,6 +17,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -66,17 +67,17 @@ import org.redaksi.core.helper.verse.Launcher
 import org.redaksi.core.helper.verse.VerseProvider
 import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
-import org.redaksi.ui.compose.Inter
 import org.redaksi.ui.LoadingScreen
+import org.redaksi.ui.R
+import org.redaksi.ui.R.font.pt_serif_regular
+import org.redaksi.ui.compose.Inter
 import org.redaksi.ui.compose.PillarColor
 import org.redaksi.ui.compose.PillarColor.background
 import org.redaksi.ui.compose.PillarColor.kategori
 import org.redaksi.ui.compose.PillarColor.secondary
 import org.redaksi.ui.compose.PillarTypography3
-import org.redaksi.ui.R
-import org.redaksi.ui.R.font.pt_serif_regular
+import org.redaksi.ui.compose.UiModelProvider
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun ArtikelDetailScreen() {
     val viewModel: ArtikelDetailViewModel = hiltViewModel()
@@ -84,10 +85,36 @@ fun ArtikelDetailScreen() {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
+    val wrappedClickEvent = WrappedClickEvent(
+        showKnownDialog = { isShown, verse, ari -> viewModel.onEvent(ArtikelDetailEvent.ShowKnownDialog(isShown, verse, ari)) },
+        showNotKnownDialog = { viewModel.onEvent(ArtikelDetailEvent.ShowNotKnownDialog(it)) },
+        dismissNotKnownDialog = { viewModel.onEvent(ArtikelDetailEvent.DismissNotKnownDialog) },
+        installDialog = { viewModel.onEvent(ArtikelDetailEvent.InstallDialog(it)) },
+        playStoreDialog = { viewModel.onEvent(ArtikelDetailEvent.PlayStoreDialog(it)) }
+    )
+
+    ArtikelDetailScreenContent(uiState = uiState, scrollState = scrollState, context = context, wrappedClickEvent)
+}
+
+data class WrappedClickEvent(
+    val showKnownDialog: (Boolean, AnnotatedString, Int) -> Unit = { _, _, _ -> },
+    val showNotKnownDialog: (String) -> Unit = {},
+    val dismissNotKnownDialog: () -> Unit = {},
+    val installDialog: (Boolean) -> Unit = {},
+    val playStoreDialog: (Boolean) -> Unit = {}
+)
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@Composable
+fun ArtikelDetailScreenContent(
+    uiState: ArtikelDetailViewModelState,
+    scrollState: ScrollState,
+    context: Context,
+    wrappedClickEvent: WrappedClickEvent
+) {
     fun share(title: String, text: String) {
         context.startActivity(IntentHelper.shareSheetIntent(title, text))
     }
-
     Scaffold(
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
@@ -98,7 +125,7 @@ fun ArtikelDetailScreen() {
             ) {
                 FloatingActionButton(
                     onClick = { share(uiState.articleDetailUi.title, uiState.articleDetailUi.bodyStriped) },
-                    containerColor = PillarColor.secondary,
+                    containerColor = secondary,
                     contentColor = background
                 ) {
                     Icon(
@@ -136,26 +163,26 @@ fun ArtikelDetailScreen() {
                     modifier = Modifier.padding(it),
                     artikelDetailUi = uiState.articleDetailUi,
                     context,
-                    { viewModel.showNotKnownDialog(it) },
-                    installDialog = { viewModel.installDialog(true) },
-                    known = { isShown, verse, ari -> viewModel.showKnownDialog(isShown, verse, ari) }
+                    { wrappedClickEvent.showNotKnownDialog(it) },
+                    installDialog = { wrappedClickEvent.installDialog(true) },
+                    known = { isShown, verse, ari -> wrappedClickEvent.showKnownDialog(isShown, verse, ari) }
                 )
 
                 if (uiState.showNotKnownDialog.first) {
-                    NotKnownVerseDialog(verse = uiState.showNotKnownDialog.second, dismissDialog = { viewModel.dismissNotKnownDialog() })
+                    NotKnownVerseDialog(verse = uiState.showNotKnownDialog.second, dismissDialog = { wrappedClickEvent.dismissNotKnownDialog() })
                 }
 
                 if (uiState.showAlkitabInstalledDialog) {
-                    AlkitabDialog(dismissDialog = { viewModel.installDialog(false) }, {
+                    AlkitabDialog(dismissDialog = { wrappedClickEvent.installDialog(false) }, {
                         val isSuccess =
                             runCatching { context.startActivity(Launcher.openGooglePlayDownloadPage(context, Launcher.Product.ALKITAB)) }.getOrNull()
-                        viewModel.playStoreDialog(isSuccess == null)
+                        wrappedClickEvent.playStoreDialog(isSuccess == null)
                     })
                 }
 
                 if (uiState.showPlayStoreDialog) {
                     PlayStoreDialog {
-                        viewModel.playStoreDialog(false)
+                        wrappedClickEvent.playStoreDialog(false)
                     }
                 }
 
@@ -163,12 +190,23 @@ fun ArtikelDetailScreen() {
                     VerseDialog(uiState.showKnownDialog.third, uiState.showKnownDialog.second, {
                         runCatching { context.startActivity(Launcher.openAppAtBibleLocation(it)) }.getOrNull()
                     }) {
-                        viewModel.showKnownDialog(false)
+                        wrappedClickEvent.showKnownDialog(false, AnnotatedString(""), 0)
                     }
                 }
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun ArtikelDetailScreenPreview() {
+    ArtikelDetailScreenContent(
+        uiState = ArtikelDetailViewModelState(UiModelProvider.articleDetailUi, false),
+        scrollState = ScrollState(0),
+        context = LocalContext.current,
+        wrappedClickEvent = WrappedClickEvent()
+    )
 }
 
 @Composable
@@ -194,6 +232,12 @@ fun NotKnownVerseDialog(verse: String, dismissDialog: () -> Unit) {
             dismissDialog()
         }
     )
+}
+
+@Preview
+@Composable
+fun NotKnownVerseDialogPreview(){
+    NotKnownVerseDialog(verse = "Yohanes 3:16") {}
 }
 
 @Composable
@@ -234,6 +278,12 @@ fun AlkitabDialog(dismissDialog: () -> Unit, openPlayStore: () -> Unit) {
     )
 }
 
+@Preview
+@Composable
+fun AlkitabDialogPreview(){
+    AlkitabDialog({}) {}
+}
+
 @Composable
 fun PlayStoreDialog(dismissDialog: () -> Unit) {
     AlertDialog(
@@ -257,6 +307,12 @@ fun PlayStoreDialog(dismissDialog: () -> Unit) {
             dismissDialog()
         }
     )
+}
+
+@Preview
+@Composable
+fun PlayStoreDialogPreview(){
+    PlayStoreDialog {}
 }
 
 @Composable
@@ -300,18 +356,11 @@ fun VerseDialog(ari: Int, verse: AnnotatedString, openBible: (Int) -> Unit, dism
     )
 }
 
-val category = listOf(CategoryUi("Transkrip"))
-val artikelDetailUi = ArtikelDetailUi(
-    "Iman, Pengharapan, dan Kasih (Bagian 16): Doktrin Iman",
-    "Adam R",
-    displayDate = "1 Okt 2023",
-    estimation = "12 menit",
-    categoryUi = category,
-    body = "Iman adalah hal yang sangat unik, khususnya dalam agama Kristen, karena Alkitab berkata, “Tanpa iman, tidak ada orang yang " +
-        "diperkenan Allah.” Manusia beriman dan menjadi orang yang diperkenan Tuhan. Iman tidak berarti kita menyatakan jasa keyakinan kita dan " +
-        "cukup syarat sehingga Tuhan harus terima. Justru iman membuktikan dan mengaku bahwa kita tidak berjasa, tidak layak, tidak berharga, dan " +
-        "tidak bersyarat, kemudian datang kepada Tuhan, bersandar kepada-Nya, dan menerima jasa Yesus menjadi sumber iman kita. \n"
-)
+@Preview
+@Composable
+fun VerseDialogPreview(){
+    VerseDialog(0, AnnotatedString("Yohanes 3:16"), {}) {}
+}
 
 @Composable
 fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
@@ -349,9 +398,7 @@ fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
 @Preview(showBackground = true)
 @Composable
 fun ArtikelHeaderPreview() {
-    ArtikelHeader(
-        artikelDetailUi = artikelDetailUi
-    )
+    ArtikelHeader(artikelDetailUi = UiModelProvider.articleDetailUi)
 }
 
 @Composable
@@ -455,5 +502,5 @@ fun ArtikelBody(
 @Preview(showBackground = true)
 @Composable
 fun ArtikelBodyPreview() {
-    ArtikelBody(Modifier, artikelDetailUi, LocalContext.current, {}, {}) { _, _, _ -> }
+    ArtikelBody(Modifier, UiModelProvider.articleDetailUi, LocalContext.current, {}, {}) { _, _, _ -> }
 }

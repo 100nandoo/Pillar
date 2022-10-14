@@ -35,22 +35,46 @@ class ArtikelViewModel @Inject constructor(private val pillarApi: PillarApi) : V
         loadArticlesByCategory(TRANSKIP)
     }
 
-    fun loadArticlesByCategory(@CategoryId categoryId: Int) {
+    fun onEvent(artikelEvent: ArtikelEvent) {
+        when (artikelEvent) {
+            is ArtikelEvent.LoadArticlesByCategory -> loadArticlesByCategory(artikelEvent.categoryId)
+        }
+    }
+
+    private fun loadArticlesByCategory(@CategoryId categoryId: Int) {
         viewModelScope.launch {
             val artikelPager = Pager(PagingConfig(pageSize = 10)) {
                 ArtikelSource(pillarApi, categoryId)
             }.flow.cachedIn(viewModelScope)
 
             when (categoryId) {
-                TRANSKIP -> { viewModelState.update { it.copy(transkripArticles = artikelPager, transkripLoaded = true) } }
-                ALKITAB_N_THEOLOGI -> { viewModelState.update { it.copy(alkitabTheologiArticles = artikelPager, alkitabTheologiLoaded = true) } }
-                IMAN_KRISTEN -> { viewModelState.update { it.copy(imanKristenArticles = artikelPager, imanKristenLoaded = true) } }
-                KEHIDUPAN_KRISTEN -> { viewModelState.update { it.copy(kehidupanKristenArticles = artikelPager, kehidupanKristenLoaded = true) } }
-                RENUNGAN -> { viewModelState.update { it.copy(renunganArticles = artikelPager, renunganLoaded = true) } }
-                ISU_TERKINI -> { viewModelState.update { it.copy(isuTerkiniArticles = artikelPager, isuTerkiniLoaded = true) } }
-                SENI_BUDAYA -> { viewModelState.update { it.copy(seniBudayaArticles = artikelPager, seniBudayaLoaded = true) } }
-                SEPUTAR_GRII -> { viewModelState.update { it.copy(seputarGriiArticles = artikelPager, seputarGriiLoaded = true) } }
-                else -> { viewModelState.update { it.copy(resensiArticles = artikelPager, resensiLoaded = true) } }
+                TRANSKIP -> {
+                    viewModelState.update { it.copy(transkripArticles = artikelPager, transkripLoaded = true) }
+                }
+                ALKITAB_N_THEOLOGI -> {
+                    viewModelState.update { it.copy(alkitabTheologiArticles = artikelPager, alkitabTheologiLoaded = true) }
+                }
+                IMAN_KRISTEN -> {
+                    viewModelState.update { it.copy(imanKristenArticles = artikelPager, imanKristenLoaded = true) }
+                }
+                KEHIDUPAN_KRISTEN -> {
+                    viewModelState.update { it.copy(kehidupanKristenArticles = artikelPager, kehidupanKristenLoaded = true) }
+                }
+                RENUNGAN -> {
+                    viewModelState.update { it.copy(renunganArticles = artikelPager, renunganLoaded = true) }
+                }
+                ISU_TERKINI -> {
+                    viewModelState.update { it.copy(isuTerkiniArticles = artikelPager, isuTerkiniLoaded = true) }
+                }
+                SENI_BUDAYA -> {
+                    viewModelState.update { it.copy(seniBudayaArticles = artikelPager, seniBudayaLoaded = true) }
+                }
+                SEPUTAR_GRII -> {
+                    viewModelState.update { it.copy(seputarGriiArticles = artikelPager, seputarGriiLoaded = true) }
+                }
+                else -> {
+                    viewModelState.update { it.copy(resensiArticles = artikelPager, resensiLoaded = true) }
+                }
             }
         }
     }
@@ -76,3 +100,7 @@ data class ArtikelViewModelState(
     val resensiArticles: Flow<PagingData<ArticleUi>> = flowOf(),
     val resensiLoaded: Boolean = false
 )
+
+sealed class ArtikelEvent {
+    data class LoadArticlesByCategory(@CategoryId val categoryId: Int) : ArtikelEvent()
+}
