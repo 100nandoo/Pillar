@@ -236,7 +236,7 @@ fun NotKnownVerseDialog(verse: String, dismissDialog: () -> Unit) {
 
 @Preview
 @Composable
-fun NotKnownVerseDialogPreview(){
+fun NotKnownVerseDialogPreview() {
     NotKnownVerseDialog(verse = "Yohanes 3:16") {}
 }
 
@@ -280,7 +280,7 @@ fun AlkitabDialog(dismissDialog: () -> Unit, openPlayStore: () -> Unit) {
 
 @Preview
 @Composable
-fun AlkitabDialogPreview(){
+fun AlkitabDialogPreview() {
     AlkitabDialog({}) {}
 }
 
@@ -311,7 +311,7 @@ fun PlayStoreDialog(dismissDialog: () -> Unit) {
 
 @Preview
 @Composable
-fun PlayStoreDialogPreview(){
+fun PlayStoreDialogPreview() {
     PlayStoreDialog {}
 }
 
@@ -358,7 +358,7 @@ fun VerseDialog(ari: Int, verse: AnnotatedString, openBible: (Int) -> Unit, dism
 
 @Preview
 @Composable
-fun VerseDialogPreview(){
+fun VerseDialogPreview() {
     VerseDialog(0, AnnotatedString("Yohanes 3:16"), {}) {}
 }
 

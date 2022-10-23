@@ -40,7 +40,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0"
+        kotlinCompilerExtensionVersion = "1.3.2"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -89,7 +89,6 @@ dependencies {
     implementation(libs.hilt.nav.compose)
 
     kapt(libs.hilt.compiler)
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
 
     // ----------------------------- COMPOSE ------------------------------
     // Integration with activities
@@ -100,6 +99,7 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material3)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
 
     // Integration with ViewModels
     implementation(libs.androidx.compose.viewmodel)

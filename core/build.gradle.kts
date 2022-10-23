@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    implementation("org.jsoup:jsoup:1.14.3")
+    implementation(libs.jsoup)
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.nav.compose)
