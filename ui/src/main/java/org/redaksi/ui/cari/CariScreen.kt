@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -131,6 +132,7 @@ class AlphaNumericVisualTransformation : VisualTransformation {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CariTextField(uiState: CariViewModelState, onValueChange: (TextFieldValue) -> Unit, onSearch: (String) -> Unit) {
     OutlinedTextField(
