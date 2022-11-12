@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.0.6] - 12 November 2022
+* Ubah warna dialog ayat alkitab di halaman artikel
+* Perbaikan bug halaman `Artikel Detail` jika nama penulis panjang
+
 ## [2.0.5] - 12 Oktober 2022
 * Ikon launcher baru
 * Implementasi app design baru
