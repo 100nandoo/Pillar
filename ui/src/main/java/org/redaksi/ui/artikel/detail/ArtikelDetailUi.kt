@@ -1,7 +1,5 @@
 package org.redaksi.ui.artikel.detail
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.toLowerCase
@@ -10,7 +8,6 @@ import org.redaksi.core.helper.ReadingTime
 import org.redaksi.data.remote.ALKITAB_N_THEOLOGI
 import org.redaksi.data.remote.ARTIKEL_MINGGUAN
 import org.redaksi.data.remote.IMAN_KRISTEN
-import org.redaksi.data.remote.IMAN_KRISTEN_N_PEKERJAAN
 import org.redaksi.data.remote.ISU_TERKINI
 import org.redaksi.data.remote.KEHIDUPAN_KRISTEN
 import org.redaksi.data.remote.RENUNGAN
@@ -76,7 +73,6 @@ fun Int.toCategoryUi(): CategoryUi {
         SEPUTAR_GRII -> ::SEPUTAR_GRII.name
         RESENSI -> ::RESENSI.name
         ARTIKEL_MINGGUAN -> ::ARTIKEL_MINGGUAN.name
-        IMAN_KRISTEN_N_PEKERJAAN -> ::IMAN_KRISTEN_N_PEKERJAAN.name
         else -> ""
     }
     val titleCapitalize = title.toLowerCase(Locale.current).capitalize(Locale.current)
@@ -84,10 +80,3 @@ fun Int.toCategoryUi(): CategoryUi {
         .replace("_", " ")
     return CategoryUi(titleCapitalize)
 }
-
-data class BottomBarIcon(
-    @DrawableRes val icon: Int,
-    @StringRes val label: Int,
-    val isComment: Boolean,
-    val onClick: (ArtikelDetailViewModelState) -> Unit
-)
