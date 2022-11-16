@@ -62,7 +62,7 @@ fun UtamaScreenContent(uiState: UtamaViewModelState, paddingValues: PaddingValue
                 colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = primary)
             )
         }
-    ) { it ->
+    ) {
         SwipeRefresh(
             modifier = Modifier
                 .padding(paddingValues)

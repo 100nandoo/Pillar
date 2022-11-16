@@ -36,6 +36,7 @@ fun LainnyaScreen(paddingValues: PaddingValues, onClickTentang: () -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(PillarColor.background)
+                .padding(it)
                 .padding(paddingValues)
                 .padding(sixteen.dp)
         ) {
@@ -71,5 +72,5 @@ fun LainnyaScreen(paddingValues: PaddingValues, onClickTentang: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun LainnyaScreenPreview() {
-    LainnyaScreen(PaddingValues(), {})
+    LainnyaScreen(PaddingValues()) {}
 }

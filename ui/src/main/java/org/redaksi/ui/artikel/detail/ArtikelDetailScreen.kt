@@ -458,7 +458,7 @@ fun ArtikelBody(
                                             for (item in verses) {
                                                 dialogSpan.withStyle(
                                                     style = SpanStyle(
-                                                        fontStyle = FontStyle.Italic,
+                                                        fontStyle = Italic,
                                                         fontFamily = Inter
                                                     )
                                                 ) {

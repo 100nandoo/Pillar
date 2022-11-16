@@ -285,7 +285,7 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isDividerSh
             }
             Row(modifier = modifier.padding(0.dp, eight.dp)) {
                 if (articleUi.authors.isNotBlank()) {
-                    androidx.compose.material3.Text(
+                    Text(
                         modifier = Modifier
                             .weight(1f),
                         style = PillarTypography3.labelSmall,
@@ -296,7 +296,7 @@ fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isDividerSh
                     )
                 }
                 if (articleUi.displayDate.isNotBlank()) {
-                    androidx.compose.material3.Text(
+                    Text(
                         style = PillarTypography3.labelSmall,
                         color = PillarColor.utamaBody,
                         text = articleUi.displayDate
