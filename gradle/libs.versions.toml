@@ -12,6 +12,8 @@ espresso_core = "3.5.0"
 androidx_test_ext = "1.1.4"
 androidx_test = "1.5.0"
 
+coroutine_test = "1.6.4"
+
 # Androidx
 activity = "1.6.1"
 appcompat = "1.5.1"
@@ -73,6 +75,8 @@ androidx_test_ext_junit = { module = "androidx.test.ext:junit", version.ref = "a
 androidx_test_ext_junit_ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx.test.ext" }
 androidx_test_compose_junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 
+coroutine_test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutine.test" }
+
 espresso_core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso.core" }
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 kgp = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -106,7 +110,7 @@ firebase_performance_plugin = { module = "com.google.firebase:perf-plugin", vers
 firebase_crashlytics_plugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase.crash.plugin" }
 gms = { module = "com.google.gms:google-services", version.ref = "gms" }
 
-jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup"}
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit_converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit.converter" }

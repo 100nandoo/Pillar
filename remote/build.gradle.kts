@@ -32,6 +32,7 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.coroutine.test)
 }
 
 kapt {

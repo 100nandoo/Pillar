@@ -1,6 +1,5 @@
 # TODO
 - [ ] Jump to Top Artikel Detail
-- [ ] Update Pillar Api Test
 - [ ] Download
 - [ ] Animasi
 
@@ -26,3 +25,5 @@ Done
 - [x] Image on Artikel
 - [x] Image on Artikel Detail
 - [x] Fix Previews
+- [x] Update Pillar Api Test
+
