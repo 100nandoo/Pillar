@@ -32,5 +32,6 @@ include(
     "app",
     "remote",
     "ui",
-    "core"
+    "core",
+    "benchmark"
 )

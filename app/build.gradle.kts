@@ -63,6 +63,12 @@ android {
             )
             signingConfig = signingConfigs.getByName("release")
         }
+        create("benchmark") {
+            initWith(getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            isDebuggable = false
+        }
     }
 
     lint {
@@ -84,6 +90,8 @@ dependencies {
 
     // ----------------------------- AndroidX ------------------------------
     implementation(libs.androidx.viewmodel.ktx)
+
+    implementation("androidx.profileinstaller:profileinstaller:1.2.0")
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.nav.compose)

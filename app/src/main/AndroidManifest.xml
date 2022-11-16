@@ -4,7 +4,11 @@
     package="org.redaksi.pillar">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+
+    <queries>
+        <provider android:authorities="yuku.alkitab.provider" />
+    </queries>
 
     <application
         android:name=".PillarApp"
@@ -15,6 +19,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Starting"
         tools:ignore="AllowBackup">
+        <profileable
+            android:enabled="true"
+            android:shell="true"
+            tools:targetApi="q" />
 
         <activity
             android:name="org.redaksi.pillar.MainActivity"
@@ -27,7 +35,4 @@
         </activity>
     </application>
 
-    <queries>
-        <provider android:authorities="yuku.alkitab.provider" />
-    </queries>
 </manifest>
