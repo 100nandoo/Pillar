@@ -1,12 +1,13 @@
 package org.redaksi.pillar
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -48,6 +49,7 @@ fun MainScreenPreview() {
     MainScreen(navBarItemList, rememberNavController())
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -111,10 +113,16 @@ fun NavBar(modifier: Modifier, items: List<NavBarItem>, navController: NavContro
                 icon = {
                     Icon(painter = painterResource(id = item.icon), contentDescription = stringResource(item.label))
                 },
-                label = { Text(stringResource(item.label), color = secondary) },
+                label = { Text(stringResource(item.label)) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = { onClickNavBarItem(navController, item) },
-                colors = NavigationBarItemDefaults.colors(primary, secondary, indicatorColor = bottomBarSelected)
+                colors = NavigationBarItemDefaults.colors(
+                    primary,
+                    secondary,
+                    unselectedTextColor = secondary,
+                    unselectedIconColor = secondary,
+                    indicatorColor = bottomBarSelected
+                )
             )
         }
     }
