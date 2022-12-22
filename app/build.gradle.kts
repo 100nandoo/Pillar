@@ -82,20 +82,18 @@ dependencies {
     implementation(project(":ui"))
     implementation(project(":remote"))
     implementation(libs.kotlinx.coroutines)
+
+    // ----------------------------- AndroidX ------------------------------
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraint.layout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.navigation)
-
-    // ----------------------------- AndroidX ------------------------------
+    implementation(libs.androidx.profile.installer)
     implementation(libs.androidx.viewmodel.ktx)
-
-    implementation("androidx.profileinstaller:profileinstaller:1.2.0")
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.nav.compose)
-
     kapt(libs.hilt.compiler)
 
     // ----------------------------- COMPOSE ------------------------------
