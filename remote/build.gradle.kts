@@ -9,6 +9,7 @@ plugins {
 }
 
 android {
+    namespace = "org.redaksi.data.remote"
     buildTypes {
         release {
             isMinifyEnabled = true

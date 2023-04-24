@@ -13,6 +13,7 @@ plugins {
 }
 
 android {
+    namespace = "org.redaksi.pillar"
     compileSdk = AppCoordinates.compileSDK
 
     signingConfigs {
@@ -40,7 +41,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

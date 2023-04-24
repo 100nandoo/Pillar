@@ -7,6 +7,7 @@ plugins {
 }
 
 android {
+    namespace = "org.redaksi.core"
     buildTypes {
         release {
             isMinifyEnabled = false

@@ -9,11 +9,12 @@ plugins {
 }
 
 android {
+    namespace = "org.redaksi.ui"
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
 
     buildTypes {
