@@ -1,4 +1,6 @@
 # Changelog
+## [2.0.7] - 24 April 2023
+* Perbaikan performa dan optimisasi
 
 ## [2.0.6] - 12 November 2022
 * Ubah warna dialog ayat alkitab di halaman artikel
