@@ -20,7 +20,8 @@ interface PillarApi {
 
     @GET("posts")
     suspend fun articlesByCategory(
-        @CategoryId @Query("categories")
+        @CategoryId
+        @Query("categories")
         categories: Int,
         @Query("page")
         page: Int

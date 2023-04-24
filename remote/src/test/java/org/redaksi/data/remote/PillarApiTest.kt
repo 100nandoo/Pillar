@@ -2,8 +2,8 @@ package org.redaksi.data.remote
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.serialization.json.Json
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -34,8 +34,8 @@ internal class PillarApiTest {
             assertTrue(::articleDetail.name + MESSAGE_RESPONSE_FAILED, result.isSuccessful)
             assertEquals(result.body()?.title?.rendered, "Tuhan, Ambillah Nyawaku")
         }
-
     }
+
     @Test
     fun searchArticle() {
         runTest {

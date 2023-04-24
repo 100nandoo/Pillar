@@ -73,7 +73,9 @@ fun PillarTheme(
             }
         } else if (darkTheme) {
             DarkMainColorPalette
-        } else LightMainColorPalette
+        } else {
+            LightMainColorPalette
+        }
     }
 
     MaterialTheme3(
