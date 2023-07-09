@@ -152,9 +152,9 @@ fun CariTextField(uiState: CariViewModelState, onValueChange: (TextFieldValue) -
         keyboardActions = keyboardActions(uiState.textFieldValue.text) {
             onSearch(it)
         },
-        colors = TextFieldDefaults.textFieldColors(
+        colors = TextFieldDefaults.colors(
             focusedIndicatorColor = secondary,
-            containerColor = background
+            focusedContainerColor = background
         ),
         maxLines = 1,
         visualTransformation = AlphaNumericVisualTransformation()

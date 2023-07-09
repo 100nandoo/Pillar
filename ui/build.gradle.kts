@@ -60,7 +60,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
 
     // ----------------------------- UI ------------------------------
-    implementation(libs.accompanist.swiperefresh)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicator)
     implementation(libs.accompanist.webview)
