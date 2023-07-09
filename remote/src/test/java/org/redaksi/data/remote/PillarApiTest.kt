@@ -37,6 +37,16 @@ internal class PillarApiTest {
     }
 
     @Test
+    fun articleDetailSlug() {
+        runTest {
+            val result = pillarApi.articleDetailSlug("opera-don-giovanni-dan-pandangan-kierkegaard")
+
+            assertTrue(::articleDetail.name + MESSAGE_RESPONSE_FAILED, result.isSuccessful)
+            assertEquals(result.body()?.firstOrNull()?.title?.rendered, "Opera Don Giovanni dan Pandangan Kierkegaard")
+        }
+    }
+
+    @Test
     fun searchArticle() {
         runTest {
             val result = pillarApi.searchArticle("investasi")

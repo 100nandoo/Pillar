@@ -13,6 +13,8 @@ interface PillarApi {
     suspend fun articleDetail(@Path("id") articleId: Int): Response<Article>
 
     @GET("posts")
+    suspend fun articleDetailSlug(@Query("slug") slug: String): Response<List<Article>>
+    @GET("posts")
     suspend fun searchArticle(
         @Query("search")
         search: String
