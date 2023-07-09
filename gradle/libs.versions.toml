@@ -3,8 +3,8 @@ kotlin = "1.8.10"
 kotlinx_json = "1.5.0"
 kotlinx_coroutines = "1.6.4"
 
-ktlint = "0.48.1"
-detekt = "1.22.0"
+ktlint = "0.50.0"
+detekt = "1.23.0"
 dokka = "1.7.20"
 junit = "4.13.2"
 
@@ -25,7 +25,7 @@ constraint_layout_compose = "1.0.1"
 core_ktx = "1.10.0"
 core_splashscreen = "1.0.1"
 viewmodel = "2.6.1"
-material3 = "1.0.1"
+material3 = "1.1.1"
 navigation = "2.5.3"
 paging = "3.1.1"
 paging_compose = "1.0.0-alpha16"
@@ -37,7 +37,7 @@ hilt_nav_compose = "1.0.0"
 # Others
 accompanist = "0.28.0"
 coil = "2.3.0"
-agp = "7.3.1"
+agp = "8.0.2"
 firebase_bom = "31.5.0"
 firebase_perf_plugin = "1.4.1"
 firebase_crash_plugin = "2.9.2"
@@ -123,5 +123,5 @@ three_ten_abp = { module = "com.jakewharton.threetenabp:threetenabp", version.re
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.3.1" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.5.0" }
 versions = { id = "com.github.ben-manes.versions", version = "0.46.0" }
