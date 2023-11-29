@@ -12,7 +12,9 @@
   - [Inter](https://fonts.google.com/specimen/Inter)
 * Dependency injection using [Hilt](https://dagger.dev/hilt/)
 
-## Features 🎨
+<a href="https://play.google.com/store/apps/details?id=org.redaksi.pillar">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play" height="80">
+</a>
 
 ## Contributing 🤝
 
