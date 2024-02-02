@@ -1,7 +1,7 @@
 plugins {
     kotlin("android")
     kotlin("kapt")
-    kotlin("plugin.serialization") version "1.9.20"
+    kotlin("plugin.serialization") version libs.versions.kotlin.get()
 
     id("com.android.library")
     id("dagger.hilt.android.plugin")
