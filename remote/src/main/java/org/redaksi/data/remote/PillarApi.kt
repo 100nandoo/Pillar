@@ -15,7 +15,11 @@ interface PillarApi {
     @GET("posts")
     suspend fun searchArticle(
         @Query("search")
-        search: String
+        search: String,
+        @Query("search_columns")
+        searchColumns: String = "post_title",
+        @Query("page")
+        page: Int
     ): Response<List<Article>>
 
     @GET("posts")

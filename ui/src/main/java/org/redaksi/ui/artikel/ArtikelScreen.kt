@@ -62,6 +62,7 @@ import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.Dimens.thirtyTwo
 import org.redaksi.ui.Dimens.twelve
+import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.R
 import org.redaksi.ui.compose.PillarColor
@@ -204,7 +205,7 @@ private fun ArtikelScreenContent(
 }
 
 @Composable
-fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int) -> Unit) {
+fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int) -> Unit, isSearch: Boolean = false) {
     val articleItems = articles.collectAsLazyPagingItems()
 
     LazyColumn(Modifier.fillMaxSize()) {
@@ -233,6 +234,11 @@ fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int)
                                 .padding(sixteen.dp)
                                 .wrapContentWidth(Alignment.CenterHorizontally)
                         )
+                    }
+                }
+                this.itemCount == 0 && isSearch -> {
+                    item {
+                        EmptyScreen(message = stringResource(id = R.string.tidak_ada_hasil))
                     }
                 }
             }
