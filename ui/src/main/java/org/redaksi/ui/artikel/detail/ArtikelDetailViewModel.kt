@@ -19,10 +19,13 @@ class ArtikelDetailViewModel @Inject constructor(
     private val viewModelState = MutableStateFlow(ArtikelDetailViewModelState())
     val uiState = viewModelState
     var artikelId: Int? = null
+    var slug: String? = null
 
     init {
         artikelId = savedStateHandle["artikelId"]
+        slug = savedStateHandle["slug"]
         artikelId?.let { loadArtikelDetail(it) }
+        slug?.let { loadArtikelDetailSlug(it) }
     }
 
     fun onEvent(event: ArtikelDetailEvent) {
@@ -42,8 +45,22 @@ class ArtikelDetailViewModel @Inject constructor(
             val response = result.getOrNull()?.body()
             when {
                 result.isSuccess && response != null -> {
-                    val artikelDetailUi1 = fromResponse(response)
-                    viewModelState.update { it.copy(articleDetailUi = artikelDetailUi1, isLoading = false) }
+                    val artikelDetailUi = fromResponse(response)
+                    viewModelState.update { it.copy(articleDetailUi = artikelDetailUi, isLoading = false) }
+                }
+            }
+        }
+    }
+
+    private fun loadArtikelDetailSlug(slug: String) {
+        viewModelScope.launch {
+            viewModelState.update { it.copy(isLoading = true) }
+            val result = runCatching { pillarApi.articleDetailSlug(slug) }
+            val response = result.getOrNull()?.body()
+            when {
+                result.isSuccess && response != null -> {
+                    val artikelDetailUi = fromResponse(response[0])
+                    viewModelState.update { it.copy(articleDetailUi = artikelDetailUi, isLoading = false) }
                 }
             }
         }

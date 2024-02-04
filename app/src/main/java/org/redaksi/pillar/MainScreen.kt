@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import org.redaksi.pillar.BottomNavRoute.artikelDetailRoute
 import org.redaksi.pillar.BottomNavRoute.artikelIdArg
 import org.redaksi.pillar.BottomNavRoute.artikelRoute
@@ -72,6 +73,14 @@ fun MainScreen(items: List<NavBarItem>, navController: NavHostController) {
                 route = "$artikelDetailRoute/{$artikelIdArg}",
                 arguments = listOf(navArgument(artikelIdArg) { type = NavType.IntType })
             ) { ArtikelDetailScreen() }
+
+            composable(
+                route = "$artikelDetailRoute/{$artikelIdArg}",
+                deepLinks = listOf(navDeepLink { uriPattern = "buletinpillar.org/{slug}" })
+            ) { backStackEntry ->
+                val slug = backStackEntry.arguments?.getString("slug")
+                backStackEntry.savedStateHandle["slug"] = slug
+                ArtikelDetailScreen() }
         }
     }
 }
