@@ -329,6 +329,8 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux,gradle,windows,android,androidstudio,java,kotlin
 /keystore.properties
+*.jks
+*.keystore
 /key/
 
 venv/
