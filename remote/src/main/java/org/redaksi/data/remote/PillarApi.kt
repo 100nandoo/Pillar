@@ -30,7 +30,9 @@ interface PillarApi {
     @GET("posts")
     suspend fun editorChoicesArticles(
         @Query("pilihan")
-        pilihan: String = "yes"
+        pilihan: String = "yes",
+        @Query("orderby")
+        orderBy: String = "modified"
     ): Response<List<Article>>
 
     @GET("posts")
