@@ -1,4 +1,7 @@
 # Changelog
+## [2.0.9] - 02 Febuari 2024
+* Perbaikan crash
+
 ## [2.0.8] - 02 Febuari 2024
 * Perbaharui endpoint `search` agar hasil sama dengan website
 * Tambah artikel sorotan (artikel pertama tanpa header) di halaman `Utama`
