@@ -76,7 +76,7 @@ class ReadingTime @JvmOverloads constructor(
     /**
      * Calculates and returns the reading time in seconds.
      */
-    fun calcReadingTimeInSec(): Double {
+    private fun calcReadingTimeInSec(): Double {
         if (readTime == INVALID) {
             readTime = if (!excludeImages) calcImgReadingTime().toDouble() else 0.0
             readTime += (wordCount(text) / wpm) * 60.0

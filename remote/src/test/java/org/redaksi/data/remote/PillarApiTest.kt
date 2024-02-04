@@ -39,7 +39,7 @@ internal class PillarApiTest {
     @Test
     fun searchArticle() {
         runTest {
-            val result = pillarApi.searchArticle("investasi")
+            val result = pillarApi.searchArticle(search = "investasi", page = 1)
             val isNotEmpty = (result.body()?.size ?: 0) > 0
 
             assertTrue(::searchArticle.name + MESSAGE_RESPONSE_FAILED, result.isSuccessful)
@@ -64,7 +64,7 @@ internal class PillarApiTest {
             val result = pillarApi.editorChoicesArticles()
 
             assertTrue(::articleDetail.name + MESSAGE_RESPONSE_FAILED, result.isSuccessful)
-            assertEquals(result.body()?.size, 3)
+            assertEquals(result.body()?.size, 4)
         }
     }
 

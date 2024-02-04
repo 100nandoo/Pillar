@@ -48,12 +48,13 @@ class UtamaViewModel @Inject constructor(private val pillarApi: PillarApi) : Vie
                 else -> listOf()
             }
 
-            viewModelState.update { it.copy(newestArticles = newestArticles, editorChoiceArticles = editorChoiceArticles, isLoading = false) }
+            viewModelState.update { it.copy(highlightArticle = editorChoiceArticles.first(), newestArticles = newestArticles, editorChoiceArticles = editorChoiceArticles.drop(1), isLoading = false) }
         }
     }
 }
 
 data class UtamaViewModelState(
+    val highlightArticle: ArticleUi = ArticleUi(),
     val newestArticles: List<ArticleUi> = listOf(),
     val editorChoiceArticles: List<ArticleUi> = listOf(),
     val isLoading: Boolean = true

@@ -8,10 +8,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -20,7 +18,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -38,15 +35,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.EmptyScreen
-import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.R
 import org.redaksi.ui.ScreenState
-import org.redaksi.ui.artikel.ArticleItem
+import org.redaksi.ui.artikel.ArtikelList
 import org.redaksi.ui.compose.PillarColor.background
 import org.redaksi.ui.compose.PillarColor.cariPlaceholder
 import org.redaksi.ui.compose.PillarColor.secondary
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CariScreen(paddingValues: PaddingValues, onClick: (Int) -> Unit) {
     val viewModel: CariViewModel = hiltViewModel()
@@ -65,7 +60,6 @@ fun CariScreen(paddingValues: PaddingValues, onClick: (Int) -> Unit) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CariScreenContent(
     paddingValues: PaddingValues,
@@ -96,24 +90,10 @@ fun CariScreenContent(
                 )
             }
 
-            when (uiState.screenState) {
-                ScreenState.LOADING -> LoadingScreen()
-                ScreenState.CONTENT -> {
-                    LazyColumn {
-                        uiState.articlesUi.forEachIndexed { index, articleUi ->
-                            item {
-                                val isLast = index == uiState.articlesUi.size - 1
-                                ArticleItem(articleUi = articleUi, isDividerShown = isLast) { onClick(articleUi.id) }
-                            }
-                        }
-                    }
-                }
-                ScreenState.EMPTY -> {
-                    EmptyScreen(message = stringResource(id = R.string.tidak_ada_hasil))
-                }
-                else -> {
-                    EmptyScreen(message = "")
-                }
+            if (uiState.screenState == ScreenState.BLANK){
+                EmptyScreen(message = "")
+            } else {
+                ArtikelList(articles = uiState.articlesUi, onClick = { onClick(it) }, isSearch = true)
             }
         }
     }
@@ -133,7 +113,6 @@ class AlphaNumericVisualTransformation : VisualTransformation {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CariTextField(uiState: CariViewModelState, onValueChange: (TextFieldValue) -> Unit, onSearch: (String) -> Unit) {
     OutlinedTextField(

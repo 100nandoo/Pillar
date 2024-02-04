@@ -42,7 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
+import androidx.paging.compose.itemKey
 import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -62,6 +62,7 @@ import org.redaksi.ui.Dimens.eight
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.Dimens.thirtyTwo
 import org.redaksi.ui.Dimens.twelve
+import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.R
 import org.redaksi.ui.compose.PillarColor
@@ -160,11 +161,17 @@ private fun ArtikelScreenContent(
                 containerColor = primary,
                 selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
-                    TabRowDefaults.Indicator(modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions), color = secondary)
+                    TabRowDefaults.Indicator(
+                        modifier = Modifier.pagerTabIndicatorOffset(
+                            pagerState,
+                            tabPositions
+                        ), color = secondary
+                    )
                 }
             ) {
                 pages.forEachIndexed { index, page ->
-                    val color = if (index == pagerState.currentPage) secondary else bottomBarSelected
+                    val color =
+                        if (index == pagerState.currentPage) secondary else bottomBarSelected
                     Tab(
                         text = { Text(color = color, text = stringResource(id = page.label)) },
                         selected = pagerState.currentPage == index,
@@ -198,13 +205,18 @@ private fun ArtikelScreenContent(
 }
 
 @Composable
-fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int) -> Unit) {
+fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int) -> Unit, isSearch: Boolean = false) {
     val articleItems = articles.collectAsLazyPagingItems()
 
     LazyColumn(Modifier.fillMaxSize()) {
-        items(articleItems) { articleUi ->
-            ArticleItem(articleUi = articleUi!!) {
-                onClick(articleUi.id)
+        items(
+            count = articleItems.itemCount,
+            key = articleItems.itemKey { it.id }) { index ->
+            val articleUi = articleItems[index]
+            articleUi?.let { articleUi ->
+                ArticleItem(articleUi = articleUi) {
+                    onClick(articleUi.id)
+                }
             }
         }
 
@@ -213,6 +225,7 @@ fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int)
                 loadState.refresh is LoadState.Loading -> {
                     item { LoadingScreen(Modifier.fillParentMaxSize()) }
                 }
+
                 loadState.append is LoadState.Loading -> {
                     item {
                         LoadingScreen(
@@ -223,13 +236,23 @@ fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int)
                         )
                     }
                 }
+                this.itemCount == 0 && isSearch -> {
+                    item {
+                        EmptyScreen(message = stringResource(id = R.string.tidak_ada_hasil))
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isDividerShown: Boolean = false, onClick: (artikelId: Int) -> Unit) {
+fun ArticleItem(
+    modifier: Modifier = Modifier,
+    articleUi: ArticleUi,
+    isDividerShown: Boolean = false,
+    onClick: (artikelId: Int) -> Unit
+) {
     ConstraintLayout(
         modifier = modifier
             .fillMaxWidth()

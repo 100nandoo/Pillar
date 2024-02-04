@@ -8,4 +8,5 @@ object Dimens {
     const val sixteen = 16
     const val thirtyTwo = 32
     const val forty = 40
+    const val fortyFour = 40
 }

@@ -31,7 +31,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import org.redaksi.ui.Dimens.fortyFour
 import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.Dimens.thirtyTwo
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.R
 import org.redaksi.ui.artikel.ArticleItem
@@ -81,6 +83,9 @@ fun UtamaScreenContent(uiState: UtamaViewModelState, paddingValues: PaddingValue
             } else {
                 LazyColumn {
                     item {
+                        ArticleItem(articleUi = uiState.highlightArticle, isDividerShown = false) { onClick(uiState.highlightArticle.id) }
+                    }
+                    item {
                         HeaderItem(Modifier.background(PillarColor.background), R.string.artikel_terbaru)
                     }
                     uiState.newestArticles.forEach { articleUi ->
@@ -110,6 +115,7 @@ fun UtamaScreenContent(uiState: UtamaViewModelState, paddingValues: PaddingValue
 private fun UtamaScreenPreview() {
     UtamaScreenContent(
         UtamaViewModelState(
+            highlightArticle = UiModelProvider.articleUiList.first(),
             newestArticles = UiModelProvider.articleUiList,
             editorChoiceArticles = UiModelProvider.articleUiList,
             false
@@ -123,7 +129,7 @@ private fun UtamaScreenPreview() {
 fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
     val staticModifier = modifier
         .background(PillarColor.background)
-        .padding(sixteen.dp)
+        .padding(fortyFour.dp, thirtyTwo.dp, sixteen.dp, sixteen.dp)
         .fillMaxWidth()
     Text(
         modifier = staticModifier,

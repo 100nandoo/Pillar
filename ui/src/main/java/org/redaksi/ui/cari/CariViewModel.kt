@@ -3,14 +3,20 @@ package org.redaksi.ui.cari
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.redaksi.data.remote.PillarApi
 import org.redaksi.ui.ScreenState
+import org.redaksi.ui.cari.paging.CariSource
 import org.redaksi.ui.utama.ArticleUi
-import org.redaksi.ui.utama.fromResponse
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,16 +33,10 @@ class CariViewModel @Inject constructor(private val pillarApi: PillarApi) : View
 
     private fun loadSearchArticle(keyword: String) {
         viewModelScope.launch {
-            viewModelState.update { it.copy(screenState = ScreenState.LOADING) }
-            val result = runCatching { pillarApi.searchArticle(keyword) }
-            val response = result.getOrNull()?.body()
-            when {
-                result.isSuccess && response != null -> {
-                    val articlesUi = fromResponse(response)
-                    val screenState = if (articlesUi.isEmpty()) ScreenState.EMPTY else ScreenState.CONTENT
-                    viewModelState.update { it.copy(articlesUi = articlesUi, screenState = screenState) }
-                }
-            }
+            val cariPager = Pager(PagingConfig(pageSize = 10)) {
+                CariSource(pillarApi, keyword)
+            }.flow.cachedIn(viewModelScope)
+            viewModelState.update { it.copy(articlesUi = cariPager, screenState = ScreenState.CONTENT) }
         }
     }
 
@@ -46,7 +46,7 @@ class CariViewModel @Inject constructor(private val pillarApi: PillarApi) : View
 }
 
 data class CariViewModelState(
-    val articlesUi: List<ArticleUi> = listOf(),
+    val articlesUi: Flow<PagingData<ArticleUi>> = flowOf(),
     val textFieldValue: TextFieldValue = TextFieldValue(),
     val screenState: ScreenState = ScreenState.BLANK
 )
