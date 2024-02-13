@@ -1,4 +1,7 @@
 # Changelog
+## [2.0.10] - 13 Febuari 2024
+* Perbaikan crash
+
 ## [2.0.9] - 02 Febuari 2024
 * Perbaikan crash
 
