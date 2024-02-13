@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,7 +27,6 @@ import org.redaksi.ui.R
 import org.redaksi.ui.compose.PillarColor
 import org.redaksi.ui.compose.PillarTypography3
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LainnyaScreen(paddingValues: PaddingValues, onClickTentang: () -> Unit) {
     Scaffold {

@@ -1,5 +1,6 @@
 package org.redaksi.ui.artikel
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -11,9 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
@@ -44,9 +46,6 @@ import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import coil.compose.AsyncImage
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.redaksi.data.remote.ALKITAB_N_THEOLOGI
@@ -116,7 +115,7 @@ private val HorizontalScrollConsumer = object : NestedScrollConnection {
 fun Modifier.disabledHorizontalPointerInputScroll(disabled: Boolean = true) =
     if (disabled) this.nestedScroll(HorizontalScrollConsumer) else this
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ArtikelScreenContent(
     pages: List<Page>,
@@ -127,7 +126,9 @@ private fun ArtikelScreenContent(
 ) {
     Scaffold { it ->
         val coroutineScope = rememberCoroutineScope()
-        val pagerState = rememberPagerState()
+        val pagerState = rememberPagerState {
+            pages.size
+        }
 
         fun onClickTab(index: Int, page: Page, action: (Int) -> Unit) {
             coroutineScope.launch {
@@ -182,7 +183,6 @@ private fun ArtikelScreenContent(
 
             HorizontalPager(
                 modifier = Modifier.disabledHorizontalPointerInputScroll(),
-                count = pages.size,
                 state = pagerState
             ) { page ->
                 val categoryId = pages[page].category

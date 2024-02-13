@@ -55,7 +55,7 @@ fun UtamaScreen(paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit)
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UtamaScreenContent(uiState: UtamaViewModelState, paddingValues: PaddingValues, onClick: (artikelId: Int) -> Unit, onRefresh: () -> Unit) {
     Scaffold(
