@@ -1,7 +1,10 @@
 # TODO
 - [ ] Jump to Top Artikel Detail
-- [ ] Download
+- [ ] Share article URL
+- [ ] Daily/Weekly Reminder
+- [ ] Redesign UI for `Artikel`
 - [ ] Animasi
+- [ ] Download
 
 Done
 - [x] Setup pillar app icon
