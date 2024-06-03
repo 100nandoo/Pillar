@@ -1,6 +1,5 @@
 # TODO
 - [ ] Jump to Top Artikel Detail
-- [ ] Share article URL
 - [ ] Daily/Weekly Reminder
 - [ ] Redesign UI for `Artikel`
 - [ ] Animasi
@@ -29,4 +28,4 @@ Done
 - [x] Image on Artikel Detail
 - [x] Fix Previews
 - [x] Update Pillar Api Test
-
+- [x] Share article URL
