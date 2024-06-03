@@ -1,4 +1,10 @@
 # Changelog
+## [2.0.12] - 3 Juni 2024
+* Artikel highlight diambil dari newest articles
+
+## [2.0.11] - 3 Juni 2024
+* Dilewati
+
 ## [2.0.10] - 13 Febuari 2024
 * Perbaikan crash
 
