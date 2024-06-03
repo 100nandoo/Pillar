@@ -1,4 +1,5 @@
 # TODO
+- [ ] API call documentation
 - [ ] Jump to Top Artikel Detail
 - [ ] Daily/Weekly Reminder
 - [ ] Redesign UI for `Artikel`
