@@ -38,30 +38,28 @@ fun LainnyaScreen(paddingValues: PaddingValues, onClickTentang: () -> Unit) {
                 .padding(paddingValues)
                 .padding(sixteen.dp)
         ) {
-            Column {
-                Row(
+            Row(
+                modifier = Modifier
+                    .clickable { onClickTentang() }
+                    .padding(0.dp, sixteen.dp)
+                    .height(IntrinsicSize.Min),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
                     modifier = Modifier
-                        .clickable { onClickTentang() }
-                        .padding(0.dp, sixteen.dp)
-                        .height(IntrinsicSize.Min),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        modifier = Modifier
-                            .padding(eight.dp, 0.dp)
-                            .fillMaxHeight(),
-                        painter = painterResource(id = R.drawable.ic_tentang),
-                        contentDescription = stringResource(R.string.tentang)
-                    )
-                    Text(
-                        modifier = Modifier
-                            .height(26.dp)
-                            .fillMaxWidth(),
-                        style = PillarTypography3.headlineSmall,
-                        color = PillarColor.utamaTitle,
-                        text = stringResource(id = R.string.tentang)
-                    )
-                }
+                        .padding(eight.dp, 0.dp)
+                        .fillMaxHeight(),
+                    painter = painterResource(id = R.drawable.ic_tentang),
+                    contentDescription = stringResource(R.string.tentang)
+                )
+                Text(
+                    modifier = Modifier
+                        .height(26.dp)
+                        .fillMaxWidth(),
+                    style = PillarTypography3.headlineSmall,
+                    color = PillarColor.utamaTitle,
+                    text = stringResource(id = R.string.tentang)
+                )
             }
         }
     }

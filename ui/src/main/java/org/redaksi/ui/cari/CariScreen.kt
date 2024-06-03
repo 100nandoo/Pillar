@@ -90,7 +90,7 @@ fun CariScreenContent(
                 )
             }
 
-            if (uiState.screenState == ScreenState.BLANK){
+            if (uiState.screenState == ScreenState.BLANK) {
                 EmptyScreen(message = "")
             } else {
                 ArtikelList(articles = uiState.articlesUi, onClick = { onClick(it) }, isSearch = true)

@@ -10,6 +10,7 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -20,9 +21,11 @@ import org.redaksi.ui.utama.ArticleUi
 import javax.inject.Inject
 
 @HiltViewModel
-class CariViewModel @Inject constructor(private val pillarApi: PillarApi) : ViewModel() {
-    private val viewModelState = MutableStateFlow(CariViewModelState())
-    val uiState = viewModelState
+class CariViewModel
+@Inject
+constructor(private val pillarApi: PillarApi) : ViewModel() {
+    private val _uiState = MutableStateFlow(CariViewModelState())
+    val uiState: StateFlow<CariViewModelState> = _uiState
 
     fun onEvent(cariEvent: CariEvent) {
         when (cariEvent) {
@@ -36,12 +39,12 @@ class CariViewModel @Inject constructor(private val pillarApi: PillarApi) : View
             val cariPager = Pager(PagingConfig(pageSize = 10)) {
                 CariSource(pillarApi, keyword)
             }.flow.cachedIn(viewModelScope)
-            viewModelState.update { it.copy(articlesUi = cariPager, screenState = ScreenState.CONTENT) }
+            _uiState.update { it.copy(articlesUi = cariPager, screenState = ScreenState.CONTENT) }
         }
     }
 
     private fun updateTextFieldValue(textFieldValue: TextFieldValue) {
-        viewModelState.update { it.copy(textFieldValue = textFieldValue) }
+        _uiState.update { it.copy(textFieldValue = textFieldValue) }
     }
 }
 
@@ -53,5 +56,6 @@ data class CariViewModelState(
 
 sealed class CariEvent {
     data class LoadSearchArticle(val keyword: String) : CariEvent()
+
     data class UpdateTextFieldValue(val textFieldValue: TextFieldValue) : CariEvent()
 }

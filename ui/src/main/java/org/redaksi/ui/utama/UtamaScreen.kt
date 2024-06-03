@@ -23,6 +23,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -82,15 +83,17 @@ fun UtamaScreenContent(uiState: UtamaViewModelState, paddingValues: PaddingValue
                 LoadingScreen(isLoading = false)
             } else {
                 LazyColumn {
-                    item {
-                        ArticleItem(articleUi = uiState.highlightArticle, isDividerShown = false) { onClick(uiState.highlightArticle.id) }
+                    uiState.highlightArticle?.let { articleUi ->
+                        item {
+                            ArticleItem(articleUi = articleUi) { onClick(articleUi.id) }
+                        }
                     }
                     item {
                         HeaderItem(Modifier.background(PillarColor.background), R.string.artikel_terbaru)
                     }
                     uiState.newestArticles.forEach { articleUi ->
                         item {
-                            ArticleItem(articleUi = articleUi, isDividerShown = false) { onClick(articleUi.id) }
+                            ArticleItem(articleUi = articleUi) { onClick(articleUi.id) }
                         }
                     }
                     item {
@@ -98,7 +101,7 @@ fun UtamaScreenContent(uiState: UtamaViewModelState, paddingValues: PaddingValue
                     }
                     uiState.editorChoiceArticles.forEach { articleUi ->
                         item {
-                            ArticleItem(articleUi = articleUi, isDividerShown = false) { onClick(articleUi.id) }
+                            ArticleItem(articleUi = articleUi) { onClick(articleUi.id) }
                         }
                     }
                 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -13,9 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UtamaViewModel @Inject constructor(private val pillarApi: PillarApi) : ViewModel() {
-
-    private val viewModelState = MutableStateFlow(UtamaViewModelState())
-    val uiState = viewModelState
+    private val _uiState = MutableStateFlow(UtamaViewModelState())
+    val uiState = _uiState.asStateFlow()
 
     init {
         loadUtama()
@@ -29,32 +29,42 @@ class UtamaViewModel @Inject constructor(private val pillarApi: PillarApi) : Vie
 
     private fun loadUtama() {
         viewModelScope.launch {
-            viewModelState.update { it.copy(isLoading = true) }
-            val newestResult = withContext(Dispatchers.Default) { runCatching { pillarApi.newestArticles() } }
-            val newestResponse = newestResult.getOrNull()?.body()
-            val newestArticles: List<ArticleUi> = when {
-                newestResult.isSuccess && newestResponse != null -> {
-                    fromResponse(newestResponse)
-                }
-                else -> listOf()
-            }
+            _uiState.update { it.copy(isLoading = true) }
+            val newestArticles = fetchNewestArticles()
+            val editorChoiceArticles = fetchEditorChoiceArticles()
 
-            val editorChoiceResult = withContext(Dispatchers.Default) { runCatching { pillarApi.editorChoicesArticles() } }
-            val editorChoiceResponse = editorChoiceResult.getOrNull()?.body()
-            val editorChoiceArticles: List<ArticleUi> = when {
-                editorChoiceResult.isSuccess && editorChoiceResponse != null -> {
-                    fromResponse(editorChoiceResponse)
-                }
-                else -> listOf()
+            _uiState.update {
+                it.copy(
+                    highlightArticle = if (newestArticles.isNotEmpty()) newestArticles.first() else null,
+                    newestArticles = if (newestArticles.isNotEmpty()) newestArticles.drop(1) else emptyList(),
+                    editorChoiceArticles = editorChoiceArticles,
+                    isLoading = false
+                )
             }
+        }
+    }
 
-            viewModelState.update { it.copy(highlightArticle = editorChoiceArticles.first(), newestArticles = newestArticles, editorChoiceArticles = editorChoiceArticles.drop(1), isLoading = false) }
+    private suspend fun fetchNewestArticles(): List<ArticleUi> {
+        return withContext(Dispatchers.IO) {
+            runCatching { pillarApi.newestArticles() }
+                .getOrNull()
+                ?.body()
+                ?.let { fromResponse(it) } ?: emptyList()
+        }
+    }
+
+    private suspend fun fetchEditorChoiceArticles(): List<ArticleUi> {
+        return withContext(Dispatchers.IO) {
+            runCatching { pillarApi.editorChoicesArticles() }
+                .getOrNull()
+                ?.body()
+                ?.let { fromResponse(it) } ?: emptyList()
         }
     }
 }
 
 data class UtamaViewModelState(
-    val highlightArticle: ArticleUi = ArticleUi(),
+    val highlightArticle: ArticleUi? = ArticleUi(),
     val newestArticles: List<ArticleUi> = listOf(),
     val editorChoiceArticles: List<ArticleUi> = listOf(),
     val isLoading: Boolean = true

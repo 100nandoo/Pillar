@@ -15,7 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
@@ -236,6 +236,7 @@ fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int)
                         )
                     }
                 }
+
                 this.itemCount == 0 && isSearch -> {
                     item {
                         EmptyScreen(message = stringResource(id = R.string.tidak_ada_hasil))
@@ -327,7 +328,7 @@ fun ArticleItem(
                 }
             }
             if (isImageExist.not() || isDividerShown) {
-                Divider(modifier = modifier, color = secondaryVar)
+                HorizontalDivider(modifier = modifier, color = secondaryVar)
             }
         }
     }

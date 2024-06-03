@@ -24,10 +24,11 @@ fun fromResponse(articles: List<Article>): List<ArticleUi> {
     return articles.map { article ->
         val authors = article.postAuthors.joinToString { it.name }
 
-        val zonedDateTime = runCatching {
-            ZonedDateTime.parse(article.date + "Z", DateTimeFormatter.ISO_ZONED_DATE_TIME)
-                .withZoneSameInstant(ZoneId.systemDefault())
-        }.getOrNull()
+        val zonedDateTime =
+            runCatching {
+                ZonedDateTime.parse(article.date + "Z", DateTimeFormatter.ISO_ZONED_DATE_TIME)
+                    .withZoneSameInstant(ZoneId.systemDefault())
+            }.getOrNull()
         val displayDate = detailScreenDate(zonedDateTime)
 
         ArticleUi(

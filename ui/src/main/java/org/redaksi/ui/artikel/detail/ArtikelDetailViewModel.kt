@@ -81,8 +81,12 @@ data class ArtikelDetailViewModelState(
 
 sealed class ArtikelDetailEvent {
     data class ShowNotKnownDialog(val verse: String) : ArtikelDetailEvent()
+
     object DismissNotKnownDialog : ArtikelDetailEvent()
+
     data class ShowKnownDialog(val isShown: Boolean, val verse: AnnotatedString, val ari: Int) : ArtikelDetailEvent()
+
     data class PlayStoreDialog(val isShown: Boolean) : ArtikelDetailEvent()
+
     data class InstallDialog(val isShown: Boolean) : ArtikelDetailEvent()
 }
