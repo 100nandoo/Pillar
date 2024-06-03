@@ -14,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.ScrollState
@@ -29,7 +28,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -103,7 +101,6 @@ data class WrappedClickEvent(
     val playStoreDialog: (Boolean) -> Unit = {}
 )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun ArtikelDetailScreenContent(
     uiState: ArtikelDetailViewModelState,
@@ -123,7 +120,7 @@ fun ArtikelDetailScreenContent(
                 exit = scaleOut()
             ) {
                 FloatingActionButton(
-                    onClick = { share(uiState.articleDetailUi.title, uiState.articleDetailUi.bodyStriped) },
+                    onClick = { share(uiState.articleDetailUi.title, uiState.articleDetailUi.webUrl) },
                     containerColor = secondary,
                     contentColor = background
                 ) {
