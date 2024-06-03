@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -91,18 +92,14 @@ fun UtamaScreenContent(uiState: UtamaViewModelState, paddingValues: PaddingValue
                     item {
                         HeaderItem(Modifier.background(PillarColor.background), R.string.artikel_terbaru)
                     }
-                    uiState.newestArticles.forEach { articleUi ->
-                        item {
-                            ArticleItem(articleUi = articleUi) { onClick(articleUi.id) }
-                        }
+                    items(uiState.newestArticles) { articleUi ->
+                        ArticleItem(articleUi = articleUi) { onClick(articleUi.id) }
                     }
                     item {
                         HeaderItem(Modifier.background(PillarColor.background), R.string.pilihan_editor)
                     }
-                    uiState.editorChoiceArticles.forEach { articleUi ->
-                        item {
-                            ArticleItem(articleUi = articleUi) { onClick(articleUi.id) }
-                        }
+                    items(uiState.editorChoiceArticles) { articleUi ->
+                        ArticleItem(articleUi = articleUi) { onClick(articleUi.id) }
                     }
                 }
             }
@@ -130,10 +127,12 @@ private fun UtamaScreenPreview() {
 
 @Composable
 fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
-    val staticModifier = modifier
-        .background(PillarColor.background)
-        .padding(fortyFour.dp, thirtyTwo.dp, sixteen.dp, sixteen.dp)
-        .fillMaxWidth()
+    val staticModifier = remember {
+        modifier
+            .background(PillarColor.background)
+            .padding(fortyFour.dp, thirtyTwo.dp, sixteen.dp, sixteen.dp)
+            .fillMaxWidth()
+    }
     Text(
         modifier = staticModifier,
         style = PillarTypography3.headlineMedium,

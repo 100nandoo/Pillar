@@ -42,6 +42,6 @@ interface PillarApi {
     @GET("posts")
     suspend fun newestArticles(
         @Query("per_page")
-        perPage: Int = 3
+        perPage: Int = 4
     ): Response<List<Article>>
 }
