@@ -266,30 +266,7 @@ obj/
 /out/
 
 # User-specific configurations
-.idea/caches/
-.idea/libraries/
-.idea/shelf/
-.idea/.name
-.idea/compiler.xml
-.idea/copyright/profiles_settings.xml
-.idea/encodings.xml
-.idea/misc.xml
-.idea/scopes/scope_settings.xml
-.idea/vcs.xml
-.idea/jsLibraryMappings.xml
-.idea/datasources.xml
-.idea/dataSources.ids
-.idea/sqlDataSources.xml
-.idea/dynamic.xml
-.idea/uiDesigner.xml
-
-# Below 2 lines added manually for this project
-.idea/.gitignore
-.idea/jarRepositories.xml
-
-# static analysis plugins
-.idea/sonarlint/
-.idea/checkstyle-idea.xml
+.idea/
 
 # OS-specific files
 .DS_Store?
