@@ -109,7 +109,7 @@ fun ArtikelDetailScreenContent(
     wrappedClickEvent: WrappedClickEvent
 ) {
     fun share(title: String, text: String) {
-        context.startActivity(IntentHelper.shareSheetIntent(title, text))
+        context.startActivity(IntentHelper.createShareTextIntent(title, title + "\n\n" + text))
     }
     Scaffold(
         floatingActionButtonPosition = FabPosition.End,
