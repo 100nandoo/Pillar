@@ -1,7 +1,6 @@
 package org.redaksi.data.remote
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
@@ -9,7 +8,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @kotlinx.serialization.ExperimentalSerializationApi
 internal class PillarApiTest {
     private val MESSAGE_RESPONSE_FAILED = "failed to response."
@@ -20,7 +18,7 @@ internal class PillarApiTest {
             isLenient = true
         }
         retrofit2.Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(PillarApi.BASE_URL)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
             .create(PillarApi::class.java)
@@ -39,7 +37,7 @@ internal class PillarApiTest {
     @Test
     fun searchArticle() {
         runTest {
-            val result = pillarApi.searchArticle(search = "investasi", page = 1)
+            val result = pillarApi.searchArticle(search = "investasi", PillarApi,   page = 1)
             val isNotEmpty = (result.body()?.size ?: 0) > 0
 
             assertTrue(::searchArticle.name + MESSAGE_RESPONSE_FAILED, result.isSuccessful)
