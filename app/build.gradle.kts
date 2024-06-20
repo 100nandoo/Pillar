@@ -10,6 +10,8 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
+
+    alias(libs.plugins.kotlin.compose.compiler)
 }
 
 android {
@@ -40,8 +42,8 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

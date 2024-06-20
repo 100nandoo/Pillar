@@ -311,3 +311,6 @@ fabric.properties
 /key/
 
 venv/
+
+# Kotlin 2.0
+.kotlin/

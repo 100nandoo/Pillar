@@ -162,7 +162,7 @@ private fun ArtikelScreenContent(
                 containerColor = primary,
                 selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
-                    TabRowDefaults.Indicator(
+                    TabRowDefaults.SecondaryIndicator(
                         modifier = Modifier.pagerTabIndicatorOffset(
                             pagerState,
                             tabPositions

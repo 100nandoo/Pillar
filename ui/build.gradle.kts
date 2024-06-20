@@ -6,6 +6,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 
     id("base-android-plugin")
+    alias(libs.plugins.kotlin.compose.compiler)
 }
 
 android {
@@ -13,10 +14,9 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false

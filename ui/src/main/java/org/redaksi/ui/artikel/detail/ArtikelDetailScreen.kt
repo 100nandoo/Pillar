@@ -19,6 +19,7 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -54,7 +55,7 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.google.accompanist.flowlayout.FlowRow
+import androidx.compose.foundation.layout.FlowRow
 import org.redaksi.core.helper.IntentHelper
 import org.redaksi.core.helper.verse.AlkitabIntegrationUtil
 import org.redaksi.core.helper.verse.ConnectionResult
@@ -358,6 +359,7 @@ fun VerseDialogPreview() {
     VerseDialog(0, AnnotatedString("Yohanes 3:16"), {}) {}
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
     Column(
