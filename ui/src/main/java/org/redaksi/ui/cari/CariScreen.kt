@@ -16,9 +16,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,6 +37,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import org.redaksi.ui.Dimens.sixteen
 import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.R
@@ -115,10 +120,13 @@ class AlphaNumericVisualTransformation : VisualTransformation {
 
 @Composable
 fun CariTextField(uiState: CariViewModelState, onValueChange: (TextFieldValue) -> Unit, onSearch: (String) -> Unit) {
+    val focusRequester = remember { FocusRequester() }
+
     OutlinedTextField(
         modifier = Modifier
             .padding(16.dp, 16.dp, 16.dp, 0.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .focusRequester(focusRequester),
         value = uiState.textFieldValue,
         placeholder = { Placeholder() },
         trailingIcon = {
@@ -139,6 +147,12 @@ fun CariTextField(uiState: CariViewModelState, onValueChange: (TextFieldValue) -
         maxLines = 1,
         visualTransformation = AlphaNumericVisualTransformation()
     )
+
+    if (uiState.articlesUi.collectAsLazyPagingItems().itemCount == 0 || uiState.screenState == ScreenState.BLANK){
+        LaunchedEffect(Unit) {
+            focusRequester.requestFocus()
+        }
+    }
 }
 
 private val keyboardOptions = KeyboardOptions(KeyboardCapitalization.None, true, KeyboardType.Text, ImeAction.Search)
