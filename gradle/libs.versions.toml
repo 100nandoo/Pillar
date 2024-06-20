@@ -36,7 +36,7 @@ hilt_nav_compose = "1.2.0"
 # Others
 accompanist = "0.34.0"
 coil = "2.6.0"
-agp = "8.2.2"
+agp = "8.4.2"
 firebase_bom = "33.1.0"
 firebase_perf_plugin = "1.4.1"
 firebase_crash_plugin = "2.9.2"

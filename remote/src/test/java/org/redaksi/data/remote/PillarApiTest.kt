@@ -1,12 +1,12 @@
 package org.redaksi.data.remote
 
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 @kotlinx.serialization.ExperimentalSerializationApi
 internal class PillarApiTest {
@@ -37,7 +37,7 @@ internal class PillarApiTest {
     @Test
     fun searchArticle() {
         runTest {
-            val result = pillarApi.searchArticle(search = "investasi", PillarApi,   page = 1)
+            val result = pillarApi.searchArticle(search = "investasi", PillarApi.QUERY_SEARCH_COLUMNS_DEFAULT, page = 1)
             val isNotEmpty = (result.body()?.size ?: 0) > 0
 
             assertTrue(::searchArticle.name + MESSAGE_RESPONSE_FAILED, result.isSuccessful)
