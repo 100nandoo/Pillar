@@ -1,92 +1,82 @@
-package org.redaksi.core.helper.verse;
+package org.redaksi.core.helper.verse
 
-import java.util.Arrays;
+class IntArrayList @JvmOverloads constructor(cap: Int = 16) {
+    var buf: IntArray
+    var len: Int = 0
 
-public class IntArrayList {
-    int[] buf;
-    int len;
-
-    public IntArrayList() {
-        this(16);
+    init {
+        buf = IntArray(cap)
     }
 
-    public IntArrayList(int cap) {
-        buf = new int[cap];
-        this.len = 0;
+    fun size(): Int {
+        return this.len
     }
 
-    public int size() {
-        return this.len;
+    private fun expand() {
+        val newArray = IntArray(buf.size shl 1)
+        System.arraycopy(this.buf, 0, newArray, 0, this.len)
+        this.buf = newArray
     }
 
-    private void expand() {
-        int[] newArray = new int[this.buf.length << 1];
-        System.arraycopy(this.buf, 0, newArray, 0, this.len);
-        this.buf = newArray;
-    }
-
-    public void add(int a) {
-        if (this.len >= this.buf.length) {
-            expand();
+    fun add(a: Int) {
+        if (this.len >= buf.size) {
+            expand()
         }
 
-        this.buf[this.len++] = a;
+        buf[len++] = a
     }
 
-    public int pop() {
-        return this.buf[--this.len];
+    fun pop(): Int {
+        return buf[--this.len]
     }
 
-    public int get(int i) {
-        return this.buf[i];
+    operator fun get(i: Int): Int {
+        return buf[i]
     }
 
-    public void set(int i, int a) {
-        this.buf[i] = a;
+    fun set(i: Int, a: Int) {
+        buf[i] = a
     }
 
     /**
      * DANGEROUS. Do not mess with this buffer carelessly.
      * Use this for faster access to the underlying buffer only.
-     * The length of the returned array will be the same or larger than {@link #size()}.
+     * The length of the returned array will be the same or larger than [.size].
      */
-    public int[] buffer() {
-        return buf;
+    fun buffer(): IntArray {
+        return buf
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(this.len * 8);
-        sb.append('[');
-        for (int i = 0; i < len; i++) {
-            sb.append(buf[i]);
+    override fun toString(): String {
+        val sb = StringBuilder(this.len * 8)
+        sb.append('[')
+        for (i in 0 until len) {
+            sb.append(buf[i])
             if (i != this.len - 1) {
-                sb.append(", "); //$NON-NLS-1$
+                sb.append(", ") //$NON-NLS-1$
             }
         }
-        sb.append(']');
-        return sb.toString();
+        sb.append(']')
+        return sb.toString()
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    override fun equals(o: Any?): Boolean {
+        if (this === o) return true
+        if (o == null || javaClass != o.javaClass) return false
 
-        final IntArrayList that = (IntArrayList) o;
+        val that = o as IntArrayList
 
-        if (len != that.len) return false;
-        for (int i = 0; i < len; i++) {
-            if (buf[i] != that.buf[i]) return false;
+        if (len != that.len) return false
+        for (i in 0 until len) {
+            if (buf[i] != that.buf[i]) return false
         }
 
-        return true;
+        return true
     }
 
-    @Override
-    public int hashCode() {
-        int result = Arrays.hashCode(buf);
-        result = 31 * result + len;
-        return result;
+    override fun hashCode(): Int {
+        var result = buf.contentHashCode()
+        result = 31 * result + len
+        return result
     }
 }

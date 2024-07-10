@@ -1,20 +1,20 @@
-package org.redaksi.core.helper.verse;
+package org.redaksi.core.helper.verse
 
-public class ConnectionResult {
-    public static final String TAG = ConnectionResult.class.getSimpleName();
+object ConnectionResult {
+    val TAG: String = ConnectionResult::class.java.simpleName
 
-    /** The connection was successful. */
-    public static final int SUCCESS = 0;
+    /** The connection was successful.  */
+    const val SUCCESS: Int = 0
 
-    /** Alkitab app is missing on this device. */
-    public static final int APP_MISSING = 1;
+    /** Alkitab app is missing on this device.  */
+    const val APP_MISSING: Int = 1
 
-    /** The installed version of Alkitab app is out of date. */
-    public static final int APP_VERSION_UPDATE_REQUIRED = 2;
+    /** The installed version of Alkitab app is out of date.  */
+    const val APP_VERSION_UPDATE_REQUIRED: Int = 2
 
-    /** The provider component of Alkitab has been disabled on this device. */
-    public static final int PROVIDER_DISABLED = 3;
+    /** The provider component of Alkitab has been disabled on this device.  */
+    const val PROVIDER_DISABLED: Int = 3
 
-    /** An internal error occurred. Retrying should resolve the problem. */
-    public static final int INTERNAL_ERROR = 8;
+    /** An internal error occurred. Retrying should resolve the problem.  */
+    const val INTERNAL_ERROR: Int = 8
 }
