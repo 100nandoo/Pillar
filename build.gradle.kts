@@ -1,7 +1,8 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
-@Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("com.android.application") apply false
     id("com.android.library") apply false
@@ -34,6 +35,12 @@ subprojects {
         filter {
             exclude("**/generated/**")
             include("**/kotlin/**")
+            exclude("/src/main/java/org/redaksi/core/helper/verse/**")
+        }
+
+        reporters {
+            reporter(ReporterType.PLAIN)
+            reporter(ReporterType.HTML)
         }
     }
 
