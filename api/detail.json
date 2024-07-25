@@ -1,0 +1,113 @@
+{
+  "id": 123,
+  "date": "2006-12-03T00:00:00",
+  "date_gmt": "2006-12-03T00:00:00",
+  "guid": {
+    "rendered": "https://www.buletinpillar.org/pokok-doa-desember-2006/"
+  },
+  "modified": "2006-12-03T00:00:00",
+  "modified_gmt": "2006-12-03T00:00:00",
+  "slug": "pokok-doa-desember-2006",
+  "status": "publish",
+  "type": "post",
+  "link": "https://www.buletinpillar.org/pokok-doa/pokok-doa-desember-2006",
+  "title": {
+    "rendered": "Desember 2006"
+  },
+  "content": {
+    "rendered": "<p><strong>Berita</strong></p>\n<p>1.&#160;NREC 2006&#160;dengan tema &#8220;Iman, Pengetahuan, dan Pelayanan (III)&#8221; akan diadakan pada 27-30 Desember 2006 di Wisma Kinasih. Teman-teman diharapkan mempersiapkan hati untuk mengikutinya. Hubungi Sekretariat NREC: (021) 3810912 (Ev. Stanly Maria) atau GRII/MRII setempat untuk informasi selengkapnya.</p>\n<p>2. KKR Anak dan Remaja akan diadakan pada tanggal 16 Desember 2006 di Istora Senayan Jakarta untuk anak-anak (SD) pukul 13.00 WIB dan remaja (SMP dan SMA) pukul 16.00 WIB. Saudara/i yang terbeban untuk melayani bersama dapat menghubungi Sekretariat KKR: (021) 3810912.</p>\n<p>3. Konser Natal bagi Remaja akan diadakan pada tanggal 21 Desember 2006 pukul 16.00 WIB di Jakarta Convention Center dan dilanjutkan dengan KKR Natal Umum pada pukul 19.30 WIB di tempat yang sama.</p>\n<p><strong>Pokok Doa:</strong></p>\n<p>1. Bersyukur untuk SPIK dengan tema &#8220;Iman dan Kebudayaan&#8221; yang telah diadakan pada tanggal 8-9 November 2006 yang lalu. Berdoa kiranya firman yang diberitakan dapat meneguhkan iman&#160;para peserta dalam menjalankan hidup sebagai terang dunia di tengah masyarakat.</p>\n<p>2. Bersyukur untuk KKR Kupang yang berlangsung pada tanggal 16-18 November 2006 yang lalu. Bersyukur untuk firman yang dibawakan oleh Pdt. Dr. Stephen Tong. Kiranya sekitar 6.000-10.000 jiwa yang menghadiri KKR tersebut setiap harinya dapat diteguhkan imannya dan semakin mengerti tentang kebenaran firman Tuhan. Bersyukur juga untuk KKR Anak yang diadakan pada tanggal 18 November 2006 di tempat yang sama dan berdoa kiranya Roh Kudus bekerja di dalam hati setiap anak untuk memeliharakan&#160;benih firman yang telah ditanamkan.</p>\n<p>3. Berdoa untuk persiapan menjelang Natal pada bulan Desember ini. Kiranya Natal bukan sekedar suatu pesta ataupun kemeriahan belaka, tetapi kita dapat mengerti esensi dari Natal itu sendiri, yaitu inkarnasi dari Tuhan kita Yesus Kristus untuk menebus dosa umat manusia. Mari kita mempersiapkan hati kita di dalam menyambut Natal ini dan menjadikannya sebagai momen untuk melakukan penginjilan bagi orang-orang yang belum mengenal Kristus.</p>\n",
+    "protected": false
+  },
+  "excerpt": {
+    "rendered": "<p>Berita 1.&#160;NREC 2006&#160;dengan tema &#822",
+    "protected": false
+  },
+  "author": 1,
+  "featured_media": 0,
+  "comment_status": "closed",
+  "ping_status": "closed",
+  "sticky": false,
+  "template": "",
+  "format": "standard",
+  "meta": {
+    "_seopress_robots_primary_cat": "",
+    "_seopress_titles_title": "",
+    "_seopress_titles_desc": "",
+    "_seopress_robots_index": "",
+    "_jetpack_memberships_contains_paid_content": false,
+    "footnotes": ""
+  },
+  "categories": [
+    29
+  ],
+  "tags": [],
+  "Penulis": [],
+  "jetpack_sharing_enabled": true,
+  "jetpack_featured_media_url": "",
+  "post_authors": [],
+  "search_content": "Berita 1. NREC 2006 dengan tema “Iman, Pengetahuan, dan Pelayanan (III)” akan diadakan pada 27-30 Desember 2006 di Wisma Kinasih. Teman-teman diharapkan mempersiapkan hati untuk mengikutinya. Hubungi Sekretariat NREC: (021) 3810912 (Ev.",
+  "_links": {
+    "self": [
+      {
+        "href": "https://www.buletinpillar.org/wp-json/wp/v2/posts/123"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://www.buletinpillar.org/wp-json/wp/v2/posts"
+      }
+    ],
+    "about": [
+      {
+        "href": "https://www.buletinpillar.org/wp-json/wp/v2/types/post"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://www.buletinpillar.org/wp-json/wp/v2/users/1"
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://www.buletinpillar.org/wp-json/wp/v2/comments?post=123"
+      }
+    ],
+    "version-history": [
+      {
+        "count": 0,
+        "href": "https://www.buletinpillar.org/wp-json/wp/v2/posts/123/revisions"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://www.buletinpillar.org/wp-json/wp/v2/media?parent=123"
+      }
+    ],
+    "wp:term": [
+      {
+        "taxonomy": "category",
+        "embeddable": true,
+        "href": "https://www.buletinpillar.org/wp-json/wp/v2/categories?post=123"
+      },
+      {
+        "taxonomy": "post_tag",
+        "embeddable": true,
+        "href": "https://www.buletinpillar.org/wp-json/wp/v2/tags?post=123"
+      },
+      {
+        "taxonomy": "Penulis",
+        "embeddable": true,
+        "href": "https://www.buletinpillar.org/wp-json/wp/v2/Penulis?post=123"
+      }
+    ],
+    "curies": [
+      {
+        "name": "wp",
+        "href": "https://api.w.org/{rel}",
+        "templated": true
+      }
+    ]
+  }
+}
