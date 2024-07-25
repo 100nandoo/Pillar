@@ -1,8 +1,8 @@
 package org.redaksi.core.helper
 
-import org.jsoup.Jsoup
 import java.math.BigDecimal
 import java.math.RoundingMode
+import org.jsoup.Jsoup
 
 /**
  * Calculates the reading time of the given [text].

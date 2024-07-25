@@ -38,7 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
-import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.Dimens.SIXTEEN
 import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.R
 import org.redaksi.ui.ScreenState
@@ -81,7 +81,7 @@ fun CariScreenContent(
                 .padding(it)
                 .padding(paddingValues)
         ) {
-            Box(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, sixteen.dp)) {
+            Box(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, SIXTEEN.dp)) {
                 CariTextField(
                     uiState = uiState,
                     onValueChange = {
@@ -148,7 +148,7 @@ fun CariTextField(uiState: CariViewModelState, onValueChange: (TextFieldValue) -
         visualTransformation = AlphaNumericVisualTransformation()
     )
 
-    if (uiState.articlesUi.collectAsLazyPagingItems().itemCount == 0 || uiState.screenState == ScreenState.BLANK){
+    if (uiState.articlesUi.collectAsLazyPagingItems().itemCount == 0 || uiState.screenState == ScreenState.BLANK) {
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
         }

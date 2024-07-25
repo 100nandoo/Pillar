@@ -16,10 +16,7 @@ import androidx.compose.ui.unit.lerp
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
-fun Modifier.pagerTabIndicatorOffset(
-    pagerState: PagerState,
-    tabPositions: List<TabPosition>
-): Modifier = composed {
+fun Modifier.pagerTabIndicatorOffset(pagerState: PagerState, tabPositions: List<TabPosition>): Modifier = composed {
     // If there are no pages, nothing to show
     if (pagerState.pageCount == 0) return@composed this
 

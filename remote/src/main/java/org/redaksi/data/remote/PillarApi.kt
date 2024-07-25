@@ -50,7 +50,7 @@ interface PillarApi {
         @Query(QUERY_PILIHAN)
         pilihan: String = QUERY_PILIHAN_DEFAULT,
         @Query(QUERY_ORDER_BY)
-        orderBy: String = QUERY_ORDER_BY_DEFAULT,
+        orderBy: String = QUERY_ORDER_BY_DEFAULT
     ): Response<List<Article>>
 
     @GET("posts")

@@ -26,5 +26,6 @@ object PillarColor {
 }
 
 enum class ColorPallet {
-    MAIN, WALLPAPER
+    MAIN,
+    WALLPAPER
 }

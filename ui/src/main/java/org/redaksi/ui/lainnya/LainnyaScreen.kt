@@ -21,8 +21,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.redaksi.ui.Dimens.eight
-import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.Dimens.EIGHT
+import org.redaksi.ui.Dimens.SIXTEEN
 import org.redaksi.ui.R
 import org.redaksi.ui.compose.PillarColor
 import org.redaksi.ui.compose.PillarTypography3
@@ -36,18 +36,18 @@ fun LainnyaScreen(paddingValues: PaddingValues, onClickTentang: () -> Unit) {
                 .background(PillarColor.background)
                 .padding(it)
                 .padding(paddingValues)
-                .padding(sixteen.dp)
+                .padding(SIXTEEN.dp)
         ) {
             Row(
                 modifier = Modifier
                     .clickable { onClickTentang() }
-                    .padding(0.dp, sixteen.dp)
+                    .padding(0.dp, SIXTEEN.dp)
                     .height(IntrinsicSize.Min),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     modifier = Modifier
-                        .padding(eight.dp, 0.dp)
+                        .padding(EIGHT.dp, 0.dp)
                         .fillMaxHeight(),
                     painter = painterResource(id = R.drawable.ic_tentang),
                     contentDescription = stringResource(R.string.tentang)

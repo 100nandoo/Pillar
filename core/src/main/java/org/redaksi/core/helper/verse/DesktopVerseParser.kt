@@ -11,10 +11,10 @@ object DesktopVerseParser {
 
     val TAG: String = DesktopVerseParser::class.java.simpleName
 
-    ///////////////////////////////////// 1 complete verse address (book chapter verse)
-    /////////////////////////////////////  2 book name with optional period and spaces after it
-    /////////////////////////////////////   3 book name
-    ///////////////////////////////////// ... 4 numbers (chapter or chapter:verse, with ',' or ';' or 'dan') which is not followed by nofollow
+    // /////////////////////////////////// 1 complete verse address (book chapter verse)
+    // ///////////////////////////////////  2 book name with optional period and spaces after it
+    // ///////////////////////////////////   3 book name
+    // /////////////////////////////////// ... 4 numbers (chapter or chapter:verse, with ',' or ';' or 'dan') which is not followed by nofollow
     var reg: Pattern = Pattern.compile(
         "(((" + bookNamesPattern_indonesian + "|" + bookNamesPattern_english + ")(?:\\.?\\s+|\\.))(\\d+(?:(?:-|:|(?:;\\s*\\d+:\\s*)|,|\\.|\\d|dan|\\s)+\\d+)?))",
         Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CASE
@@ -37,13 +37,13 @@ object DesktopVerseParser {
         "yos|yosua|joshua|josh|jos",
         "hak|hakim-hakim|judges|judg|jdg",
         "rut|ru|ruth|rut|rth|ru",
-        "1 samuel|1samuel|1 sam|1sam|1 sa|1sa|i samuel|i sam|i sa",  // same for english: 1 samuel|1samuel|1 sam|1sam|1 sa|1sa|i samuel|i sam|i sa
-        "2 samuel|2samuel|2 sam|2sam|2 sa|2sa|ii samuel|ii sam|ii sa",  // same for english: 2 samuel|2samuel|2 sam|2sam|2 sa|2sa|ii samuel|ii sam|ii sa
+        "1 samuel|1samuel|1 sam|1sam|1 sa|1sa|i samuel|i sam|i sa", // same for english: 1 samuel|1samuel|1 sam|1sam|1 sa|1sa|i samuel|i sam|i sa
+        "2 samuel|2samuel|2 sam|2sam|2 sa|2sa|ii samuel|ii sam|ii sa", // same for english: 2 samuel|2samuel|2 sam|2sam|2 sa|2sa|ii samuel|ii sam|ii sa
         "1 raj|1 raja|1raj|1raja|1 raja-raja|1raja-raja|i raj|i raja|iraj|iraja|i raja-raja|iraja-raja|1 kings|1kings|1 kin|1kin|1 kgs|1kgs|1 ki|1ki|i kings|i kin|i kgs|i ki",
         "2 raj|2 raja|2raj|2raja|2 raja-raja|2raja-raja|ii raj|ii raja|iiraj|iiraja|ii raja-raja|iiraja-raja|2 kings|2kings|2 kin|2kin|2 kgs|2kgs|2 ki|2ki|ii kings|ii kin|ii kgs|ii ki",
         "1 tawarikh|1tawarikh|1 taw|1taw|i tawarikh|i taw|1 chronicles|1chronicles|1 chron|1chron|1 chr|1chr|1 ch|1ch|i chronicles|i chron|i chr|i ch",
         "2 tawarikh|2tawarikh|2 taw|2taw|ii tawarikh|ii taw|2 chronicles|2chronicles|2 chron|2chron|2 chr|2chr|2 ch|2ch|ii chronicles|ii chron|ii chr|ii ch",
-        "ezra|ezr",  // same for english: ezra|ezr
+        "ezra|ezr", // same for english: ezra|ezr
         "neh|nh|ne|nehemia|nehemiah|neh|nh|ne|nehemia",
         "est|es|ester|esther|esth|est|es|ester",
         "ayub|ayb|ay|job|jb",
@@ -56,16 +56,16 @@ object DesktopVerseParser {
         "ratapan|rat|lamentations|lam|la",
         "yehezkiel|yeh|ezekiel|ezek|eze",
         "daniel|dan|dn|daniel|dan|dn|da",
-        "hosea|hos|ho",  // same for english: hosea|hos|ho
+        "hosea|hos|ho", // same for english: hosea|hos|ho
         "yoel|yl|joel|joe|yl",
-        "amos|amo|am",  // same for english: amos|amo|am
+        "amos|amo|am", // same for english: amos|amo|am
         "obaja|oba|ob|obadiah|oba|ob",
         "yunus|yun|jonah|jon",
         "mikha|mik|mi|micah|mikha|mic|mi",
-        "nahum|nah|na",  // same for english: nahum|nah|na
-        "habakkuk|habakuk|hab",  // same for english: habakkuk|habakuk|hab
+        "nahum|nah|na", // same for english: nahum|nah|na
+        "habakkuk|habakuk|hab", // same for english: habakkuk|habakuk|hab
         "zefanya|zef|zephaniah|zeph|zep",
-        "haggai|hagai|hag",  // same for english: haggai|hagai|hag
+        "haggai|hagai|hag", // same for english: haggai|hagai|hag
         "zakharia|zak|za|zechariah|zech|zec|za",
         "maleakhi|mal|malachi|mal",
         "matius|mat|mt|matthew|mathew|matt|mat|mt",
@@ -84,7 +84,7 @@ object DesktopVerseParser {
         "2 tesalonika|2tesalonika|2 tes|2tes|ii tesalonika|ii tes|2 thessalonians|2thessalonians|2 thess|2thess|2 thes|2thes|2 the|2the|2 th|2th|ii thessalonians|ii thess|ii thes|ii the|ii th",
         "1timotius|1 timotius|1 tim|1tim|1 ti|1ti|i tim|i ti|i timotius|i tim|i ti|1 timothy|1timothy|1 tim|1tim|1 ti|1ti|i timothy|i tim|i ti|itim|iti",
         "2timotius|2 timotius|2 tim|2tim|2 ti|2ti|ii tim|ii ti|ii timotius|ii tim|ii ti|2 timothy|2timothy|2 tim|2tim|2 ti|2ti|ii timothy|ii tim|ii ti|iitim|iiti",
-        "titus|tit",  // same for english: titus|tit
+        "titus|tit", // same for english: titus|tit
         "filemon|flm|philemon|phile|phm",
         "ibrani|ibr|hebrews|heb|he",
         "yakobus|yak|james|jam|jas|jms|ja|jm",
@@ -94,7 +94,7 @@ object DesktopVerseParser {
         "2 yohanes|2yohanes|ii yohanes|ii yoh|2yoh|2 yoh|2 john|2john|2 joh|2joh|2 jhn|2jhn|2 jo|2jo|2 jn|2jn|ii john|ii joh|ii jhn|ii jo|ii jn|iijoh|iijhn|iijo|iijn",
         "3 yohanes|3yohanes|3yoh|3 yoh|iii yohanes|iii yoh|3 john|3john|3 joh|3joh|3 jhn|3jhn|3 jo|3jo|3 jn|3jn|iii john|iii joh|iii jhn|iii jo|iii jn|iiijoh,iiijhn|iiijo|iiijn",
         "yudas|yud|jude|jud|ju",
-        "wahyu|why|wah|revelations|revelation|rev|re|rv",
+        "wahyu|why|wah|revelations|revelation|rev|re|rv"
     )
 
     var bookNameToId: HashMap<String, Int> = HashMap(512)
@@ -125,7 +125,8 @@ object DesktopVerseParser {
         val bookId = bookNameToId[bookName] ?: return null
 
         val book_0 = bookId
-        val singleChapterBook = (book_0 == 30 || book_0 == 56 || book_0 == 62 || book_0 == 63 || book_0 == 64 /* yudas */
+        val singleChapterBook = (
+            book_0 == 30 || book_0 == 56 || book_0 == 62 || book_0 == 63 || book_0 == 64 /* yudas */
             )
 
         var lastChapter = 0
@@ -150,7 +151,10 @@ object DesktopVerseParser {
                 if (cvStart != 0) {
                     val cvEnd: Int
                     val startend_1_trim = startend[1].trim { it <= ' ' }
-                    if (numbersOnly.matcher(startend_1_trim).matches()) { // check for cases like "2:3-17" (chapter 2 verse 3 to chapter 2 verse 17) or "14-17" (chapter 14 to chapter 17)
+                    if (numbersOnly.matcher(
+                            startend_1_trim
+                        ).matches()
+                    ) { // check for cases like "2:3-17" (chapter 2 verse 3 to chapter 2 verse 17) or "14-17" (chapter 14 to chapter 17)
                         val startend_1_number = startend_1_trim.toInt()
                         cvEnd = if ((cvStart and 0xff) == 0) { // cvStart has no verse number, so this is for cases like "14-17" (chapter 14 to chapter 17)
                             startend_1_number shl 8

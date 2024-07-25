@@ -8,6 +8,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +19,6 @@ import org.redaksi.data.remote.PillarApi
 import org.redaksi.ui.ScreenState
 import org.redaksi.ui.cari.paging.CariSource
 import org.redaksi.ui.utama.ArticleUi
-import javax.inject.Inject
 
 @HiltViewModel
 class CariViewModel

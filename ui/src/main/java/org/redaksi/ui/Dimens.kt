@@ -1,12 +1,11 @@
 package org.redaksi.ui
 
 object Dimens {
-    const val zero = 0
-    const val four = 4
-    const val eight = 8
-    const val twelve = 12
-    const val sixteen = 16
-    const val thirtyTwo = 32
-    const val forty = 40
-    const val fortyFour = 40
+    const val ZERO = 0
+    const val FOUR = 4
+    const val EIGHT = 8
+    const val TWELVE = 12
+    const val SIXTEEN = 16
+    const val THIRTY_TWO = 32
+    const val FORTY = 40
 }

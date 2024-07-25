@@ -33,9 +33,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import org.redaksi.ui.Dimens.fortyFour
-import org.redaksi.ui.Dimens.sixteen
-import org.redaksi.ui.Dimens.thirtyTwo
+import org.redaksi.ui.Dimens.FORTY
+import org.redaksi.ui.Dimens.SIXTEEN
+import org.redaksi.ui.Dimens.THIRTY_TWO
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.R
 import org.redaksi.ui.artikel.ArticleItem
@@ -130,7 +130,7 @@ fun HeaderItem(modifier: Modifier, @StringRes id: Int) {
     val staticModifier = remember {
         modifier
             .background(PillarColor.background)
-            .padding(fortyFour.dp, thirtyTwo.dp, sixteen.dp, sixteen.dp)
+            .padding(FORTY.dp, THIRTY_TWO.dp, SIXTEEN.dp, SIXTEEN.dp)
             .fillMaxWidth()
     }
     Text(

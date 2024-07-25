@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
@@ -24,7 +25,6 @@ import org.redaksi.data.remote.SEPUTAR_GRII
 import org.redaksi.data.remote.TRANSKIP
 import org.redaksi.ui.artikel.paging.ArtikelSource
 import org.redaksi.ui.utama.ArticleUi
-import javax.inject.Inject
 
 @HiltViewModel
 class ArtikelViewModel @Inject constructor(private val pillarApi: PillarApi) : ViewModel() {

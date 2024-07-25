@@ -63,6 +63,7 @@ object Launcher {
     }
 
     enum class Product(val displayName: String, val packageName: String) {
-        ALKITAB("Alkitab", "yuku.alkitab"), QUICK_BIBLE("Quick Bible", "yuku.alkitab.kjv")
+        ALKITAB("Alkitab", "yuku.alkitab"),
+        QUICK_BIBLE("Quick Bible", "yuku.alkitab.kjv")
     }
 }

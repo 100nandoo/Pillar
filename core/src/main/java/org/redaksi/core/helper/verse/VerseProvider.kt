@@ -114,7 +114,9 @@ class VerseProvider(private val cr: ContentResolver) {
      */
     fun getVerses(ranges: VerseRanges): List<Verse>? {
         val c = cr.query(
-            Uri.parse(("content://" + AlkitabIntegrationUtil.providerAuthority) + "/" + PATH_bible_verses_range_by_ari + ranges.toString() + "?formatting=0"),
+            Uri.parse(
+                ("content://" + AlkitabIntegrationUtil.providerAuthority) + "/" + PATH_bible_verses_range_by_ari + ranges.toString() + "?formatting=0"
+            ),
             null,
             null,
             null,

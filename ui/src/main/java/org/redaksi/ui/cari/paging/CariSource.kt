@@ -13,7 +13,7 @@ class CariSource(private val pillarApi: PillarApi, val keyword: String) : Paging
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ArticleUi> {
         val nextPage = params.key ?: 1
-        val result = runCatching { pillarApi.searchArticle(search = keyword, page =  nextPage) }
+        val result = runCatching { pillarApi.searchArticle(search = keyword, page = nextPage) }
         val response = result.getOrNull()?.body()
         return when {
             result.isSuccess && response != null -> {

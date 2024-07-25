@@ -59,5 +59,8 @@ fun EmptyScreenPreview() {
 }
 
 enum class ScreenState {
-    LOADING, EMPTY, CONTENT, BLANK
+    LOADING,
+    EMPTY,
+    CONTENT,
+    BLANK
 }

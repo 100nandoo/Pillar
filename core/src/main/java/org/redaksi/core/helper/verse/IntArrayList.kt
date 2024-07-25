@@ -53,7 +53,7 @@ class IntArrayList @JvmOverloads constructor(cap: Int = 16) {
         for (i in 0 until len) {
             sb.append(buf[i])
             if (i != this.len - 1) {
-                sb.append(", ") //$NON-NLS-1$
+                sb.append(", ") // $NON-NLS-1$
             }
         }
         sb.append(']')

@@ -57,10 +57,10 @@ import org.redaksi.data.remote.RESENSI
 import org.redaksi.data.remote.SENI_BUDAYA
 import org.redaksi.data.remote.SEPUTAR_GRII
 import org.redaksi.data.remote.TRANSKIP
-import org.redaksi.ui.Dimens.eight
-import org.redaksi.ui.Dimens.sixteen
-import org.redaksi.ui.Dimens.thirtyTwo
-import org.redaksi.ui.Dimens.twelve
+import org.redaksi.ui.Dimens.EIGHT
+import org.redaksi.ui.Dimens.SIXTEEN
+import org.redaksi.ui.Dimens.THIRTY_TWO
+import org.redaksi.ui.Dimens.TWELVE
 import org.redaksi.ui.EmptyScreen
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.R
@@ -112,8 +112,7 @@ private val HorizontalScrollConsumer = object : NestedScrollConnection {
     override suspend fun onPreFling(available: Velocity) = available.copy(y = 0f)
 }
 
-fun Modifier.disabledHorizontalPointerInputScroll(disabled: Boolean = true) =
-    if (disabled) this.nestedScroll(HorizontalScrollConsumer) else this
+fun Modifier.disabledHorizontalPointerInputScroll(disabled: Boolean = true) = if (disabled) this.nestedScroll(HorizontalScrollConsumer) else this
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -166,7 +165,8 @@ private fun ArtikelScreenContent(
                         modifier = Modifier.pagerTabIndicatorOffset(
                             pagerState,
                             tabPositions
-                        ), color = secondary
+                        ),
+                        color = secondary
                     )
                 }
             ) {
@@ -211,7 +211,8 @@ fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int)
     LazyColumn(Modifier.fillMaxSize()) {
         items(
             count = articleItems.itemCount,
-            key = articleItems.itemKey { it.id }) { index ->
+            key = articleItems.itemKey { it.id }
+        ) { index ->
             val articleUi = articleItems[index]
             articleUi?.let { articleUi ->
                 ArticleItem(articleUi = articleUi) {
@@ -231,7 +232,7 @@ fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int)
                         LoadingScreen(
                             Modifier
                                 .fillMaxWidth()
-                                .padding(sixteen.dp)
+                                .padding(SIXTEEN.dp)
                                 .wrapContentWidth(Alignment.CenterHorizontally)
                         )
                     }
@@ -248,12 +249,7 @@ fun ArtikelList(articles: Flow<PagingData<ArticleUi>>, onClick: (artikelId: Int)
 }
 
 @Composable
-fun ArticleItem(
-    modifier: Modifier = Modifier,
-    articleUi: ArticleUi,
-    isDividerShown: Boolean = false,
-    onClick: (artikelId: Int) -> Unit
-) {
+fun ArticleItem(modifier: Modifier = Modifier, articleUi: ArticleUi, isDividerShown: Boolean = false, onClick: (artikelId: Int) -> Unit) {
     ConstraintLayout(
         modifier = modifier
             .fillMaxWidth()
@@ -261,8 +257,8 @@ fun ArticleItem(
     ) {
         val (image, title, column) = createRefs()
         val isImageExist = articleUi.imageUrl.isNotBlank()
-        val cardHorMargin = if (isImageExist) thirtyTwo else 0
-        val cardBottomMargin = if (isImageExist) sixteen else 0
+        val cardHorMargin = if (isImageExist) THIRTY_TWO else 0
+        val cardBottomMargin = if (isImageExist) SIXTEEN else 0
 
         if (isImageExist) {
             AsyncImage(
@@ -279,9 +275,9 @@ fun ArticleItem(
             modifier = modifier
                 .padding(cardHorMargin.dp, 0.dp)
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(sixteen, sixteen))
+                .clip(RoundedCornerShape(SIXTEEN, SIXTEEN))
                 .background(PillarColor.background)
-                .padding(twelve.dp, twelve.dp, twelve.dp, eight.dp)
+                .padding(TWELVE.dp, TWELVE.dp, TWELVE.dp, EIGHT.dp)
                 .constrainAs(title) {
                     bottom.linkTo(image.bottom)
                 },
@@ -293,7 +289,7 @@ fun ArticleItem(
             modifier
                 .padding(cardHorMargin.dp, 0.dp)
                 .background(PillarColor.background)
-                .padding(twelve.dp, 0.dp, twelve.dp, cardBottomMargin.dp)
+                .padding(TWELVE.dp, 0.dp, TWELVE.dp, cardBottomMargin.dp)
                 .constrainAs(column) {
                     top.linkTo(title.bottom)
                 }
@@ -307,7 +303,7 @@ fun ArticleItem(
                     text = articleUi.body
                 )
             }
-            Row(modifier = modifier.padding(0.dp, eight.dp)) {
+            Row(modifier = modifier.padding(0.dp, EIGHT.dp)) {
                 if (articleUi.authors.isNotBlank()) {
                     Text(
                         modifier = Modifier

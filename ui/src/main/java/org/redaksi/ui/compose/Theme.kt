@@ -2,6 +2,8 @@ package org.redaksi.ui.compose
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme as MaterialTheme3
+import androidx.compose.material3.Typography as Typography3
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -15,8 +17,6 @@ import org.redaksi.ui.compose.PillarColor.onPrimaryContainer
 import org.redaksi.ui.compose.PillarColor.primary
 import org.redaksi.ui.compose.PillarColor.secondary
 import org.redaksi.ui.compose.PillarColor.secondaryContainer
-import androidx.compose.material3.MaterialTheme as MaterialTheme3
-import androidx.compose.material3.Typography as Typography3
 
 private val DarkMainColorPalette = darkColorScheme(
     primary = primary,

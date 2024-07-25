@@ -3,6 +3,7 @@ package org.redaksi.ui.utama
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,7 +11,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.redaksi.data.remote.PillarApi
-import javax.inject.Inject
 
 @HiltViewModel
 class UtamaViewModel @Inject constructor(private val pillarApi: PillarApi) : ViewModel() {
@@ -46,19 +46,13 @@ class UtamaViewModel @Inject constructor(private val pillarApi: PillarApi) : Vie
 
     private suspend fun fetchNewestArticles(): List<ArticleUi> {
         return withContext(Dispatchers.IO) {
-            runCatching { pillarApi.newestArticles() }
-                .getOrNull()
-                ?.body()
-                ?.let { fromResponse(it) } ?: emptyList()
+            runCatching { pillarApi.newestArticles() }.getOrNull()?.body()?.let { fromResponse(it) } ?: emptyList()
         }
     }
 
     private suspend fun fetchEditorChoiceArticles(): List<ArticleUi> {
         return withContext(Dispatchers.IO) {
-            runCatching { pillarApi.editorChoicesArticles() }
-                .getOrNull()
-                ?.body()
-                ?.let { fromResponse(it) } ?: emptyList()
+            runCatching { pillarApi.editorChoicesArticles() }.getOrNull()?.body()?.let { fromResponse(it) } ?: emptyList()
         }
     }
 }

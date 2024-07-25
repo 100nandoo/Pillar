@@ -20,6 +20,7 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,7 +56,6 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import androidx.compose.foundation.layout.FlowRow
 import org.redaksi.core.helper.IntentHelper
 import org.redaksi.core.helper.verse.AlkitabIntegrationUtil
 import org.redaksi.core.helper.verse.ConnectionResult
@@ -63,8 +63,8 @@ import org.redaksi.core.helper.verse.DesktopVerseFinder
 import org.redaksi.core.helper.verse.DesktopVerseParser
 import org.redaksi.core.helper.verse.Launcher
 import org.redaksi.core.helper.verse.VerseProvider
-import org.redaksi.ui.Dimens.eight
-import org.redaksi.ui.Dimens.sixteen
+import org.redaksi.ui.Dimens.EIGHT
+import org.redaksi.ui.Dimens.SIXTEEN
 import org.redaksi.ui.LoadingScreen
 import org.redaksi.ui.R
 import org.redaksi.ui.R.font.pt_serif_regular
@@ -365,10 +365,10 @@ fun ArtikelHeader(artikelDetailUi: ArtikelDetailUi) {
     Column(
         Modifier
             .background(PillarColor.primary)
-            .padding(sixteen.dp)
+            .padding(SIXTEEN.dp)
     ) {
         Text(
-            modifier = Modifier.padding(0.dp, 0.dp, 0.dp, eight.dp),
+            modifier = Modifier.padding(0.dp, 0.dp, 0.dp, EIGHT.dp),
             style = PillarTypography3.titleLarge,
             text = artikelDetailUi.title,
             color = PillarColor.artikelDetailTitle
@@ -413,7 +413,7 @@ fun ArtikelBody(
             .background(background)
     ) {
         AndroidView(
-            modifier = Modifier.padding(sixteen.dp, eight.dp, sixteen.dp, 0.dp),
+            modifier = Modifier.padding(SIXTEEN.dp, EIGHT.dp, SIXTEEN.dp, 0.dp),
             factory = { context ->
                 TextView(context).apply {
                     setLineSpacing(12f, 1f)
@@ -490,7 +490,7 @@ fun ArtikelBody(
             }
         )
         Text(
-            modifier = Modifier.padding(sixteen.dp, 0.dp, sixteen.dp, sixteen.dp),
+            modifier = Modifier.padding(SIXTEEN.dp, 0.dp, SIXTEEN.dp, SIXTEEN.dp),
             style = PillarTypography3.labelMedium,
             text = artikelDetailUi.displayDate
         )

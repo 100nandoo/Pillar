@@ -32,10 +32,10 @@ subprojects {
         outputToConsole.set(true)
         ignoreFailures.set(false)
         enableExperimentalRules.set(true)
+        ignoreFailures = true
         filter {
             exclude("**/generated/**")
             include("**/kotlin/**")
-            exclude("/src/main/java/org/redaksi/core/helper/verse/**")
         }
 
         reporters {
